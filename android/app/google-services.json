@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "214738954591",
+    "project_id": "kivicareneurocare",
+    "storage_bucket": "kivicareneurocare.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214738954591:android:0001ca82ce05e1ea5f6eea",
+        "android_client_info": {
+          "package_name": "com.iqonic.kivicare"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCBwddeG80wz19VNhbQ7rl6bDq49csTgNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
