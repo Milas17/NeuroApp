@@ -49,29 +49,28 @@ android {
         multiDexEnabled true
     }
 
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
-        }
+   signingConfigs {
+    release {
+        // pas de configuration de clé, build non signé
     }
-    
-    buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
+}
 
-        release {
-            signingConfig signingConfigs.release
-            minifyEnabled false
-            shrinkResources false
-            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-        }
+buildTypes {
+    debug {
+        // debug est toujours signé automatiquement par Android Studio
+        signingConfig signingConfigs.debug
+        minifyEnabled false
+        shrinkResources false
+        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+    }
+
+    release {
+        // pas de signature → juste un APK non signé
+        minifyEnabled false
+        shrinkResources false
+        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+    }
+}
     }
 
     googleServices { disableVersionCheck = true }
