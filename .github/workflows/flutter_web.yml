@@ -3,7 +3,10 @@ name: Build and Deploy Flutter Web
 on:
   push:
     branches:
-      - main   # Déclenche à chaque push sur la branche main
+      - main   # Lance le workflow à chaque push sur main
+
+permissions:
+  contents: write   # ✅ Donne le droit au bot GitHub de créer/modifier gh-pages
 
 jobs:
   build:
@@ -16,7 +19,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          channel: stable  # ou "flutter-version: '3.32.7'" si tu veux verrouiller
 
       - name: Get dependencies
         run: flutter pub get
