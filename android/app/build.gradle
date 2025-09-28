@@ -14,17 +14,17 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-
 android {
     compileSdkVersion 35
     ndkVersion "27.0.12077973"
+
+    namespace "com.iqonic.kivicare_flutter"   // ✅ replacé au bon endroit
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -49,38 +49,35 @@ android {
         multiDexEnabled true
     }
 
-   signingConfigs {
-    release {
-        // pas de configuration de clé, build non signé
-    }
-}
-
-buildTypes {
-    debug {
-        // debug est toujours signé automatiquement par Android Studio
-        signingConfig signingConfigs.debug
-        minifyEnabled false
-        shrinkResources false
-        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+    signingConfigs {
+        release {
+            // pas de configuration de clé, build non signé
+        }
     }
 
-    release {
-        // pas de signature → juste un APK non signé
-        minifyEnabled false
-        shrinkResources false
-        proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-    }
-}
-    }
+    buildTypes {
+        debug {
+            // debug est toujours signé automatiquement
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
 
-    googleServices { disableVersionCheck = true }
+        release {
+            // pas de signature → juste un APK non signé
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
 
     lint {
         disable 'InvalidPackage'
     }
-    namespace 'com.iqonic.kivicare_flutter'
 }
 
+googleServices { disableVersionCheck = true }
 
 flutter {
     source '../..'
