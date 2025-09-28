@@ -15,24 +15,36 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.32.7' 
+          flutter-version: '3.32.7'
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
+      # ✅ Build Debug APK (installable sur téléphone)
+      - name: Build Debug APK
+        run: flutter build apk --debug
+
+      - name: Upload Debug APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+
+      # ✅ Build Release APK (non signé)
+      - name: Build Release APK
         run: flutter build apk --release
 
-      - name: Build AAB
-        run: flutter build appbundle --release
-
-      - name: Upload APK artifact
+      - name: Upload Release APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Upload AAB artifact
+      # ✅ Build Release AAB (non signé)
+      - name: Build Release AAB
+        run: flutter build appbundle --release
+
+      - name: Upload Release AAB artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-aab
