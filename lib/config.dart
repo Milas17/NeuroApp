@@ -2,9 +2,9 @@ const APP_NAME = 'NeuroCare Connect';
 const APP_FIRST_NAME = 'NeuroCare';
 const APP_SECOND_NAME = 'Connect';
 const APP_NAME_TAG_LINE =
-    'Plateforme de telemedecine neurologique et pscyhiatrique';
+    'Plateforme de telemedecine neurologique et psychiatrique';
 
-const DOMAIN_URL = 'neurocareconnect.tech';
+const DOMAIN_URL = 'https://neurocareconnect.tech';
 
 const BASE_URL = '$DOMAIN_URL/wp-json/';
 
