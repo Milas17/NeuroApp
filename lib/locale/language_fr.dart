@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:kivicare_flutter/locale/base_language_key.dart';
 
-abstract class BaseLanguage {
-  static BaseLanguage of(BuildContext context) => Localizations.of<BaseLanguage>(context, BaseLanguage)!;
+class LanguageFr extends BaseLanguage {
 
   String get appName => "NeuroCare Connect";
 
