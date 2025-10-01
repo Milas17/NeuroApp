@@ -1798,7 +1798,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNoTitle => "Pas de titre";
 
   @override
-  String get lblSelectOneClinic => "Sélectionnez une clinique"
+  String get lblSelectOneClinic => "Sélectionnez une clinique";
 
   @override
   String get lblPast => "Passé";

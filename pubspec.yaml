@@ -100,3 +100,8 @@ flutter:
     - images/flags/
     - images/filesFormat/
     - images/icons/ic_addToCart.png
+    
+dependencies:
+  flutter:
+    sdk: flutter
+  jitsi_meet_flutter_sdk: ^0.2.3

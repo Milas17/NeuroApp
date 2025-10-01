@@ -17,6 +17,8 @@ import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
 import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:kivicare_flutter/screens/doctor/screens/teleconsultation_page.dart';
+
 
 class DoctorDashboardScreen extends StatefulWidget {
   @override
@@ -52,6 +54,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       if (showDashboard) DashboardFragment(),
       if (showAppointment) AppointmentFragment(),
       if (showPatientList) PatientListFragment(),
+      TeleconsultationPage(), // 👈 nouveau
       SettingFragment(),
     ];
   }
@@ -126,6 +129,11 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                       selectedIcon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: primaryColor),
                     ),
                   if (showAppointment)
+                    NavigationDestination(
+                      icon: Icon(Icons.video_call, size: iconSize, color: disableIconColor),
+                      label: "Téléconsultation",
+                      selectedIcon: Icon(Icons.video_call, size: iconSize, color: primaryColor),
+                    ),
                     NavigationDestination(
                       icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disabledIconColor),
                       label: locale.lblAppointments,
