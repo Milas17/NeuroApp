@@ -13,6 +13,8 @@ import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:kivicare_flutter/utils/constants/sharedpreference_constants.dart';
+import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
+import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:kivicare_flutter/screens/doctor/screens/teleconsultation_page.dart';
@@ -23,28 +25,57 @@ class DoctorDashboardScreen extends StatefulWidget {
 }
 
 class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
+  int currentIndex = 0;
   double iconSize = 24;
 
-  bool get showAppointment => isVisible(SharedPreferenceKey.kiviCareAppointmentListKey);
-  bool get showDashboard => isVisible(SharedPreferenceKey.kiviCareDashboardKey);
-  bool get showPatientList => isVisible(SharedPreferenceKey.kiviCarePatientListKey);
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  bool get showAppointment {
+    return isVisible(SharedPreferenceKey.kiviCareAppointmentListKey);
+  }
+
+  bool get showDashboard {
+    return isVisible(SharedPreferenceKey.kiviCareDashboardKey);
+  }
+
+  bool get showPatientList {
+    return isVisible(SharedPreferenceKey.kiviCarePatientListKey);
+  }
 
   List<Widget> getScreens() {
     return [
       if (showDashboard) DashboardFragment(),
       if (showAppointment) AppointmentFragment(),
       if (showPatientList) PatientListFragment(),
+      TeleconsultationPage(), // 👈 nouvelle page
       SettingFragment(),
     ];
+  }
+
+  void init() async {
+    afterBuildCreated(() {
+      View.of(context).platformDispatcher.onPlatformBrightnessChanged = () {
+        if (getIntAsync(THEME_MODE_INDEX) == THEME_MODE_SYSTEM) {
+          appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.light);
+        }
+      };
+    });
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
   }
 
   @override
   Widget build(BuildContext context) {
     return DoublePressBackWidget(
       child: Observer(builder: (context) {
-        if (doctorAppStore.bottomNavIndex >= getScreens().length) {
-          doctorAppStore.setBottomNavIndex(getScreens().length - 1);
-        }
+        if (doctorAppStore.bottomNavIndex >= getScreens().length) doctorAppStore.setBottomNavIndex(getScreens().length - 1);
         Color disabledIconColor = appStore.isDarkModeOn ? Colors.white : secondaryTxtColor;
 
         return Scaffold(
@@ -55,63 +86,84 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                   showBack: false,
                   color: context.scaffoldBackgroundColor,
                   elevation: 0,
+                  systemUiOverlayStyle: defaultSystemUiOverlayStyle(
+                    context,
+                    color: appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withValues(alpha: 0.02),
+                    statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
+                  ),
                   actions: [
-                    ic_shop.iconImageColored().paddingAll(14).appOnTap(() {
-                      ProductListScreen().launch(context,
-                          pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+                    Image.asset(
+                      ic_shop,
+                      height: 28,
+                      width: 28,
+                      color: appStore.isDarkModeOn ? Colors.white : primaryColor,
+                    ).paddingAll(14).appOnTap(() {
+                      ProductListScreen().launch(
+                        context,
+                        pageRouteAnimation: pageAnimation,
+                        duration: pageAnimationDuration,
+                      );
                     }).visible(appStore.wcNonce.validate().isNotEmpty),
-                    DashboardTopProfileWidget(refreshCallback: () => setState(() {})),
+                    DashboardTopProfileWidget(
+                      refreshCallback: () => setState(() {}),
+                    ),
                   ],
                 )
               : null,
           body: getScreens()[doctorAppStore.bottomNavIndex],
-          bottomNavigationBar: NavigationBar(
-            height: 66,
-            selectedIndex: doctorAppStore.bottomNavIndex,
-            backgroundColor: context.cardColor,
-            onDestinationSelected: (index) {
-              if (index == 2) {
-                // 👇 Quand on clique sur le bouton téléconsultation
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => TeleconsultationPage()),
-                );
-              } else {
-                doctorAppStore.setBottomNavIndex(index);
-                setState(() {});
-              }
-            },
-            destinations: [
-              if (showDashboard)
-                NavigationDestination(
-                  icon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: disabledIconColor),
-                  label: locale.lblDashboard,
-                  selectedIcon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: primaryColor),
-                ),
-              if (showAppointment)
-                NavigationDestination(
-                  icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disabledIconColor),
-                  label: locale.lblAppointments,
-                  selectedIcon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: primaryColor),
-                ),
-              // 👉 bouton téléconsultation (toujours présent)
-              NavigationDestination(
-                icon: Icon(Icons.video_call, size: iconSize, color: disabledIconColor),
-                label: "Téléconsultation",
-                selectedIcon: Icon(Icons.video_call, size: iconSize, color: primaryColor),
+          bottomNavigationBar: Blur(
+            blur: 30,
+            borderRadius: radius(0),
+            child: NavigationBarTheme(
+              data: NavigationBarThemeData(
+                backgroundColor: context.primaryColor.withValues(alpha: 0.02),
+                indicatorColor: context.primaryColor.withValues(alpha: 0.1),
+                labelTextStyle: WidgetStateProperty.all(primaryTextStyle(size: 10)),
+                surfaceTintColor: Colors.transparent,
+                shadowColor: Colors.transparent,
               ),
-              if (showPatientList)
-                NavigationDestination(
-                  icon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: disabledIconColor),
-                  label: locale.lblPatients,
-                  selectedIcon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: primaryColor),
-                ),
-              NavigationDestination(
-                icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disabledIconColor),
-                label: locale.lblSettings,
-                selectedIcon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: primaryColor),
+              child: NavigationBar(
+                height: 66,
+                surfaceTintColor: context.scaffoldBackgroundColor,
+                selectedIndex: doctorAppStore.bottomNavIndex,
+                backgroundColor: context.cardColor,
+                animationDuration: 1000.milliseconds,
+                destinations: [
+                  if (showDashboard)
+                    NavigationDestination(
+                      icon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: disabledIconColor),
+                      label: locale.lblDashboard,
+                      selectedIcon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: primaryColor),
+                    ),
+                  if (showAppointment)
+                    NavigationDestination(
+                      icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disabledIconColor),
+                      label: locale.lblAppointments,
+                      selectedIcon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: primaryColor),
+                    ),
+                  NavigationDestination(
+                    icon: Icon(Icons.video_call, size: iconSize, color: disabledIconColor),
+                    label: "Téléconsultation",
+                    selectedIcon: Icon(Icons.video_call, size: iconSize, color: primaryColor),
+                  ),
+                  if (showPatientList)
+                    NavigationDestination(
+                      icon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: disabledIconColor),
+                      label: locale.lblPatients,
+                      selectedIcon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: primaryColor),
+                    ),
+                  NavigationDestination(
+                    icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disabledIconColor),
+                    label: locale.lblSettings,
+                    selectedIcon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: primaryColor),
+                  ),
+                ],
+                onDestinationSelected: (index) {
+                  doctorAppStore.setBottomNavIndex(index);
+                  setState(() {});
+                },
               ),
-            ],
+            ),
           ),
         );
       }),
