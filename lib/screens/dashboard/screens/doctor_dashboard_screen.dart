@@ -19,7 +19,6 @@ import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:kivicare_flutter/screens/doctor/screens/teleconsultation_page.dart';
 
-
 class DoctorDashboardScreen extends StatefulWidget {
   @override
   _DoctorDashboardScreenState createState() => _DoctorDashboardScreenState();
@@ -33,7 +32,6 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
   @override
   void initState() {
     super.initState();
-
     init();
   }
 
@@ -54,7 +52,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       if (showDashboard) DashboardFragment(),
       if (showAppointment) AppointmentFragment(),
       if (showPatientList) PatientListFragment(),
-      TeleconsultationPage(), // 👈 nouveau
+      TeleconsultationPage(), // 👈 nouvelle page
       SettingFragment(),
     ];
   }
@@ -80,6 +78,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       child: Observer(builder: (context) {
         if (doctorAppStore.bottomNavIndex >= getScreens().length) doctorAppStore.setBottomNavIndex(getScreens().length - 1);
         Color disabledIconColor = appStore.isDarkModeOn ? Colors.white : secondaryTxtColor;
+
         return Scaffold(
           appBar: doctorAppStore.bottomNavIndex != getScreens().length - 1
               ? appBarWidget(
@@ -130,15 +129,18 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                     ),
                   if (showAppointment)
                     NavigationDestination(
-                      icon: Icon(Icons.video_call, size: iconSize, color: disableIconColor),
-                      label: "Téléconsultation",
-                      selectedIcon: Icon(Icons.video_call, size: iconSize, color: primaryColor),
-                    ),
-                    NavigationDestination(
                       icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disabledIconColor),
                       label: locale.lblAppointments,
                       selectedIcon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: primaryColor),
                     ),
+
+                  // 👉 Téléconsultation toujours affichée
+                  NavigationDestination(
+                    icon: Icon(Icons.video_call, size: iconSize, color: disabledIconColor),
+                    label: "Téléconsultation",
+                    selectedIcon: Icon(Icons.video_call, size: iconSize, color: primaryColor),
+                  ),
+
                   if (showPatientList)
                     NavigationDestination(
                       icon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: disabledIconColor),
@@ -153,6 +155,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                 ],
                 onDestinationSelected: (index) {
                   doctorAppStore.setBottomNavIndex(index);
+                  setState(() {});
                 },
               ),
             ),
