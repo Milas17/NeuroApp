@@ -9648,7 +9648,7 @@ this.a.drawPicture(s)}}
 A.Dg.prototype={
 $1(a){var s=A.bm().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/d3d45dcf251823c1769909cd43698d126db38deb/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/d2913632a4578ee4d0b8b1c4a69888c8a0672c4b/":s)+a},
 $S:15}
 A.lK.prototype={
 gj0(){var s,r=this,q=r.b
@@ -19234,9 +19234,7 @@ case 6:s=8
 return A.z($.H8().hj("[DEFAULT]",new A.eN(b.a,b.b,b.c,b.d,b.e,b.f,b.r,b.w,b.x,b.y,b.z,b.Q,b.as,b.at)),$async$bh)
 case 8:p.ma(d)
 o=$.jh.h(0,"[DEFAULT]")
-case 7:if(o!=null)n=!B.c.T(b.d,"demo-")
-else n=!1
-if(n){n=o.b
+case 7:if(o!=null){n=o.b
 m=!0
 if(b.a===n.a){l=b.f
 if(!(l!=null&&l!==n.f)){m=b.r
