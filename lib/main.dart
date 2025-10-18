@@ -5,11 +5,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-// ⚙️ Firebase (optionnel sur Web)
+// Firebase uniquement pour mobile
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-// 🌐 App imports
 import 'package:kivicare_flutter/app_theme.dart';
 import 'package:kivicare_flutter/config.dart';
 import 'package:kivicare_flutter/locale/app_localizations.dart';
@@ -61,12 +60,17 @@ PageRouteAnimation pageAnimation = PageRouteAnimation.Fade;
 PageRouteAnimation signInAnimation = PageRouteAnimation.Scale;
 Duration pageAnimationDuration = Duration(milliseconds: 500);
 
+// ✅ Rétablis les 3 listes globales manquantes
+List<String> paymentMethodList = [];
+List<String> paymentMethodImages = [];
+List<String> paymentModeList = [];
+
 BaseLanguage locale = LanguageEn();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 🔥 Initialisation Firebase (uniquement sur Mobile)
+  // 🔥 Firebase uniquement si pas Web
   if (!kIsWeb) {
     try {
       await Firebase.initializeApp(
@@ -75,11 +79,10 @@ void main() async {
       );
       await FirebaseMessaging.instance.setAutoInitEnabled(true);
     } catch (e) {
-      log('FIREBASE INIT ERROR: $e');
+      log('Firebase init error: $e');
     }
   }
 
-  // 🎨 Configuration globale UI
   defaultBlurRadius = 0;
   defaultSpreadRadius = 0.0;
   defaultAppBarElevation = 2;
@@ -101,19 +104,26 @@ void main() async {
 
   appStore.setLanguage(getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
   appStore.setLoggedIn(getBoolAsync(IS_LOGGED_IN));
-
   await defaultValue();
 
-  // 🚫 HttpOverrides et PackageInfo non compatibles Web
+  // 🚫 Supprime HttpOverrides pour Web (dart:io non disponible)
   if (!kIsWeb) {
     try {
       HttpOverrides.global = HttpOverridesSkipCertificate();
+    } catch (e) {
+      log('HttpOverrides error: $e');
+    }
+  }
+
+  // 🚫 PackageInfo seulement mobile
+  try {
+    if (!kIsWeb) {
       packageInfo = await getPackageInfo();
       appStore.setAppVersion(packageInfo.versionName.validate());
-    } catch (e) {
-      log('PackageInfo Error: $e');
+    } else {
+      appStore.setAppVersion("Web");
     }
-  } else {
+  } catch (e) {
     appStore.setAppVersion("Web");
   }
 
@@ -133,11 +143,15 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // 🌐 Vérification connexion (désactivée sur web)
+    // 🌐 Pas de Connectivity sur Web
     if (!kIsWeb) {
-      Connectivity().onConnectivityChanged.listen((event) {
-        appStore.setInternetStatus(!event.contains(ConnectivityResult.none));
-      });
+      try {
+        Connectivity().onConnectivityChanged.listen((event) {
+          appStore.setInternetStatus(!event.contains(ConnectivityResult.none));
+        });
+      } catch (e) {
+        log('Connectivity init error: $e');
+      }
     }
 
     removePermission();
