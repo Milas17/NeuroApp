@@ -1,11 +1,15 @@
 import 'dart:async';
-import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:nb_utils/nb_utils.dart';
+
+// ⚙️ Firebase (optionnel sur Web)
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+// 🌐 App imports
 import 'package:kivicare_flutter/app_theme.dart';
 import 'package:kivicare_flutter/config.dart';
 import 'package:kivicare_flutter/locale/app_localizations.dart';
@@ -27,8 +31,6 @@ import 'package:kivicare_flutter/store/UserStore.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
-import 'package:kivicare_flutter/utils/push_notification_service.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 import 'network/services/default_firebase_config.dart';
 import 'utils/app_common.dart';
@@ -37,8 +39,8 @@ import 'utils/app_common.dart';
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   log('${FirebaseMsgConst.notificationDataKey} : ${message.data}');
   log('${FirebaseMsgConst.notificationKey} : ${message.notification}');
-  log('${FirebaseMsgConst.notificationTitleKey} : ${message.notification!.title}');
-  log('${FirebaseMsgConst.notificationBodyKey} : ${message.notification!.body}');
+  log('${FirebaseMsgConst.notificationTitleKey} : ${message.notification?.title}');
+  log('${FirebaseMsgConst.notificationBodyKey} : ${message.notification?.body}');
 }
 
 late PackageInfoData packageInfo;
@@ -52,35 +54,37 @@ DoctorAppStore doctorAppStore = DoctorAppStore();
 ReceptionistAppStore receptionistAppStore = ReceptionistAppStore();
 PermissionStore permissionStore = PermissionStore();
 ShopStore shopStore = ShopStore();
-
 UserStore userStore = UserStore();
+
 ListAnimationType listAnimationType = ListAnimationType.FadeIn;
 PageRouteAnimation pageAnimation = PageRouteAnimation.Fade;
 PageRouteAnimation signInAnimation = PageRouteAnimation.Scale;
-
 Duration pageAnimationDuration = Duration(milliseconds: 500);
-
-List<String> paymentMethodList = [];
-List<String> paymentMethodImages = [];
-List<String> paymentModeList = [];
 
 BaseLanguage locale = LanguageEn();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(name: DefaultFirebaseConfig.platformOptions.projectId,options: DefaultFirebaseConfig.platformOptions).then((value) {}).then((value) async {
-    await PushNotificationService().initFirebaseMessaging();
-  }).catchError((e) {
-    log('------FIREBASE INITIALIZATION ERROR-----------\n${e.toString()}');
-  });
 
+  // 🔥 Initialisation Firebase (uniquement sur Mobile)
+  if (!kIsWeb) {
+    try {
+      await Firebase.initializeApp(
+        name: DefaultFirebaseConfig.platformOptions.projectId,
+        options: DefaultFirebaseConfig.platformOptions,
+      );
+      await FirebaseMessaging.instance.setAutoInitEnabled(true);
+    } catch (e) {
+      log('FIREBASE INIT ERROR: $e');
+    }
+  }
+
+  // 🎨 Configuration globale UI
   defaultBlurRadius = 0;
   defaultSpreadRadius = 0.0;
-
   defaultAppBarElevation = 2;
   appBarBackgroundColorGlobal = primaryColor;
   appButtonBackgroundColorGlobal = primaryColor;
-
   defaultAppButtonTextColorGlobal = Colors.white;
   defaultAppButtonElevation = 0.0;
   passwordLengthGlobal = 6;
@@ -89,29 +93,32 @@ void main() async {
 
   await initialize(aLocaleLanguageList: languageList());
 
-  setupRemoteConfig().then((value) {
-    log('------FIREBASE REMOTE CONFIG COMPLETED-----------');
-  }).catchError((e) {
-    log('------FIREBASE REMOTE CONFIG ERROR-----------');
-  });
+  if (!kIsWeb) {
+    await setupRemoteConfig().catchError((e) {
+      log('Remote Config Error: $e');
+    });
+  }
 
   appStore.setLanguage(getStringAsync(SELECTED_LANGUAGE_CODE, defaultValue: DEFAULT_LANGUAGE));
   appStore.setLoggedIn(getBoolAsync(IS_LOGGED_IN));
 
   await defaultValue();
 
-  HttpOverrides.global = HttpOverridesSkipCertificate();
-
-  packageInfo = await getPackageInfo();
-
-  appStore.setAppVersion(packageInfo.versionName.validate());
+  // 🚫 HttpOverrides et PackageInfo non compatibles Web
+  if (!kIsWeb) {
+    try {
+      HttpOverrides.global = HttpOverridesSkipCertificate();
+      packageInfo = await getPackageInfo();
+      appStore.setAppVersion(packageInfo.versionName.validate());
+    } catch (e) {
+      log('PackageInfo Error: $e');
+    }
+  } else {
+    appStore.setAppVersion("Web");
+  }
 
   int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
-  if (themeModeIndex == THEME_MODE_LIGHT) {
-    appStore.setDarkMode(false);
-  } else if (themeModeIndex == THEME_MODE_DARK) {
-    appStore.setDarkMode(true);
-  }
+  appStore.setDarkMode(themeModeIndex == THEME_MODE_DARK);
 
   runApp(MyApp());
 }
@@ -125,16 +132,15 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    Connectivity().onConnectivityChanged.listen((event) {
-      appStore.setInternetStatus(!event.contains(ConnectivityResult.none));
-    });
+
+    // 🌐 Vérification connexion (désactivée sur web)
+    if (!kIsWeb) {
+      Connectivity().onConnectivityChanged.listen((event) {
+        appStore.setInternetStatus(!event.contains(ConnectivityResult.none));
+      });
+    }
 
     removePermission();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -151,7 +157,7 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: Language.languagesLocale(),
         localeResolutionCallback: (locale, supportedLocales) => locale,
         locale: Locale(appStore.selectedLanguageCode),
-        localizationsDelegates: [
+        localizationsDelegates: const [
           AppLocalizations(),
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
