@@ -5,7 +5,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-// Firebase uniquement pour mobile
+// Firebase (utilisé uniquement sur Android/iOS)
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -60,7 +60,7 @@ PageRouteAnimation pageAnimation = PageRouteAnimation.Fade;
 PageRouteAnimation signInAnimation = PageRouteAnimation.Scale;
 Duration pageAnimationDuration = Duration(milliseconds: 500);
 
-// ✅ Rétablis les 3 listes globales manquantes
+// ✅ Rétablis les listes globales utilisées ailleurs
 List<String> paymentMethodList = [];
 List<String> paymentMethodImages = [];
 List<String> paymentModeList = [];
@@ -83,6 +83,7 @@ void main() async {
     }
   }
 
+  // 🎨 Thèmes & paramètres globaux
   defaultBlurRadius = 0;
   defaultSpreadRadius = 0.0;
   defaultAppBarElevation = 2;
@@ -106,16 +107,9 @@ void main() async {
   appStore.setLoggedIn(getBoolAsync(IS_LOGGED_IN));
   await defaultValue();
 
-  // 🚫 Supprime HttpOverrides pour Web (dart:io non disponible)
-  if (!kIsWeb) {
-    try {
-      HttpOverrides.global = HttpOverridesSkipCertificate();
-    } catch (e) {
-      log('HttpOverrides error: $e');
-    }
-  }
+  // 🚫 HttpOverrides supprimé (incompatible Web)
 
-  // 🚫 PackageInfo seulement mobile
+  // ℹ️ PackageInfo non dispo Web
   try {
     if (!kIsWeb) {
       packageInfo = await getPackageInfo();
