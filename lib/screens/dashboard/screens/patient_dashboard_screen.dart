@@ -47,6 +47,8 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
     return [
       if (showDashboard) PatientDashBoardFragment(),
       if (showAppointment) PatientAppointmentFragment(),
+      // Teleconsultation page for patients
+      TeleconsultationScreen(),
       FeedFragment(),
       SettingFragment(),
     ];
@@ -128,6 +130,11 @@ class _PatientDashBoardScreenState extends State<PatientDashBoardScreen> {
                       icon: Image.asset(ic_document, height: iconSize, width: iconSize, color: disableIconColor),
                       label: locale.lblFeedsAndArticles,
                       selectedIcon: Image.asset(ic_document, height: iconSize, width: iconSize, color: primaryColor),
+                    ),
+                    NavigationDestination(
+                      icon: Image.asset(ic_telemed, height: iconSize, width: iconSize, color: disableIconColor),
+                      label: locale.lblVideoConsulting,
+                      selectedIcon: Image.asset(ic_telemed, height: iconSize, width: iconSize, color: primaryColor),
                     ),
                     NavigationDestination(
                       icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disableIconColor),

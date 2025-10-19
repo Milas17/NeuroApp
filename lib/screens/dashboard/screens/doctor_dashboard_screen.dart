@@ -52,6 +52,8 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
       if (showDashboard) DashboardFragment(),
       if (showAppointment) AppointmentFragment(),
       if (showPatientList) PatientListFragment(),
+      // Teleconsultation page for doctors
+      TeleconsultationScreen(),
       SettingFragment(),
     ];
   }
@@ -118,7 +120,7 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                 selectedIndex: doctorAppStore.bottomNavIndex,
                 backgroundColor: context.cardColor,
                 animationDuration: 1000.milliseconds,
-                destinations: [
+                  destinations: [
                   if (showDashboard)
                     NavigationDestination(
                       icon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: disabledIconColor),
@@ -137,6 +139,12 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
                       label: locale.lblPatients,
                       selectedIcon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: primaryColor),
                     ),
+                  // Teleconsultation destination
+                  NavigationDestination(
+                    icon: Image.asset(ic_telemed, height: iconSize, width: iconSize, color: disabledIconColor),
+                    label: locale.lblVideoConsulting,
+                    selectedIcon: Image.asset(ic_telemed, height: iconSize, width: iconSize, color: primaryColor),
+                  ),
                   NavigationDestination(
                     icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disabledIconColor),
                     label: locale.lblSettings,
