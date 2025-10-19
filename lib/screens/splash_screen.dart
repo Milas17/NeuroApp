@@ -58,8 +58,9 @@ class _SplashScreenState extends State<SplashScreen> {
           }
         }).catchError((r) {
           appStore.setLoading(false);
-
-          throw r;
+          // Afficher une erreur à l'utilisateur et rediriger vers l'écran de connexion
+          toast(r.toString());
+          SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
         });
       } else {
         SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);

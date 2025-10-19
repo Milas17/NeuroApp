@@ -70,6 +70,17 @@ BaseLanguage locale = LanguageEn();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Global error handlers to avoid silent crashes
+  FlutterError.onError = (FlutterErrorDetails details) {
+    // In debug, use Flutter's default error handling which prints to console.
+    FlutterError.presentError(details);
+    // In release, you might want to report to a crash analytics service.
+    log('FlutterError: ${details.exceptionAsString()}');
+  };
+
+  // Catch errors in zones (async errors)
+  runZonedGuarded(() async {
+
   // 🔥 Firebase uniquement si pas Web
   if (!kIsWeb) {
     try {
@@ -124,7 +135,12 @@ void main() async {
   int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
   appStore.setDarkMode(themeModeIndex == THEME_MODE_DARK);
 
-  runApp(MyApp());
+    runApp(MyApp());
+  }, (error, stack) {
+    // Handle uncaught async errors here. Report or log as needed.
+    log('Uncaught zone error: $error');
+    log('Stack: $stack');
+  });
 }
 
 class MyApp extends StatefulWidget {
