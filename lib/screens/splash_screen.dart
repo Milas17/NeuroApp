@@ -29,7 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   init() async {
-    afterBuildCreated(() {
+    try {
+      afterBuildCreated(() {
       int themeModeIndex = getIntAsync(THEME_MODE_INDEX);
       if (themeModeIndex == THEME_MODE_SYSTEM) {
         appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.dark);
@@ -40,31 +41,39 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     });
 
-    await 2.seconds.delay;
-    checkIsAppInReview();
+      await 2.seconds.delay;
+      await checkIsAppInReview();
 
-    if (!getBoolAsync(IS_WALKTHROUGH_FIRST, defaultValue: false)) {
-      WalkThroughScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration); // User is for first time.
-    } else {
-      if (appStore.isLoggedIn) {
-        shopStore.setCartCount(getIntAsync('${CartKeys.cartItemCountKey} of ${userStore.userName}'));
-        getConfigurationAPI().then((v) {
-          if (isDoctor()) {
-            DoctorDashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration); // User is Doctor
-          } else if (isPatient()) {
-            PatientDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration); // User is Patient
-          } else {
-            RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration); // User is Receptionist
-          }
-        }).catchError((r) {
-          appStore.setLoading(false);
-          // Afficher une erreur à l'utilisateur et rediriger vers l'écran de connexion
-          toast(r.toString());
-          SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
-        });
+      if (!getBoolAsync(IS_WALKTHROUGH_FIRST, defaultValue: false)) {
+        WalkThroughScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration); // User is for first time.
       } else {
-        SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+        if (appStore.isLoggedIn) {
+          shopStore.setCartCount(getIntAsync('${CartKeys.cartItemCountKey} of ${userStore.userName}'));
+          getConfigurationAPI().then((v) {
+            if (isDoctor()) {
+              DoctorDashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration); // User is Doctor
+            } else if (isPatient()) {
+              PatientDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration); // User is Patient
+            } else {
+              RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration); // User is Receptionist
+            }
+          }).catchError((r) {
+            appStore.setLoading(false);
+            // Afficher une erreur à l'utilisateur et rediriger vers l'écran de connexion
+            toast(r.toString());
+            SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+          });
+        } else {
+          SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+        }
       }
+    } catch (e, s) {
+      // Catch any unexpected initialization errors to avoid app crash
+      log('Splash init error: $e\n$s');
+      toast('Erreur d\'initialisation');
+      try {
+        SignInScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+      } catch (_) {}
     }
   }
 
@@ -102,7 +111,7 @@ class _SplashScreenState extends State<SplashScreen> {
             right: 0,
             child: Column(
               children: [
-                Text('v ${packageInfo.versionName.validate()}', style: secondaryTextStyle(size: 16), textAlign: TextAlign.center),
+                Text('v ${appStore.appVersion.isNotEmpty ? appStore.appVersion : 'Unknown'}', style: secondaryTextStyle(size: 16), textAlign: TextAlign.center),
                 8.height,
                 Text(COPY_RIGHT_TEXT, style: secondaryTextStyle(size: 12), textAlign: TextAlign.center),
               ],

@@ -45,9 +45,17 @@ class OtherSettingsComponent extends StatelessWidget {
           image: ic_rateUs,
           subTitle: locale.lblRateUsSubTitle,
           onTap: () async {
-            if (isAndroid)
-              commonLaunchUrl(playStoreBaseURL + await getPackageInfo().then((value) => value.packageName.validate()), launchMode: LaunchMode.externalApplication);
-            else if (isIOS) commonLaunchUrl(APPSTORE_APP_LINK, launchMode: LaunchMode.externalApplication);
+            try {
+              if (isAndroid) {
+                final info = await getPackageInfo();
+                commonLaunchUrl(playStoreBaseURL + info.packageName.validate(), launchMode: LaunchMode.externalApplication);
+              } else if (isIOS) {
+                commonLaunchUrl(APPSTORE_APP_LINK, launchMode: LaunchMode.externalApplication);
+              }
+            } catch (e) {
+              // fallback
+              commonLaunchUrl(playStoreBaseURL, launchMode: LaunchMode.externalApplication);
+            }
           },
         ),
         AppSettingWidget(
@@ -63,10 +71,17 @@ class OtherSettingsComponent extends StatelessWidget {
           image: ic_share,
           subTitle: locale.lblReachUsMore,
           onTap: () async {
-            if (isIOS)
-              SharePlus.instance.share(ShareParams(text:'${locale.lblShare} $APP_NAME\n\n$APPSTORE_APP_LINK' ));
-            else
-              SharePlus.instance.share(ShareParams(text:'${locale.lblShare} $APP_NAME app\n\n$playStoreBaseURL${await getPackageInfo().then((value) => value.packageName.validate())}'));
+            try {
+              if (isIOS) {
+                SharePlus.instance.share(ShareParams(text:'${locale.lblShare} $APP_NAME\n\n$APPSTORE_APP_LINK' ));
+              } else {
+                final info = await getPackageInfo();
+                SharePlus.instance.share(ShareParams(text:'${locale.lblShare} $APP_NAME app\n\n$playStoreBaseURL${info.packageName.validate()}'));
+              }
+            } catch (e) {
+              // fallback share without package name
+              SharePlus.instance.share(ShareParams(text:'${locale.lblShare} $APP_NAME app\n\n$playStoreBaseURL'));
+            }
           },
         ),
         AppSettingWidget(
@@ -139,7 +154,7 @@ class OtherSettingsComponent extends StatelessWidget {
         AppSettingWidget(
           name: locale.lblAppVersion,
           image: ic_app_version,
-          subTitle: packageInfo.versionName,
+          subTitle: appStore.appVersion.isNotEmpty ? appStore.appVersion : 'Unknown',
         ),
         TextButton(
           onPressed: () {

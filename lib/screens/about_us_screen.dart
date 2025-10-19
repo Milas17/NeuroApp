@@ -49,7 +49,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           Container(decoration: boxDecorationDefault(color: primaryColor, borderRadius: radius(4)), height: 4, width: 100),
           16.height,
           Text(locale.lblVersion, style: secondaryTextStyle()),
-          Text('${packageInfo.versionName}', style: primaryTextStyle()),
+          Text('${appStore.appVersion.isNotEmpty ? appStore.appVersion : 'Unknown'}', style: primaryTextStyle()),
           16.height,
           Text(locale.lblAboutUsDes, style: primaryTextStyle(size: 14), textAlign: TextAlign.justify),
           16.height,
