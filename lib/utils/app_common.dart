@@ -20,6 +20,7 @@ Future<void> defaultValue() async {
   appStore.setDemoReceptionist(getStringAsync(DEMO_RECEPTIONIST));
   appStore.setDemoPatient(getStringAsync(DEMO_PATIENT));
   appStore.setCurrency(getStringAsync(CURRENCY));
+  appStore.setWcCurrency(getStringAsync(WC_CURRENCY_CODE));
 
   if (appStore.isLoggedIn) {
     userStore.setUserId(getIntAsync(USER_ID));

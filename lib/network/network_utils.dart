@@ -20,7 +20,6 @@ import 'package:kivicare_flutter/utils/woo_commerce/query_string.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:crypto/crypto.dart' as crypto;
 
-
 Map<String, String> buildHeaderTokens({Map? extraKeys, bool requiredNonce = false, bool requiredToken = true, bool isOAuth = false}) {
   if (extraKeys == null) {
     extraKeys = {};
@@ -66,65 +65,112 @@ Uri buildBaseUrl(String endPoint, {String requestMethod = '', bool isOAuth = fal
 }
 
 Future<Response> buildHttpResponse(
-    String endPoint, {
-      HttpMethod method = HttpMethod.GET,
-      Map? request,
-      bool isOauth = false,
-      bool headerRequired = true,
-      bool requiredNonce = false,
-      bool requiredToken = true,
-    }) async {
-  if (await isNetworkAvailable()) {
-    var headers = buildHeaderTokens(requiredNonce: requiredNonce, requiredToken: requiredToken, isOAuth: isOauth);
+  String endPoint, {
+  HttpMethod method = HttpMethod.GET,
+  Map? request,
+  bool isOauth = false,
+  bool headerRequired = true,
+  bool requiredNonce = false,
+  bool requiredToken = true,
+}) async {
+  var headers = buildHeaderTokens(requiredNonce: requiredNonce, requiredToken: requiredToken, isOAuth: isOauth);
 
-    Uri url = buildBaseUrl(endPoint, requestMethod: method.toString(), isOAuth: isOauth);
+  Uri url = buildBaseUrl(endPoint, requestMethod: method.toString(), isOAuth: isOauth);
 
-    Response response;
+  Response response;
 
-    if (method == HttpMethod.POST) {
-      response = await http.post(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
-    } else if (method == HttpMethod.DELETE) {
-      response = await delete(url, headers: headerRequired ? headers : {});
-    } else if (method == HttpMethod.PUT) {
-      response = await put(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
-    } else if (method == HttpMethod.PATCH) {
-      response = await put(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
-    } else {
-      response = await get(url, headers: headerRequired ? headers : {});
-    }
-
-    apiPrint(
-      url: url.toString(),
-      endPoint: endPoint,
-      headers: jsonEncode(headers),
-      hasRequest: method == HttpMethod.POST || method == HttpMethod.PUT,
-      request: jsonEncode(request),
-      statusCode: response.statusCode,
-      responseHeader: jsonEncode(response.headers),
-      responseBody: response.body,
-      methodtype: method.name,
-    );
-
-    if (appStore.isLoggedIn && response.statusCode == 403 && (jsonDecode(response.body)['code'] == "rest_cookie_invalid_nonce" || jsonDecode(response.body)['message'] == "Cookie check failed")) {
-      return await regenerateCookie().then((value) async {
-        return await buildHttpResponse(
-          endPoint,
-          method: method,
-          request: request,
-          requiredNonce: requiredNonce,
-          isOauth: isOauth,
-          requiredToken: requiredToken,
-          headerRequired: headerRequired,
-        );
-      }).catchError((e) {
-        throw e.toString();
-      });
-    } else {
-      return response;
-    }
+  if (method == HttpMethod.POST) {
+    response = await http.post(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
+  } else if (method == HttpMethod.DELETE) {
+    response = await delete(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
+  } else if (method == HttpMethod.PUT) {
+    response = await put(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
+  } else if (method == HttpMethod.PATCH) {
+    response = await put(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
   } else {
-    throw locale.lblNoInternetMsg;
+    response = await get(url, headers: headerRequired ? headers : {});
   }
+
+  apiPrint(
+    url: url.toString(),
+    endPoint: endPoint,
+    headers: jsonEncode(headers),
+    hasRequest: method == HttpMethod.POST || method == HttpMethod.PUT,
+    request: jsonEncode(request),
+    statusCode: response.statusCode,
+    responseHeader: jsonEncode(response.headers),
+    responseBody: response.body,
+    methodtype: method.name,
+  );
+
+  if (appStore.isLoggedIn && response.statusCode == 403 && (jsonDecode(response.body)['code'] == "rest_cookie_invalid_nonce" || jsonDecode(response.body)['message'] == "Cookie check failed")) {
+    return await regenerateCookie().then((value) async {
+      return await buildHttpResponse(
+        endPoint,
+        method: method,
+        request: request,
+        requiredNonce: requiredNonce,
+        isOauth: isOauth,
+        requiredToken: requiredToken,
+        headerRequired: headerRequired,
+      );
+    }).catchError((e) {
+      throw e.toString();
+    });
+  } else {
+    return response;
+  }
+  // if (await isNetworkAvailable()) {
+  //   var headers = buildHeaderTokens(requiredNonce: requiredNonce, requiredToken: requiredToken, isOAuth: isOauth);
+
+  //   Uri url = buildBaseUrl(endPoint, requestMethod: method.toString(), isOAuth: isOauth);
+
+  //   Response response;
+
+  //   if (method == HttpMethod.POST) {
+  //     response = await http.post(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
+  //   } else if (method == HttpMethod.DELETE) {
+  //     response = await delete(url, headers: headerRequired ? headers : {});
+  //   } else if (method == HttpMethod.PUT) {
+  //     response = await put(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
+  //   } else if (method == HttpMethod.PATCH) {
+  //     response = await put(url, body: jsonEncode(request), headers: headerRequired ? headers : {});
+  //   } else {
+  //     response = await get(url, headers: headerRequired ? headers : {});
+  //   }
+
+  //   apiPrint(
+  //     url: url.toString(),
+  //     endPoint: endPoint,
+  //     headers: jsonEncode(headers),
+  //     hasRequest: method == HttpMethod.POST || method == HttpMethod.PUT,
+  //     request: jsonEncode(request),
+  //     statusCode: response.statusCode,
+  //     responseHeader: jsonEncode(response.headers),
+  //     responseBody: response.body,
+  //     methodtype: method.name,
+  //   );
+
+  //   if (appStore.isLoggedIn && response.statusCode == 403 && (jsonDecode(response.body)['code'] == "rest_cookie_invalid_nonce" || jsonDecode(response.body)['message'] == "Cookie check failed")) {
+  //     return await regenerateCookie().then((value) async {
+  //       return await buildHttpResponse(
+  //         endPoint,
+  //         method: method,
+  //         request: request,
+  //         requiredNonce: requiredNonce,
+  //         isOauth: isOauth,
+  //         requiredToken: requiredToken,
+  //         headerRequired: headerRequired,
+  //       );
+  //     }).catchError((e) {
+  //       throw e.toString();
+  //     });
+  //   } else {
+  //     return response;
+  //   }
+  // } else {
+  //   throw locale.lblNoInternetMsg;
+  // }
 }
 
 Future handleResponse(Response response) async {
@@ -168,12 +214,9 @@ Future handleResponse(Response response) async {
   }
 
   if (response.statusCode.isSuccessful()) {
-    if (response.request!.url.path.contains(EndPointKeys.loginEndPointKey) &&
-        response.headers.containsKey(ApiResponseKeys.setCookieKey) &&
-        !response.headers.containsKey(ApiHeaders.headerStoreNonceKey.toLowerCase())) {
+    if (response.request!.url.path.contains(EndPointKeys.loginEndPointKey) && response.headers.containsKey(ApiResponseKeys.setCookieKey) && !response.headers.containsKey(ApiHeaders.headerStoreNonceKey.toLowerCase())) {
       try {
-        List<String> cookies = response.headers[ApiResponseKeys.setCookieKey].validate()
-            .split(',').where((str) => str.contains('wordpress_sec') || str.contains('wordpress_logged_in')).toList();
+        List<String> cookies = response.headers[ApiResponseKeys.setCookieKey].validate().split(',').where((str) => str.contains('wordpress_sec') || str.contains('wordpress_logged_in')).toList();
 
         if (cookies.isNotEmpty) {
           String combinedCookie = cookies.join('; '); // Combine cookies with "; "
@@ -189,10 +232,7 @@ Future handleResponse(Response response) async {
     try {
       var body = jsonDecode(response.body);
 
-      if (body['message']
-          .toString()
-          .validate()
-          .isNotEmpty) {
+      if (body['message'].toString().validate().isNotEmpty) {
         throw parseHtmlString(body['message']);
       } else {
         throw errorSomethingWentWrong;
@@ -302,9 +342,7 @@ Future<dynamic> sendMultiPartRequest(MultipartRequest multiPartRequest, {Functio
       onSuccess?.call(response.body);
     }
   } else {
-    onError?.call(jsonDecode(response.body)['message']
-        .toString()
-        .isNotEmpty ? jsonDecode(response.body)['message'] : errorSomethingWentWrong);
+    onError?.call(jsonDecode(response.body)['message'].toString().isNotEmpty ? jsonDecode(response.body)['message'] : errorSomethingWentWrong);
   }
 }
 
@@ -328,9 +366,7 @@ Future<dynamic> sendMultiPartRequestNew(MultipartRequest multiPartRequest) async
       return response.body;
     }
   } else {
-    throw jsonDecode(response.body)['message']
-        .toString()
-        .isNotEmpty ? jsonDecode(response.body)['message'] : errorSomethingWentWrong;
+    throw jsonDecode(response.body)['message'].toString().isNotEmpty ? jsonDecode(response.body)['message'] : errorSomethingWentWrong;
   }
 }
 
@@ -353,16 +389,7 @@ Future<void> regenerateCookie() async {
   await loginAPI(req);
 }
 
-void apiPrint({String url = "",
-  String endPoint = "",
-  String headers = "",
-  String request = "",
-  int statusCode = 0,
-  String responseBody = "",
-  String methodtype = "",
-  bool hasRequest = false,
-  bool fullLog = false,
-  String responseHeader = ''}) {
+void apiPrint({String url = "", String endPoint = "", String headers = "", String request = "", int statusCode = 0, String responseBody = "", String methodtype = "", bool hasRequest = false, bool fullLog = false, String responseHeader = ''}) {
   // fullLog = statusCode.isSuccessful();
   if (fullLog) {
     debugPrint("┌───────────────────────────────────────────────────────────────────────────────────────────────────────");

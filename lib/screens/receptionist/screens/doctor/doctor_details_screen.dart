@@ -10,7 +10,6 @@ import 'package:kivicare_flutter/network/auth_repository.dart';
 import 'package:kivicare_flutter/network/doctor_repository.dart';
 import 'package:kivicare_flutter/screens/patient/screens/review/component/review_widget.dart';
 import 'package:kivicare_flutter/screens/patient/screens/review/rating_view_all_screen.dart';
-import 'package:kivicare_flutter/screens/receptionist/components/qualification_item_widget.dart';
 import 'package:kivicare_flutter/screens/receptionist/screens/doctor/add_doctor_screen.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
@@ -218,7 +217,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                     ],
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -311,6 +310,8 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
               SliverList(
                 delegate: SliverChildListDelegate(
                   [
+                    if (doctor.noOfExperience.validate().toInt() != 0 || doctor.qualifications.validate().isNotEmpty) SizedBox(height: 30),
+
                     if (doctor.specialties.validate().isNotEmpty)
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -334,13 +335,20 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(locale.lblQualification, style: boldTextStyle()),
-                          Wrap(
-                            spacing: 6,
-                            children: doctor.qualifications.validate().map((element) {
-                              return QualificationItemWidget(
-                                data: element,
-                                showAdd: false,
-                                onEdit: () {},
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: doctor.qualifications.validate().map((e) {
+                              return Container(
+                                margin: EdgeInsets.only(bottom: 8),
+                                padding: EdgeInsets.all(12),
+                                decoration: boxDecorationDefault(color: context.cardColor),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.school, color: appSecondaryColor, size: 18),
+                                    12.width,
+                                    Text("${e.degree} - ${e.university} (${e.year})", style: primaryTextStyle()),
+                                  ],
+                                ),
                               );
                             }).toList(),
                           )
@@ -412,7 +420,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                   if (await canLaunchUrl(phoneLaunchUri)) {
                                     await launchUrl(phoneLaunchUri);
                                   } else {
-                                   toast(locale.lblCouldNotLaunch);
+                                    toast(locale.lblCouldNotLaunch);
                                   }
                                 },
                                 child: Row(
@@ -440,7 +448,10 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                             viewAllShowLimit: 5,
                             list: doctor.ratingList.validate(),
                             onTap: () {
-                              RatingViewAllScreen(doctorId: doctor.iD.validate()).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
+                              RatingViewAllScreen(
+                                userId: doctor.iD.validate(),
+                                isDoctor: true,
+                              ).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
                             },
                           ),
                           16.height,
@@ -451,6 +462,7 @@ class _DoctorDetailScreenState extends State<DoctorDetailScreen> {
                                 addMargin: false,
                                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                                 decoration: boxDecorationDefault(color: context.cardColor),
+                                isDoctor: true,
                               ).visible(
                                 e.patientName.validate().isNotEmpty,
                               );

@@ -51,7 +51,7 @@ class DoctorListComponent extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       splashColor: Colors.transparent,
                       highlightColor: Colors.transparent,
-                    ).paddingTop(4),
+                    ).paddingTop(4).visible(data.specialties!.validate().isNotEmpty),
                   if (data.noOfExperience.validate().toInt() != 0) Text("${data.noOfExperience.validate()} ${locale.lblYearsOfExperience}", maxLines: 2, style: secondaryTextStyle(size: 14)),
                 ],
               ).expand(),

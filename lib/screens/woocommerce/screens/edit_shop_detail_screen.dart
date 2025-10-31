@@ -152,17 +152,17 @@ class _EditShopDetailsScreenState extends State<EditShopDetailsScreen> {
                       activeColor: context.primaryColor,
                       side: BorderSide(color: context.primaryColor),
                       value: isSame,
-                     onChanged: (val) {
-                       isSame = val.validate();
-                       if (val.validate()) {
-                         shippingAddress = billingAddress;
-                         setState(() {});
-                       } else {
-                         shippingAddress = BillingAddressModel();
-                         shippingFormKey.currentState?.reset(); // <-- Add this line
-                         setState(() {});
-                       }
-                     },
+                      onChanged: (val) {
+                        isSame = val.validate();
+                        if (val.validate()) {
+                          shippingAddress = billingAddress;
+                          setState(() {});
+                        } else {
+                          shippingAddress = BillingAddressModel();
+                          shippingFormKey.currentState?.reset(); // <-- Add this line
+                          setState(() {});
+                        }
+                      },
                     ),
                     Text(locale.billingAndShippingAddresses, style: secondaryTextStyle()).appOnTap(() {
                       isSame = !isSame;
@@ -217,7 +217,7 @@ class _EditShopDetailsScreenState extends State<EditShopDetailsScreen> {
               CachedData.storeResponse(responseKey: CartKeys.shippingAddress, response: shippingAddress.toJson());
               toast(locale.lblUpdatedSuccessfully);
               widget.callback?.call();
-              finish(context);
+              finish(context, true);
               appStore.setLoading(false);
             }).catchError((e) {
               appStore.setLoading(false);

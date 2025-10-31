@@ -88,6 +88,8 @@ void main() async {
   defaultLoaderAccentColorGlobal = primaryColor;
 
   await initialize(aLocaleLanguageList: languageList());
+   // Load saved clinic data
+  await userStore.loadUserClinicFromPrefs(); 
 
   setupRemoteConfig().then((value) {
     log('------FIREBASE REMOTE CONFIG COMPLETED-----------');

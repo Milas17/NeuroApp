@@ -58,6 +58,7 @@ class ProductListModel {
   List<ProductListModel>? relatedProduct;
   bool? reviewsAllowed;
   String? salePrice;
+  String? discount;
   String? shippingClass;
   int? shippingClassId;
   bool? shippingRequired;
@@ -126,6 +127,7 @@ class ProductListModel {
     this.relatedProduct,
     this.reviewsAllowed,
     this.salePrice,
+    this.discount,
     this.shippingClass,
     this.shippingClassId,
     this.shippingRequired,
@@ -193,6 +195,7 @@ class ProductListModel {
       relatedProduct: json['related_ids'] != null && json['related_ids'].runtimeType != List ? (json['related_ids'] as List).map((e) => ProductListModel.fromJson(json['related_ids'])).toList() : null,
       reviewsAllowed: json['reviews_allowed'],
       salePrice: json['sale_price'],
+      discount: json['discount'],
       shippingClass: json['shipping_class'],
       shippingClassId: json['shipping_class_id'],
       shippingRequired: json['shipping_required'],
@@ -250,6 +253,7 @@ class ProductListModel {
     data['regular_price'] = this.regularPrice;
     data['reviews_allowed'] = this.reviewsAllowed;
     data['sale_price'] = this.salePrice;
+    data['discount'] = this.discount;
     data['shipping_class'] = this.shippingClass;
     data['shipping_class_id'] = this.shippingClassId;
     data['shipping_required'] = this.shippingRequired;

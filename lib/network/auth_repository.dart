@@ -19,12 +19,16 @@ import 'package:kivicare_flutter/utils/push_notification_service.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 Future<UserModel?> loginAPI(Map<String, dynamic> req) async {
-  BaseResponses response = BaseResponses.fromJson(await handleResponse(await buildHttpResponse(
-    '${ApiEndPoints.authEndPoint}/${EndPointKeys.loginEndPointKey}',
-    request: req,
-    method: HttpMethod.POST,
-    requiredToken: false,
-  )));
+  BaseResponses response = BaseResponses.fromJson(
+    await handleResponse(
+      await buildHttpResponse(
+        '${ApiEndPoints.authEndPoint}/${EndPointKeys.loginEndPointKey}',
+        request: req,
+        method: HttpMethod.POST,
+        requiredToken: false,
+      ),
+    ),
+  );
   if (response.userData != null) {
     UserModel value = response.userData!;
     cachedUserData = value;
@@ -51,6 +55,26 @@ Future<UserModel?> loginAPI(Map<String, dynamic> req) async {
     userStore.setUserMobileNumber(value.mobileNumber.validate(), initialize: true);
     userStore.setUserGender(value.gender.validate(), initialize: true);
     userStore.setUserName(value.userName.validate(), initialize: true);
+
+    if (appStore.userProEnabled.validate()) {
+      permissionStore.setUserPermission(value.permissions);
+      permissionStore.setAppointmentModulePermission(value.permissions?.appointmentModule);
+      permissionStore.setBillingModulePermission(value.permissions?.billingModule);
+      permissionStore.setClinicModulePermission(value.permissions?.clinicModule);
+      permissionStore.setClinicDetailModulePermission(value.permissions?.clinicalDetailModule);
+      permissionStore.setDoctorDashboardPermission(value.permissions?.dashboardModule);
+      permissionStore.setDoctorModulePermission(value.permissions?.doctorModule);
+      permissionStore.setEncounterModulePermission(value.permissions?.encounterModule);
+      permissionStore.setEncounterTemplateModulePermission(value.permissions?.encountersTemplateModule);
+      permissionStore.setHolidayModulePermission(value.permissions?.holidayModule);
+      permissionStore.setSessionPermission(value.permissions?.sessionModule);
+      permissionStore.setOtherModulePermission(value.permissions?.otherModule);
+      permissionStore.setPatientModulePermission(value.permissions?.patientModule);
+      permissionStore.setPatientReportModulePermission(value.permissions?.patientReportModule);
+      permissionStore.setPrescriptionModulePermission(value.permissions?.prescriptionModule);
+      permissionStore.setServiceModulePermission(value.permissions?.serviceModule);
+      permissionStore.setStaticDataModulePermission(value.permissions?.staticDataModule);
+    }
 
     if (value.clinic.validate().isNotEmpty) {
       Clinic defaultClinic = value.clinic.validate().first;

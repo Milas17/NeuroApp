@@ -1,3 +1,4 @@
+
 import 'package:kivicare_flutter/model/clinic_list_model.dart';
 import 'package:kivicare_flutter/model/user_model.dart';
 import 'package:kivicare_flutter/utils/constants/user_detail_keys.dart';
@@ -93,6 +94,27 @@ abstract class UserStoreBase with Store {
   Future<void> setUserClinic(Clinic? clinicData) async {
     userClinic = clinicData;
   }
+
+Future<void> loadUserClinicFromPrefs() async {
+  userClinicId = getStringAsync(CLINIC_ID);
+  userClinicName = getStringAsync(USER_CLINIC_NAME);
+  userClinicStatus = getStringAsync(USER_CLINIC_STATUS);
+  userClinicAddress = getStringAsync(USER_CLINIC_ADDRESS);
+  userClinicImage = getStringAsync(USER_CLINIC_IMAGE);
+
+  if (userClinicId.validate().isNotEmpty) {
+    userClinic = Clinic(
+      id: userClinicId,
+      name: userClinicName,
+      status: userClinicStatus,
+      city: userClinicAddress, 
+      profileImage: userClinicImage,
+    );
+  }
+}
+
+
+
 
   @action
   Future<void> setUserData(UserModel value, {bool initialize = false}) async {
@@ -208,4 +230,7 @@ abstract class UserStoreBase with Store {
 
     userClinicId = value;
   }
+
+  
 }
+

@@ -49,6 +49,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
 
       appStore.setLoading(false);
       return value;
+      // ignore: body_might_complete_normally_catch_error
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());
@@ -95,36 +96,6 @@ class _OrderListScreenState extends State<OrderListScreen> {
             listAnimationType: ListAnimationType.None,
             onSwipeRefresh: onRefresh,
             children: [
-              Container(
-                decoration: BoxDecoration(color: context.cardColor, borderRadius: radius()),
-                child: DropdownButtonHideUnderline(
-                  child: ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButton<FilterModel>(
-                      borderRadius: radius(),
-                      icon: Icon(Icons.arrow_drop_down),
-                      elevation: 8,
-                      style: primaryTextStyle(),
-                      dropdownColor: context.cardColor,
-                      onChanged: (FilterModel? newValue) {
-                        setState(() {
-                          dropDownValue = newValue!;
-                          page = 1;
-                        });
-                        init(status: dropDownValue?.value, showLoader: true);
-                      },
-                      hint: Text('Order Status', style: primaryTextStyle()),
-                      items: filterOptions.map<DropdownMenuItem<FilterModel>>((FilterModel value) {
-                        return DropdownMenuItem<FilterModel>(
-                          value: value,
-                          child: Text(value.title.validate(), style: primaryTextStyle()),
-                        );
-                      }).toList(),
-                      value: dropDownValue,
-                    ),
-                  ),
-                ),
-              ),
               SnapHelperWidget(
                 future: future,
                 loadingWidget: OrderListShimmerScreen(),
@@ -132,18 +103,59 @@ class _OrderListScreenState extends State<OrderListScreen> {
                   if (dropDownValue != null && dropDownValue!.value.validate().isNotEmpty) {
                     if (data.isEmpty) dropDownValue = null;
                   }
-                  if (data.isNotEmpty)
-                    return AnimatedWrap(
-                        runSpacing: 16,
-                        spacing: 16,
-                        listAnimationType: ListAnimationType.None,
-                        children: data.map((orderData) {
-                          return OrderComponent(
-                            orderData: orderData,
-                            callback: () => init(showLoader: true),
-                          );
-                        }).toList());
-                  else
+
+                  if (data.isNotEmpty) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        /// 🔹 Show dropdown only when orders exist
+                        Container(
+                          decoration: BoxDecoration(color: context.cardColor, borderRadius: radius()),
+                          child: DropdownButtonHideUnderline(
+                            child: ButtonTheme(
+                              alignedDropdown: true,
+                              child: DropdownButton<FilterModel>(
+                                borderRadius: radius(),
+                                icon: Icon(Icons.arrow_drop_down),
+                                elevation: 8,
+                                style: primaryTextStyle(),
+                                dropdownColor: context.cardColor,
+                                onChanged: (FilterModel? newValue) {
+                                  setState(() {
+                                    dropDownValue = newValue!;
+                                    page = 1;
+                                  });
+                                  init(status: dropDownValue?.value, showLoader: true);
+                                },
+                                hint: Text('Order Status', style: primaryTextStyle()),
+                                items: filterOptions.map<DropdownMenuItem<FilterModel>>((FilterModel value) {
+                                  return DropdownMenuItem<FilterModel>(
+                                    value: value,
+                                    child: Text(value.title.validate(), style: primaryTextStyle()),
+                                  );
+                                }).toList(),
+                                value: dropDownValue,
+                              ),
+                            ),
+                          ),
+                        ).paddingBottom(16),
+
+                        /// 🔹 Orders List
+                        AnimatedWrap(
+                          runSpacing: 16,
+                          spacing: 16,
+                          listAnimationType: ListAnimationType.None,
+                          children: data.map((orderData) {
+                            return OrderComponent(
+                              orderData: orderData,
+                              callback: () => init(showLoader: true),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    );
+                  } else {
+                    /// 🔹 No orders → hide dropdown
                     return SizedBox(
                       height: context.height() * 0.65,
                       child: NoDataFoundWidget(
@@ -152,6 +164,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
                         onRetry: () => onRefresh(showLoader: true),
                       ).center(),
                     );
+                  }
                 },
               ).paddingTop(16),
             ],

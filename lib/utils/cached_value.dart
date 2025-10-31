@@ -13,7 +13,7 @@ DashboardModel? cachedDoctorDashboardModel;
 DashboardModel? cachedReceptionistDashboardModel;
 NewsModel? cachedNewsFeed;
 
-List<UpcomingAppointmentModel>? cachedDoctorAppointment;
+List<UpcomingAppointmentModel>? cachedDoctorAppointment = [];
 List<UpcomingAppointmentModel>? cachedReceptionistAppointment;
 List<UpcomingAppointmentModel>? cachedPatientAppointment;
 

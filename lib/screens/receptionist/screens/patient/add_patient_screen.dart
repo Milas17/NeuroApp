@@ -410,7 +410,7 @@ class _AddPatientScreenState extends State<AddPatientScreen> {
                   ],
                 ),
                 DropdownButtonFormField(
-                  value: bloodGroup,
+                  initialValue: bloodGroup,
                   borderRadius: radius(),
                   icon: SizedBox.shrink(),
                   isExpanded: true,

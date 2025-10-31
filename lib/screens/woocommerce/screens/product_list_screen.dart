@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/cached_image_widget.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/woo_commerce/category_model.dart';
 import 'package:kivicare_flutter/model/woo_commerce/common_models.dart';
@@ -51,6 +52,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
   bool showClear = false;
 
   String? orderBy;
+  String? order;
+  int? minPrice;
+  int? maxPrice;
 
   @override
   void initState() {
@@ -67,12 +71,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
     if (showLoader) {
       appStore.setLoading(true);
     }
+
     future = getProductsList(
       page: page,
       productList: productList,
       searchString: searchCont.text,
       categoryId: categoryId ?? widget.categoryId,
       orderBy: orderBy,
+      order: order,
+      minPrice: minPrice,
+      maxPrice: maxPrice,
       lastPageCallback: (b) => isLastPage = b,
     ).then((value) {
       if (searchCont.text.isNotEmpty) {
@@ -104,15 +112,20 @@ class _ProductListScreenState extends State<ProductListScreen> {
     });
   }
 
-  Future<void> selectedFilterSort({bool isOrderBy = false, FilterModel? filterValue}) async {
+  Future<void> selectedFilterSort({
+    bool isOrderBy = false,
+    FilterModel? filterValue,
+    RangeValues? priceRange,
+  }) async {
     setState(() {
-      orderBy = filterValue?.value;
+      orderBy = filterValue?.orderBy;
+      order = filterValue?.order;
+      minPrice = priceRange != null ? priceRange.start.toInt() : null;
+      maxPrice = priceRange != null ? priceRange.end.toInt() : null;
       page = 1;
     });
 
-    finish(context);
-
-    init(showLoader: true);
+    init(showLoader: true); // API call with updated params
   }
 
   Future<void> getCategories() async {
@@ -155,6 +168,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
   @override
   void dispose() {
+    _scrollController.dispose();
     appStore.setLoading(false);
     super.dispose();
   }
@@ -204,13 +218,26 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     context: context,
                     hintText: locale.lblSearchProducts,
                     prefixIcon: ic_search.iconImage().paddingAll(16),
-                    suffixIcon: !showClear
-                        ? Offstage()
-                        : ic_clear.iconImage().paddingAll(16).appOnTap(
-                            () {
-                              _onClearSearch();
-                            },
-                          ),
+                    suffixIcon: VoiceSearchSuffix(
+                      controller: searchCont,
+                      lottieAnimationPath: lt_voice,
+                      onClear: () {
+                        _onClearSearch();
+                      },
+                      onSearchChanged: (value) {
+                        if (value.isEmpty) {
+                          _onClearSearch();
+                        } else {
+                          Timer(pageAnimationDuration, () {
+                            init(showLoader: true);
+                          });
+                        }
+                      },
+                      onSearchSubmitted: (value) {
+                        hideKeyboard(context);
+                        init(showLoader: true);
+                      },
+                    ),
                   ),
                   onChanged: (newValue) {
                     if (newValue.isEmpty) {
@@ -245,14 +272,17 @@ class _ProductListScreenState extends State<ProductListScreen> {
                         showModalBottomSheet(
                           context: context,
                           backgroundColor: context.cardColor,
-                          constraints: BoxConstraints(minHeight: context.height() * 0.25, minWidth: context.width()),
+                          isScrollControlled: true,
                           builder: (context) {
                             return SortFilterBottomSheet(
-                              onTapCall: (filter) {
-                                selectedFilterSort(
+                              onTapCall: (filter, priceRange) async {
+                                await selectedFilterSort(
                                   filterValue: filter,
                                   isOrderBy: true,
+                                  priceRange: priceRange,
                                 );
+
+                                log("Selected Range: ${priceRange?.start} - ${priceRange?.end}");
                               },
                             );
                           },
@@ -279,7 +309,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
               onSuccess: (snap) {
                 return AnimatedScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
-                  disposeScrollController: true,
+                  disposeScrollController: false,
                   controller: _scrollController,
                   keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   padding: EdgeInsets.fromLTRB(16, 16, 16, 80),

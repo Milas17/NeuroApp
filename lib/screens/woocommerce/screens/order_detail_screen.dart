@@ -4,11 +4,14 @@ import 'package:kivicare_flutter/components/cached_image_widget.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/price_widget.dart';
 import 'package:kivicare_flutter/main.dart';
+import 'package:kivicare_flutter/model/woo_commerce/cart_model.dart';
 import 'package:kivicare_flutter/model/woo_commerce/order_model.dart';
+import 'package:kivicare_flutter/model/woo_commerce/order_notes_model.dart';
 import 'package:kivicare_flutter/network/shop_repository.dart';
 import 'package:kivicare_flutter/screens/shimmer/screen/order_detail_shimmer_screen.dart';
 import 'package:kivicare_flutter/screens/woocommerce/component/cancel_order_form_component.dart';
 import 'package:kivicare_flutter/screens/woocommerce/component/order_status_component.dart';
+import 'package:kivicare_flutter/screens/woocommerce/screens/edit_shop_detail_screen.dart';
 import 'package:kivicare_flutter/screens/woocommerce/screens/product_detail_screen.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
@@ -31,6 +34,9 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
+  List<OrderNotesModel> orderNotes = [];
+
+  late CartModel cart;
   Future<OrderModel>? future;
   late OrderModel orderDetails;
 
@@ -49,14 +55,15 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     orderDetails = widget.orderDetails;
     setState(() {});
 
-    future = getOrder(orderId: widget.orderId.validate()).then((value) {
+    future = getOrder(orderId: widget.orderId.validate()).then((value) async {
+      orderNotes = await getOrderNotes(orderId: widget.orderId.validate());
       orderDetails = value;
-      isSameAddress =
-          orderDetails.shipping!.postcode.validate() == orderDetails.billing!.postcode.validate() && orderDetails.shipping!.firstName.validate() == orderDetails.billing!.firstName.validate();
+      isSameAddress = orderDetails.shipping!.postcode.validate() == orderDetails.billing!.postcode.validate() && orderDetails.shipping!.firstName.validate() == orderDetails.billing!.firstName.validate();
 
       appStore.setLoading(false);
       setState(() {});
       return value;
+      // ignore: body_might_complete_normally_catch_error
     }).catchError((e) {
       toast(e.toString());
       appStore.setLoading(false);
@@ -68,6 +75,26 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   @override
   void setState(fn) {
     if (mounted) super.setState(fn);
+  }
+
+  Future<void> getCart({String? orderBy}) async {
+    appStore.setLoading(true);
+
+    await getCartDetails().then((value) {
+      cart = value;
+      billingAddress = value.billingAddress!;
+      shippingAddress = value.shippingAddress!;
+      setState(() {});
+      if (cart.items.validate().isEmpty) {
+        finish(context);
+        finish(context);
+      }
+
+      appStore.setLoading(false);
+    }).catchError((e) {
+      appStore.setLoading(false);
+      toast(e.toString(), print: true);
+    });
   }
 
   Future<void> onDeleteOrder() async {
@@ -134,54 +161,68 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBarWidget(
-        locale.orderDetails,
-        textColor: Colors.white,
-        systemUiOverlayStyle: defaultSystemUiOverlayStyle(context),
-        actions: [
-          PopupMenuButton(
-            enabled: !appStore.isLoading,
-            iconColor: Colors.white,
-            surfaceTintColor: context.cardColor,
-            color: context.cardColor,
-            shape: RoundedRectangleBorder(borderRadius: radius()),
-            onSelected: (val) async {
-              if (val == 1) {
-                onDeleteOrder();
-              } else {
-                onCancelOrder();
-              }
-            },
-            itemBuilder: (context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                value: 1,
-                child: Row(
-                  children: [
-                    Image.asset(ic_delete_icon, width: 20, height: 20, color: Colors.red, fit: BoxFit.cover),
-                    8.width,
-                    Text(locale.lblDelete, style: primaryTextStyle()),
-                  ],
+      appBar: appBarWidget(locale.orderDetails,
+          textColor: Colors.white,
+          systemUiOverlayStyle: defaultSystemUiOverlayStyle(context),
+          // actions: [
+          //   PopupMenuButton(
+          //     enabled: !appStore.isLoading,
+          //     iconColor: Colors.white,
+          //     surfaceTintColor: context.cardColor,
+          //     color: context.cardColor,
+          //     shape: RoundedRectangleBorder(borderRadius: radius()),
+          //     onSelected: (val) async {
+          //       if (val == 1) {
+          //         onDeleteOrder();
+          //       } else {
+          //         onCancelOrder();
+          //       }
+          //     },
+          //     itemBuilder: (context) => <PopupMenuEntry>[
+          //       // PopupMenuItem(
+          //       //   value: 1,
+          //       //   child: Row(
+          //       //     children: [
+          //       //       Image.asset(ic_delete_icon, width: 20, height: 20, color: Colors.red, fit: BoxFit.cover),
+          //       //       8.width,
+          //       //       Text(locale.lblDelete, style: primaryTextStyle()),
+          //       //     ],
+          //       //   ),
+          //       // ),
+          //       if (orderDetails.status.validate() != OrderStatus.cancelled &&
+          //           orderDetails.status.validate() != OrderStatus.refunded &&
+          //           orderDetails.status.validate() != OrderStatus.completed &&
+          //           orderDetails.status.validate() != OrderStatus.trash &&
+          //           orderDetails.status.validate() != OrderStatus.failed)
+          //         PopupMenuItem(
+          //           value: 2,
+          //           child: Row(
+          //             children: [
+          //               Image.asset(ic_clear, width: 20, height: 20, color: Colors.red, fit: BoxFit.cover),
+          //               8.width,
+          //               Text(locale.lblCancel, style: primaryTextStyle()),
+          //             ],
+          //           ),
+          //         ),
+          //     ],
+          //   )
+          // ],
+          actions: [
+            if (orderDetails.status.validate() != OrderStatus.cancelled &&
+                orderDetails.status.validate() != OrderStatus.refunded &&
+                orderDetails.status.validate() != OrderStatus.completed &&
+                orderDetails.status.validate() != OrderStatus.trash &&
+                orderDetails.status.validate() != OrderStatus.failed)
+              TextButton(
+                onPressed: () async {
+                  onCancelOrder();
+                },
+                child: Text(
+                  locale.lblCancel,
+                  style: primaryTextStyle(color: Colors.white), // White label in AppBar
                 ),
               ),
-              if (orderDetails.status.validate() != OrderStatus.cancelled &&
-                  orderDetails.status.validate() != OrderStatus.refunded &&
-                  orderDetails.status.validate() != OrderStatus.completed &&
-                  orderDetails.status.validate() != OrderStatus.trash &&
-                  orderDetails.status.validate() != OrderStatus.failed)
-                PopupMenuItem(
-                  value: 2,
-                  child: Row(
-                    children: [
-                      Image.asset(ic_clear, width: 20, height: 20, color: Colors.red, fit: BoxFit.cover),
-                      8.width,
-                      Text(locale.lblCancel, style: primaryTextStyle()),
-                    ],
-                  ),
-                ),
-            ],
-          )
-        ],
-      ),
+          ]),
       body: Stack(
         children: [
           SnapHelperWidget(
@@ -266,6 +307,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                   PriceWidget(
                                     price: orderDetails.lineItems![index].subtotal.validate(),
                                     textStyle: secondaryTextStyle(),
+                                    prefix: orderDetails.currencySymbol,
                                   ),
                                 ],
                               ).paddingSymmetric(vertical: 6).onTap(() {
@@ -387,6 +429,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                                     return PriceWidget(
                                       price: getPrice(e.total.validate()),
                                       textStyle: secondaryTextStyle(),
+                                      prefix: orderDetails.currencySymbol,
                                     );
                                   }).toList(),
                                 ),
@@ -397,177 +440,239 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text('${locale.lblTotal}', style: boldTextStyle()),
-                              PriceWidget(price: orderDetails.total.validate()),
+                              PriceWidget(
+                                price: orderDetails.total.validate(),
+                                prefix: orderDetails.currencySymbol,
+                              ),
                             ],
                           ),
                         ],
                       ),
                     ),
                     16.height,
-                    if (!isSameAddress) Text('${locale.billingAddress}', style: boldTextStyle()),
+                    if (!isSameAddress)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('${locale.billingAddress}', style: boldTextStyle()),
+
+                          // Show Edit icon only if status is pending or processing
+                          if (orderDetails.status == OrderStatus.pending || orderDetails.status == OrderStatus.processing)
+                            Image.asset(
+                              ic_edit,
+                              width: 22,
+                              height: 22,
+                              fit: BoxFit.cover,
+                              color: context.primaryColor,
+                            ).onTap(() async {
+                              EditShopDetailsScreen().launch(context).then((value) {
+                                if (value ?? false) getCart();
+                              });
+                            }),
+                        ],
+                      ),
                     if (!isSameAddress) 16.height,
                     if (!isSameAddress)
                       Container(
-                        decoration: BoxDecoration(color: context.cardColor, borderRadius: radius(defaultAppButtonRadius)),
+                        decoration: BoxDecoration(
+                          color: context.cardColor,
+                          borderRadius: radius(defaultAppButtonRadius),
+                        ),
                         padding: EdgeInsets.all(16),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            /// 👤 Name
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${locale.lblName} - ', style: primaryTextStyle()),
+                                Icon(Icons.person, size: 20, color: context.primaryColor),
                                 8.width,
-                                Text(orderDetails.billing!.firstName.validate() + ' ${orderDetails.billing!.lastName.validate()}', style: primaryTextStyle()),
+                                Text(
+                                  "${orderDetails.billing!.firstName.validate()} ${orderDetails.billing!.lastName.validate()}",
+                                  style: boldTextStyle(),
+                                ),
                               ],
                             ),
+
                             8.height,
+
+                            /// Company (if available)
+                            Row(
+                              children: [
+                                Icon(Icons.business, size: 20, color: context.primaryColor),
+                                8.width,
+                                Text(orderDetails.billing!.company.validate(), style: primaryTextStyle()),
+                              ],
+                            ).visible(orderDetails.billing!.company.validate().isNotEmpty),
+
+                            8.height,
+
+                            /// 📍 Address (combine non-empty fields, no extra commas)
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Company - ', style: primaryTextStyle()),
+                                Icon(Icons.location_on, size: 20, color: context.primaryColor),
                                 8.width,
-                                Text(orderDetails.billing!.company.validate().toString(), style: primaryTextStyle()),
+                                Expanded(
+                                  child: Text(
+                                    [
+                                      orderDetails.billing!.address_1.validate(),
+                                      orderDetails.billing!.address_2.validate(),
+                                      orderDetails.billing!.city.validate(),
+                                      orderDetails.billing!.state.validate(),
+                                      orderDetails.billing!.country.validate(),
+                                      orderDetails.billing!.postcode.validate(),
+                                    ].where((e) => e.isNotEmpty).join(", "),
+                                    style: primaryTextStyle(),
+                                  ),
+                                ),
                               ],
                             ),
+
                             8.height,
+
+                            /// 📞 Phone (if available)
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('${locale.lblAddress} - ', style: primaryTextStyle()),
+                                Icon(Icons.phone, size: 20, color: context.primaryColor),
                                 8.width,
-                                Text('${orderDetails.billing!.address_1.validate().toString()}, ${orderDetails.billing!.address_2.validate().toString()}', style: primaryTextStyle()).expand(),
-                              ],
-                            ),
-                            8.height,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${locale.lblCity} - ', style: primaryTextStyle()),
-                                8.width,
-                                Text(orderDetails.billing!.city.validate().toString().capitalizeFirstLetter(), style: primaryTextStyle()),
-                              ],
-                            ),
-                            8.height,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${locale.state} - ', style: primaryTextStyle()),
-                                8.width,
-                                Text(orderDetails.billing!.state.validate().toString(), style: primaryTextStyle()),
-                              ],
-                            ).visible(orderDetails.billing!.state.validate().isNotEmpty),
-                            8.height,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${locale.lblCountry} - ', style: primaryTextStyle()),
-                                8.width,
-                                Text(orderDetails.billing!.country.validate().toString(), style: primaryTextStyle()),
-                              ],
-                            ),
-                            8.height,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${locale.lblPostalCode} - ', style: primaryTextStyle()),
-                                8.width,
-                                Text(orderDetails.billing!.postcode.validate(), style: primaryTextStyle()).expand(),
-                              ],
-                            ).visible(orderDetails.billing!.postcode.validate().isNotEmpty),
-                            8.height,
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('${locale.lblContactNumber} - ', style: primaryTextStyle()),
-                                8.width,
-                                Text(orderDetails.billing!.phone.validate().toString(), style: primaryTextStyle()).expand(),
+                                Text(orderDetails.billing!.phone.validate(), style: primaryTextStyle()),
                               ],
                             ).visible(orderDetails.billing!.phone.validate().isNotEmpty),
                           ],
                         ),
                       ),
                     24.height,
-                    Text('${locale.shippingAddress}', style: boldTextStyle()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('${locale.shippingAddress}', style: boldTextStyle()),
+
+                        // Show Edit icon only if status is pending or processing
+                        if (orderDetails.status == OrderStatus.pending || orderDetails.status == OrderStatus.processing)
+                          Image.asset(
+                            ic_edit,
+                            width: 22,
+                            height: 22,
+                            fit: BoxFit.cover,
+                            color: context.primaryColor,
+                          ).onTap(() async {
+                            EditShopDetailsScreen().launch(context).then((value) {
+                              if (value ?? false) getCart();
+                            });
+                          }),
+                      ],
+                    ),
                     16.height,
                     Container(
-                      decoration: BoxDecoration(color: context.cardColor, borderRadius: radius(defaultAppButtonRadius)),
+                      decoration: BoxDecoration(
+                        color: context.cardColor,
+                        borderRadius: radius(defaultAppButtonRadius),
+                      ),
                       padding: EdgeInsets.all(16),
+                      margin: EdgeInsets.only(bottom: 16),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          /// Name
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${locale.lblName} - ', style: primaryTextStyle()),
+                              Icon(Icons.person, size: 20, color: context.primaryColor),
                               8.width,
-                              Text(orderDetails.shipping!.firstName.validate() + ' ${orderDetails.shipping!.lastName.validate()}', style: primaryTextStyle()),
+                              Text(
+                                "${orderDetails.shipping!.firstName.validate()} ${orderDetails.shipping!.lastName.validate()}",
+                                style: boldTextStyle(),
+                              ),
                             ],
                           ),
+
                           8.height,
+
+                          /// Address
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Company - ', style: primaryTextStyle()),
+                              Icon(Icons.location_on, size: 20, color: context.primaryColor),
                               8.width,
-                              Text(orderDetails.shipping!.company.validate(), style: primaryTextStyle()),
+                              Expanded(
+                                child: Text(
+                                  [
+                                    orderDetails.shipping!.address_1.validate(),
+                                    orderDetails.shipping!.address_2.validate(),
+                                    orderDetails.shipping!.city.validate(),
+                                    orderDetails.shipping!.state.validate(),
+                                    orderDetails.shipping!.country.validate(),
+                                    orderDetails.shipping!.postcode.validate(),
+                                  ].where((e) => e.isNotEmpty).join(", "),
+                                  style: primaryTextStyle(),
+                                ),
+                              ),
                             ],
-                          ).visible(orderDetails.shipping!.company.validate().isNotEmpty),
+                          ).visible(
+                            orderDetails.shipping!.address_1.validate().isNotEmpty ||
+                                orderDetails.shipping!.address_2.validate().isNotEmpty ||
+                                orderDetails.shipping!.city.validate().isNotEmpty ||
+                                orderDetails.shipping!.state.validate().isNotEmpty ||
+                                orderDetails.shipping!.country.validate().isNotEmpty ||
+                                orderDetails.shipping!.postcode.validate().isNotEmpty,
+                          ),
+
                           8.height,
+
+                          /// Phone
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${locale.lblAddress} - ', style: primaryTextStyle()),
+                              Icon(Icons.phone, size: 20, color: context.primaryColor),
                               8.width,
-                              Text('${orderDetails.shipping!.address_1.validate()} ${orderDetails.billing!.address_2.validate().prefixText(value: ',')}', style: primaryTextStyle()).expand(),
-                            ],
-                          ).visible(orderDetails.shipping!.address_1.validate().isNotEmpty || orderDetails.billing!.address_2.validate().isNotEmpty),
-                          8.height,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${locale.lblCity} - ', style: primaryTextStyle()),
-                              8.width,
-                              Text(orderDetails.shipping!.city.validate().capitalizeFirstLetter(), style: primaryTextStyle()),
-                            ],
-                          ).visible(orderDetails.shipping!.city.validate().isNotEmpty),
-                          8.height,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${locale.state} - ', style: primaryTextStyle()),
-                              8.width,
-                              Text(orderDetails.shipping!.state.validate(), style: primaryTextStyle()),
-                            ],
-                          ).visible(orderDetails.shipping!.state.validate().isNotEmpty),
-                          8.height,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${locale.lblCountry} - ', style: primaryTextStyle()),
-                              8.width,
-                              Text(orderDetails.shipping!.country.validate(), style: primaryTextStyle()),
-                            ],
-                          ).visible(orderDetails.shipping!.country.validate().isNotEmpty),
-                          8.height,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${locale.lblPostalCode} - ', style: primaryTextStyle()),
-                              8.width,
-                              Text(orderDetails.shipping!.postcode.validate(), style: primaryTextStyle()),
-                            ],
-                          ).visible(orderDetails.shipping!.postcode.validate().isNotEmpty),
-                          8.height,
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('${locale.lblContactNumber} - ', style: primaryTextStyle()),
-                              8.width,
-                              Text(orderDetails.shipping!.phone.validate(), style: primaryTextStyle()).expand(),
+                              Text(orderDetails.shipping!.phone.validate(), style: primaryTextStyle()),
                             ],
                           ).visible(orderDetails.shipping!.phone.validate().isNotEmpty),
                         ],
                       ),
                     ),
+                    16.height,
+                    if (orderNotes.isNotEmpty) ...[
+                      24.height,
+                      Text(locale.lblAddOrderNotes, style: boldTextStyle()),
+                      16.height,
+                      Container(
+                        decoration: BoxDecoration(
+                          color: context.cardColor,
+                          borderRadius: radius(defaultAppButtonRadius),
+                        ),
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: orderNotes.map((note) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                /// Author name
+                                Text(
+                                  note.author.validate(),
+                                  style: boldTextStyle(size: 14, color: primaryColor),
+                                ),
+                                4.height,
+
+                                /// Note text
+                                Text(
+                                  note.note.validate(),
+                                  style: primaryTextStyle(),
+                                ),
+                                6.height,
+
+                                /// Date
+                                Text(
+                                  note.dateCreated.validate().getFormattedDate(DISPLAY_DATE_FORMAT),
+                                  style: secondaryTextStyle(size: 12, color: Colors.grey),
+                                ),
+                                Divider(),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ]
                   ],
                 ),
               );

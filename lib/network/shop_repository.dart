@@ -23,31 +23,45 @@ Future<List<ProductListModel>> getProductsList({
   int page = 1,
   int? categoryId,
   String? orderBy,
+  String? order,
+  int? minPrice,
+  int? maxPrice,
   String? searchString,
   required List<ProductListModel> productList,
   Function(bool)? lastPageCallback,
 }) async {
   List<String> params = [];
+
   if (categoryId != null) params.add('category=$categoryId');
   if (searchString.validate().isNotEmpty) params.add('search=$searchString');
+
   if (orderBy.validate().isNotEmpty) params.add('orderby=$orderBy');
+  if (order.validate().isNotEmpty) params.add('order=$order');
+
+  if (minPrice != null) params.add('min_price=$minPrice');
+  if (maxPrice != null) params.add('max_price=$maxPrice');
+
   params.add('page=$page&per_page=$PER_PAGE');
 
   if (!appStore.isConnectedToInternet) {
     return [];
   }
 
-  Iterable it = await handleResponse(await buildHttpResponse(
-    getEndPoint(endPoint: ApiEndPoints.productsList, params: params),
-    isOauth: true,
-    requiredNonce: true,
-  ));
+  String url = getEndPoint(endPoint: ApiEndPoints.productsList, params: params);
+
+  Iterable it = await handleResponse(
+    await buildHttpResponse(
+      url,
+      isOauth: true,
+      requiredNonce: true,
+    ),
+  );
 
   if (page == 1) productList.clear();
 
   productList.addAll(it.validate().map((e) => ProductListModel.fromJson(e)));
 
-  lastPageCallback?.call(productList.validate().length != PER_PAGE);
+  lastPageCallback?.call(it.length < PER_PAGE);
 
   return productList;
 }
@@ -173,13 +187,21 @@ Future<CartModel> removeCoupon({required String code}) async {
 }
 //endregion
 
-//region cart
 Future<CartModel> getCartDetails() async {
-  return CartModel.fromJson(await handleResponse(await buildHttpResponse(
-    '${ApiEndPoints.cart}',
-    requiredNonce: true,
-    isOauth: true,
-  )));
+  var res = await handleResponse(
+    await buildHttpResponse(
+      '${ApiEndPoints.cart}',
+      requiredNonce: true,
+      isOauth: true,
+    ),
+  );
+
+  try {
+    return CartModel.fromJson(res);
+  } catch (e) {
+    // return empty cart model instead of crash
+    return CartModel(items: []);
+  }
 }
 
 Future<CartModel> addItemToCart({required int productId, required int quantity}) async {
@@ -281,6 +303,19 @@ Future<OrderNotesModel> createOrderNotes({required Map request, required int ord
       isOauth: true,
     ),
   ));
+}
+
+Future<List<OrderNotesModel>> getOrderNotes({required int orderId}) async {
+  var res = await handleResponse(
+    await buildHttpResponse(
+      '${ApiEndPoints.orders}/$orderId/notes',
+      method: HttpMethod.GET,
+      requiredNonce: true,
+      isOauth: true,
+    ),
+  );
+
+  return (res as List).map((e) => OrderNotesModel.fromJson(e)).toList();
 }
 
 Future<OrderModel> cancelOrder({required int orderId, required String note}) async {

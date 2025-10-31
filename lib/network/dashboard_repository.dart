@@ -14,8 +14,7 @@ Future<DashboardModel> getUserDashBoardAPI() async {
     return DashboardModel();
   }
 
-  DashboardModel res =
-      DashboardModel.fromJson(await (handleResponse(await buildHttpResponse('${ApiEndPoints.userEndpoint}/${EndPointKeys.getDashboardKey}?${ConstantKeys.pageKey}=1&${ConstantKeys.limitKey}=5'))));
+  DashboardModel res = DashboardModel.fromJson(await (handleResponse(await buildHttpResponse('${ApiEndPoints.userEndpoint}/${EndPointKeys.getDashboardKey}?${ConstantKeys.pageKey}=1&${ConstantKeys.limitKey}=5'))));
 
   appStore.setCurrencyPostfix(res.currencyPostfix.validate());
   appStore.setCurrencyPrefix(res.currencyPrefix.validate());
@@ -36,8 +35,7 @@ Future<EncounterModel> getEncounterDetailsDashBoardAPI({required int encounterId
 Future<StaticDataModel> getStaticDataResponseAPI(String req, {String? searchString}) async {
   List<String> param = [];
   if (searchString.validate().isNotEmpty) param.add('s=$searchString');
-  StaticDataModel data = StaticDataModel.fromJson(
-      await (handleResponse(await buildHttpResponse('${ApiEndPoints.staticDataEndPoint}/${EndPointKeys.getListEndPointKey}?${ConstantKeys.typeKey}=$req&${param.validate().join('&')}'))));
+  StaticDataModel data = StaticDataModel.fromJson(await (handleResponse(await buildHttpResponse('${ApiEndPoints.staticDataEndPoint}/${EndPointKeys.getListEndPointKey}?${ConstantKeys.typeKey}=$req&${param.validate().join('&')}'))));
   if (data.staticData != null) cachedStaticData = data.staticData;
   return data;
 }

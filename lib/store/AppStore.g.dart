@@ -9,8 +9,7 @@ part of 'AppStore.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppStore on AppStoreBase, Store {
-  late final _$appVersionAtom =
-      Atom(name: 'AppStoreBase.appVersion', context: context);
+  late final _$appVersionAtom = Atom(name: 'AppStoreBase.appVersion', context: context);
 
   @override
   String get appVersion {
@@ -25,8 +24,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$passwordAtom =
-      Atom(name: 'AppStoreBase.password', context: context);
+  late final _$passwordAtom = Atom(name: 'AppStoreBase.password', context: context);
 
   @override
   String get password {
@@ -41,8 +39,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isDarkModeOnAtom =
-      Atom(name: 'AppStoreBase.isDarkModeOn', context: context);
+  late final _$isDarkModeOnAtom = Atom(name: 'AppStoreBase.isDarkModeOn', context: context);
 
   @override
   bool get isDarkModeOn {
@@ -57,8 +54,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isLoadingAtom =
-      Atom(name: 'AppStoreBase.isLoading', context: context);
+  late final _$isLoadingAtom = Atom(name: 'AppStoreBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -73,8 +69,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isConnectedToInternetAtom =
-      Atom(name: 'AppStoreBase.isConnectedToInternet', context: context);
+  late final _$isConnectedToInternetAtom = Atom(name: 'AppStoreBase.isConnectedToInternet', context: context);
 
   @override
   bool get isConnectedToInternet {
@@ -84,14 +79,12 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   set isConnectedToInternet(bool value) {
-    _$isConnectedToInternetAtom.reportWrite(value, super.isConnectedToInternet,
-        () {
+    _$isConnectedToInternetAtom.reportWrite(value, super.isConnectedToInternet, () {
       super.isConnectedToInternet = value;
     });
   }
 
-  late final _$isTesterAtom =
-      Atom(name: 'AppStoreBase.isTester', context: context);
+  late final _$isTesterAtom = Atom(name: 'AppStoreBase.isTester', context: context);
 
   @override
   bool get isTester {
@@ -106,8 +99,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isLoggedInAtom =
-      Atom(name: 'AppStoreBase.isLoggedIn', context: context);
+  late final _$isLoggedInAtom = Atom(name: 'AppStoreBase.isLoggedIn', context: context);
 
   @override
   bool get isLoggedIn {
@@ -122,8 +114,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isNotificationsOnAtom =
-      Atom(name: 'AppStoreBase.isNotificationsOn', context: context);
+  late final _$isNotificationsOnAtom = Atom(name: 'AppStoreBase.isNotificationsOn', context: context);
 
   @override
   bool get isNotificationsOn {
@@ -138,8 +129,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$playerIdAtom =
-      Atom(name: 'AppStoreBase.playerId', context: context);
+  late final _$playerIdAtom = Atom(name: 'AppStoreBase.playerId', context: context);
 
   @override
   String get playerId {
@@ -154,8 +144,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isBookedFromDashboardAtom =
-      Atom(name: 'AppStoreBase.isBookedFromDashboard', context: context);
+  late final _$isBookedFromDashboardAtom = Atom(name: 'AppStoreBase.isBookedFromDashboard', context: context);
 
   @override
   bool get isBookedFromDashboard {
@@ -165,14 +154,12 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   set isBookedFromDashboard(bool value) {
-    _$isBookedFromDashboardAtom.reportWrite(value, super.isBookedFromDashboard,
-        () {
+    _$isBookedFromDashboardAtom.reportWrite(value, super.isBookedFromDashboard, () {
       super.isBookedFromDashboard = value;
     });
   }
 
-  late final _$mStatusAtom =
-      Atom(name: 'AppStoreBase.mStatus', context: context);
+  late final _$mStatusAtom = Atom(name: 'AppStoreBase.mStatus', context: context);
 
   @override
   String get mStatus {
@@ -187,8 +174,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$restrictAppointmentPostAtom =
-      Atom(name: 'AppStoreBase.restrictAppointmentPost', context: context);
+  late final _$restrictAppointmentPostAtom = Atom(name: 'AppStoreBase.restrictAppointmentPost', context: context);
 
   @override
   int? get restrictAppointmentPost {
@@ -198,14 +184,12 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   set restrictAppointmentPost(int? value) {
-    _$restrictAppointmentPostAtom
-        .reportWrite(value, super.restrictAppointmentPost, () {
+    _$restrictAppointmentPostAtom.reportWrite(value, super.restrictAppointmentPost, () {
       super.restrictAppointmentPost = value;
     });
   }
 
-  late final _$restrictAppointmentPreAtom =
-      Atom(name: 'AppStoreBase.restrictAppointmentPre', context: context);
+  late final _$restrictAppointmentPreAtom = Atom(name: 'AppStoreBase.restrictAppointmentPre', context: context);
 
   @override
   int? get restrictAppointmentPre {
@@ -215,14 +199,12 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   set restrictAppointmentPre(int? value) {
-    _$restrictAppointmentPreAtom
-        .reportWrite(value, super.restrictAppointmentPre, () {
+    _$restrictAppointmentPreAtom.reportWrite(value, super.restrictAppointmentPre, () {
       super.restrictAppointmentPre = value;
     });
   }
 
-  late final _$currencyAtom =
-      Atom(name: 'AppStoreBase.currency', context: context);
+  late final _$currencyAtom = Atom(name: 'AppStoreBase.currency', context: context);
 
   @override
   String? get currency {
@@ -237,8 +219,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$currencySymbolAtom =
-      Atom(name: 'AppStoreBase.currencySymbol', context: context);
+  late final _$currencySymbolAtom = Atom(name: 'AppStoreBase.currencySymbol', context: context);
 
   @override
   String get currencySymbol {
@@ -253,8 +234,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$currencyCodeAtom =
-      Atom(name: 'AppStoreBase.currencyCode', context: context);
+  late final _$currencyCodeAtom = Atom(name: 'AppStoreBase.currencyCode', context: context);
 
   @override
   String get currencyCode {
@@ -269,8 +249,22 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isRazorPayEnableAtom =
-      Atom(name: 'AppStoreBase.isRazorPayEnable', context: context);
+  late final _$wcCurrencyAtom = Atom(name: 'AppStoreBase.wcCurrency', context: context);
+
+  @override
+  String get wcCurrency {
+    _$wcCurrencyAtom.reportRead();
+    return super.wcCurrency;
+  }
+
+  @override
+  set wcCurrency(String value) {
+    _$wcCurrencyAtom.reportWrite(value, super.wcCurrency, () {
+      super.wcCurrency = value;
+    });
+  }
+
+  late final _$isRazorPayEnableAtom = Atom(name: 'AppStoreBase.isRazorPayEnable', context: context);
 
   @override
   bool get isRazorPayEnable {
@@ -285,8 +279,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isStripePayEnableAtom =
-      Atom(name: 'AppStoreBase.isStripePayEnable', context: context);
+  late final _$isStripePayEnableAtom = Atom(name: 'AppStoreBase.isStripePayEnable', context: context);
 
   @override
   bool get isStripePayEnable {
@@ -301,8 +294,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isWoocommerceEnableAtom =
-      Atom(name: 'AppStoreBase.isWoocommerceEnable', context: context);
+  late final _$isWoocommerceEnableAtom = Atom(name: 'AppStoreBase.isWoocommerceEnable', context: context);
 
   @override
   bool get isWoocommerceEnable {
@@ -317,8 +309,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isPayOfflineAtom =
-      Atom(name: 'AppStoreBase.isPayOffline', context: context);
+  late final _$isPayOfflineAtom = Atom(name: 'AppStoreBase.isPayOffline', context: context);
 
   @override
   bool get isPayOffline {
@@ -333,8 +324,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$paymentRazorpayAtom =
-      Atom(name: 'AppStoreBase.paymentRazorpay', context: context);
+  late final _$paymentRazorpayAtom = Atom(name: 'AppStoreBase.paymentRazorpay', context: context);
 
   @override
   String get paymentRazorpay {
@@ -349,8 +339,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$paymentStripeAtom =
-      Atom(name: 'AppStoreBase.paymentStripe', context: context);
+  late final _$paymentStripeAtom = Atom(name: 'AppStoreBase.paymentStripe', context: context);
 
   @override
   String get paymentStripe {
@@ -365,8 +354,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$paymentWoocommerceAtom =
-      Atom(name: 'AppStoreBase.paymentWoocommerce', context: context);
+  late final _$paymentWoocommerceAtom = Atom(name: 'AppStoreBase.paymentWoocommerce', context: context);
 
   @override
   String get paymentWoocommerce {
@@ -381,8 +369,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$paymentOfflineAtom =
-      Atom(name: 'AppStoreBase.paymentOffline', context: context);
+  late final _$paymentOfflineAtom = Atom(name: 'AppStoreBase.paymentOffline', context: context);
 
   @override
   String get paymentOffline {
@@ -397,8 +384,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$paymentModeAtom =
-      Atom(name: 'AppStoreBase.paymentMode', context: context);
+  late final _$paymentModeAtom = Atom(name: 'AppStoreBase.paymentMode', context: context);
 
   @override
   String get paymentMode {
@@ -413,8 +399,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$currencyPrefixAtom =
-      Atom(name: 'AppStoreBase.currencyPrefix', context: context);
+  late final _$currencyPrefixAtom = Atom(name: 'AppStoreBase.currencyPrefix', context: context);
 
   @override
   String? get currencyPrefix {
@@ -429,8 +414,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$currencyPostfixAtom =
-      Atom(name: 'AppStoreBase.currencyPostfix', context: context);
+  late final _$currencyPostfixAtom = Atom(name: 'AppStoreBase.currencyPostfix', context: context);
 
   @override
   String? get currencyPostfix {
@@ -445,8 +429,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$tempBaseUrlAtom =
-      Atom(name: 'AppStoreBase.tempBaseUrl', context: context);
+  late final _$tempBaseUrlAtom = Atom(name: 'AppStoreBase.tempBaseUrl', context: context);
 
   @override
   String? get tempBaseUrl {
@@ -461,8 +444,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$userProEnabledAtom =
-      Atom(name: 'AppStoreBase.userProEnabled', context: context);
+  late final _$userProEnabledAtom = Atom(name: 'AppStoreBase.userProEnabled', context: context);
 
   @override
   bool? get userProEnabled {
@@ -477,8 +459,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isGoogleMeetActiveAtom =
-      Atom(name: 'AppStoreBase.isGoogleMeetActive', context: context);
+  late final _$isGoogleMeetActiveAtom = Atom(name: 'AppStoreBase.isGoogleMeetActive', context: context);
 
   @override
   bool get isGoogleMeetActive {
@@ -493,8 +474,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$globalDateFormatAtom =
-      Atom(name: 'AppStoreBase.globalDateFormat', context: context);
+  late final _$globalDateFormatAtom = Atom(name: 'AppStoreBase.globalDateFormat', context: context);
 
   @override
   String? get globalDateFormat {
@@ -509,8 +489,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$globalUTCAtom =
-      Atom(name: 'AppStoreBase.globalUTC', context: context);
+  late final _$globalUTCAtom = Atom(name: 'AppStoreBase.globalUTC', context: context);
 
   @override
   String? get globalUTC {
@@ -525,8 +504,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$selectedLanguageCodeAtom =
-      Atom(name: 'AppStoreBase.selectedLanguageCode', context: context);
+  late final _$selectedLanguageCodeAtom = Atom(name: 'AppStoreBase.selectedLanguageCode', context: context);
 
   @override
   String get selectedLanguageCode {
@@ -536,14 +514,12 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   set selectedLanguageCode(String value) {
-    _$selectedLanguageCodeAtom.reportWrite(value, super.selectedLanguageCode,
-        () {
+    _$selectedLanguageCodeAtom.reportWrite(value, super.selectedLanguageCode, () {
       super.selectedLanguageCode = value;
     });
   }
 
-  late final _$demoDoctorAtom =
-      Atom(name: 'AppStoreBase.demoDoctor', context: context);
+  late final _$demoDoctorAtom = Atom(name: 'AppStoreBase.demoDoctor', context: context);
 
   @override
   String? get demoDoctor {
@@ -558,8 +534,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$demoReceptionistAtom =
-      Atom(name: 'AppStoreBase.demoReceptionist', context: context);
+  late final _$demoReceptionistAtom = Atom(name: 'AppStoreBase.demoReceptionist', context: context);
 
   @override
   String? get demoReceptionist {
@@ -574,8 +549,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$demoPatientAtom =
-      Atom(name: 'AppStoreBase.demoPatient', context: context);
+  late final _$demoPatientAtom = Atom(name: 'AppStoreBase.demoPatient', context: context);
 
   @override
   String? get demoPatient {
@@ -590,8 +564,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$selectedLanguageAtom =
-      Atom(name: 'AppStoreBase.selectedLanguage', context: context);
+  late final _$selectedLanguageAtom = Atom(name: 'AppStoreBase.selectedLanguage', context: context);
 
   @override
   String get selectedLanguage {
@@ -606,8 +579,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$demoEmailsAtom =
-      Atom(name: 'AppStoreBase.demoEmails', context: context);
+  late final _$demoEmailsAtom = Atom(name: 'AppStoreBase.demoEmails', context: context);
 
   @override
   List<dynamic> get demoEmails {
@@ -622,8 +594,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$cachedDashboardDataAtom =
-      Atom(name: 'AppStoreBase.cachedDashboardData', context: context);
+  late final _$cachedDashboardDataAtom = Atom(name: 'AppStoreBase.cachedDashboardData', context: context);
 
   @override
   DashboardModel get cachedDashboardData {
@@ -638,8 +609,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$clinicIdAtom =
-      Atom(name: 'AppStoreBase.clinicId', context: context);
+  late final _$clinicIdAtom = Atom(name: 'AppStoreBase.clinicId', context: context);
 
   @override
   int? get clinicId {
@@ -654,8 +624,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$wcNonceAtom =
-      Atom(name: 'AppStoreBase.wcNonce', context: context);
+  late final _$wcNonceAtom = Atom(name: 'AppStoreBase.wcNonce', context: context);
 
   @override
   String get wcNonce {
@@ -670,8 +639,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$apiNonceAtom =
-      Atom(name: 'AppStoreBase.apiNonce', context: context);
+  late final _$apiNonceAtom = Atom(name: 'AppStoreBase.apiNonce', context: context);
 
   @override
   String get apiNonce {
@@ -686,8 +654,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isLocationEnabledAtom =
-      Atom(name: 'AppStoreBase.isLocationEnabled', context: context);
+  late final _$isLocationEnabledAtom = Atom(name: 'AppStoreBase.isLocationEnabled', context: context);
 
   @override
   bool? get isLocationEnabled {
@@ -702,8 +669,7 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$isFromUpcomingAtom =
-      Atom(name: 'AppStoreBase.isFromUpcoming', context: context);
+  late final _$isFromUpcomingAtom = Atom(name: 'AppStoreBase.isFromUpcoming', context: context);
 
   @override
   int get isFromUpcoming {
@@ -718,250 +684,223 @@ mixin _$AppStore on AppStoreBase, Store {
     });
   }
 
-  late final _$setRazorPayAsyncAction =
-      AsyncAction('AppStoreBase.setRazorPay', context: context);
+  late final _$setRazorPayAsyncAction = AsyncAction('AppStoreBase.setRazorPay', context: context);
 
   @override
   Future<void> setRazorPay(bool value) {
     return _$setRazorPayAsyncAction.run(() => super.setRazorPay(value));
   }
 
-  late final _$setStripePayAsyncAction =
-      AsyncAction('AppStoreBase.setStripePay', context: context);
+  late final _$setStripePayAsyncAction = AsyncAction('AppStoreBase.setStripePay', context: context);
 
   @override
   Future<void> setStripePay(bool value) {
     return _$setStripePayAsyncAction.run(() => super.setStripePay(value));
   }
 
-  late final _$setOffLinePaymentAsyncAction =
-      AsyncAction('AppStoreBase.setOffLinePayment', context: context);
+  late final _$setOffLinePaymentAsyncAction = AsyncAction('AppStoreBase.setOffLinePayment', context: context);
 
   @override
   Future<void> setOffLinePayment(bool value) {
-    return _$setOffLinePaymentAsyncAction
-        .run(() => super.setOffLinePayment(value));
+    return _$setOffLinePaymentAsyncAction.run(() => super.setOffLinePayment(value));
   }
 
-  late final _$setPaymentModeAsyncAction =
-      AsyncAction('AppStoreBase.setPaymentMode', context: context);
+  late final _$setPaymentModeAsyncAction = AsyncAction('AppStoreBase.setPaymentMode', context: context);
 
   @override
   Future<void> setPaymentMode(String value) {
     return _$setPaymentModeAsyncAction.run(() => super.setPaymentMode(value));
   }
 
-  late final _$setWoocommerceAsyncAction =
-      AsyncAction('AppStoreBase.setWoocommerce', context: context);
+  late final _$setWoocommerceAsyncAction = AsyncAction('AppStoreBase.setWoocommerce', context: context);
 
   @override
   Future<void> setWoocommerce(bool value) {
     return _$setWoocommerceAsyncAction.run(() => super.setWoocommerce(value));
   }
 
-  late final _$setRazorPayMethodAsyncAction =
-      AsyncAction('AppStoreBase.setRazorPayMethod', context: context);
+  late final _$setRazorPayMethodAsyncAction = AsyncAction('AppStoreBase.setRazorPayMethod', context: context);
 
   @override
   Future<void> setRazorPayMethod(String value) {
-    return _$setRazorPayMethodAsyncAction
-        .run(() => super.setRazorPayMethod(value));
+    return _$setRazorPayMethodAsyncAction.run(() => super.setRazorPayMethod(value));
   }
 
-  late final _$setStripePayMethodAsyncAction =
-      AsyncAction('AppStoreBase.setStripePayMethod', context: context);
+  late final _$setStripePayMethodAsyncAction = AsyncAction('AppStoreBase.setStripePayMethod', context: context);
 
   @override
   Future<void> setStripePayMethod(String value) {
-    return _$setStripePayMethodAsyncAction
-        .run(() => super.setStripePayMethod(value));
+    return _$setStripePayMethodAsyncAction.run(() => super.setStripePayMethod(value));
   }
 
-  late final _$setOffLinePaymentMethodAsyncAction =
-      AsyncAction('AppStoreBase.setOffLinePaymentMethod', context: context);
+  late final _$setOffLinePaymentMethodAsyncAction = AsyncAction('AppStoreBase.setOffLinePaymentMethod', context: context);
 
   @override
   Future<void> setOffLinePaymentMethod(String value) {
-    return _$setOffLinePaymentMethodAsyncAction
-        .run(() => super.setOffLinePaymentMethod(value));
+    return _$setOffLinePaymentMethodAsyncAction.run(() => super.setOffLinePaymentMethod(value));
   }
 
-  late final _$setWoocommerceMethodAsyncAction =
-      AsyncAction('AppStoreBase.setWoocommerceMethod', context: context);
+  late final _$setWoocommerceMethodAsyncAction = AsyncAction('AppStoreBase.setWoocommerceMethod', context: context);
 
   @override
   Future<void> setWoocommerceMethod(String value) {
-    return _$setWoocommerceMethodAsyncAction
-        .run(() => super.setWoocommerceMethod(value));
+    return _$setWoocommerceMethodAsyncAction.run(() => super.setWoocommerceMethod(value));
   }
 
-  late final _$setGlobalUTCAsyncAction =
-      AsyncAction('AppStoreBase.setGlobalUTC', context: context);
+  late final _$setGlobalUTCAsyncAction = AsyncAction('AppStoreBase.setGlobalUTC', context: context);
 
   @override
   Future<void> setGlobalUTC(String value) {
     return _$setGlobalUTCAsyncAction.run(() => super.setGlobalUTC(value));
   }
 
-  late final _$setLoggedInAsyncAction =
-      AsyncAction('AppStoreBase.setLoggedIn', context: context);
+  late final _$setLoggedInAsyncAction = AsyncAction('AppStoreBase.setLoggedIn', context: context);
 
   @override
   Future<void> setLoggedIn(bool value) {
     return _$setLoggedInAsyncAction.run(() => super.setLoggedIn(value));
   }
 
-  late final _$setBookedFromDashboardAsyncAction =
-      AsyncAction('AppStoreBase.setBookedFromDashboard', context: context);
+  late final _$setBookedFromDashboardAsyncAction = AsyncAction('AppStoreBase.setBookedFromDashboard', context: context);
 
   @override
   Future<void> setBookedFromDashboard(bool value) {
-    return _$setBookedFromDashboardAsyncAction
-        .run(() => super.setBookedFromDashboard(value));
+    return _$setBookedFromDashboardAsyncAction.run(() => super.setBookedFromDashboard(value));
   }
 
-  late final _$setDemoDoctorAsyncAction =
-      AsyncAction('AppStoreBase.setDemoDoctor', context: context);
+  late final _$setDemoDoctorAsyncAction = AsyncAction('AppStoreBase.setDemoDoctor', context: context);
 
   @override
   Future<void> setDemoDoctor(String value, {bool initialize = false}) {
-    return _$setDemoDoctorAsyncAction
-        .run(() => super.setDemoDoctor(value, initialize: initialize));
+    return _$setDemoDoctorAsyncAction.run(() => super.setDemoDoctor(value, initialize: initialize));
   }
 
-  late final _$setDemoReceptionistAsyncAction =
-      AsyncAction('AppStoreBase.setDemoReceptionist', context: context);
+  late final _$setDemoReceptionistAsyncAction = AsyncAction('AppStoreBase.setDemoReceptionist', context: context);
 
   @override
   Future<void> setDemoReceptionist(String value, {bool initialize = false}) {
-    return _$setDemoReceptionistAsyncAction
-        .run(() => super.setDemoReceptionist(value, initialize: initialize));
+    return _$setDemoReceptionistAsyncAction.run(() => super.setDemoReceptionist(value, initialize: initialize));
   }
 
-  late final _$setDemoPatientAsyncAction =
-      AsyncAction('AppStoreBase.setDemoPatient', context: context);
+  late final _$setDemoPatientAsyncAction = AsyncAction('AppStoreBase.setDemoPatient', context: context);
 
   @override
   Future<void> setDemoPatient(String value, {bool initialize = false}) {
-    return _$setDemoPatientAsyncAction
-        .run(() => super.setDemoPatient(value, initialize: initialize));
+    return _$setDemoPatientAsyncAction.run(() => super.setDemoPatient(value, initialize: initialize));
   }
 
-  late final _$setRestrictAppointmentPostAsyncAction =
-      AsyncAction('AppStoreBase.setRestrictAppointmentPost', context: context);
+  late final _$setRestrictAppointmentPostAsyncAction = AsyncAction('AppStoreBase.setRestrictAppointmentPost', context: context);
 
   @override
-  Future<void> setRestrictAppointmentPost(int value,
-      {bool initialize = false}) {
-    return _$setRestrictAppointmentPostAsyncAction.run(
-        () => super.setRestrictAppointmentPost(value, initialize: initialize));
+  Future<void> setRestrictAppointmentPost(int value, {bool initialize = false}) {
+    return _$setRestrictAppointmentPostAsyncAction.run(() => super.setRestrictAppointmentPost(value, initialize: initialize));
   }
 
-  late final _$setRestrictAppointmentPreAsyncAction =
-      AsyncAction('AppStoreBase.setRestrictAppointmentPre', context: context);
+  late final _$setRestrictAppointmentPreAsyncAction = AsyncAction('AppStoreBase.setRestrictAppointmentPre', context: context);
 
   @override
   Future<void> setRestrictAppointmentPre(int value, {bool initialize = false}) {
-    return _$setRestrictAppointmentPreAsyncAction.run(
-        () => super.setRestrictAppointmentPre(value, initialize: initialize));
+    return _$setRestrictAppointmentPreAsyncAction.run(() => super.setRestrictAppointmentPre(value, initialize: initialize));
   }
 
-  late final _$setLoadingAsyncAction =
-      AsyncAction('AppStoreBase.setLoading', context: context);
+  late final _$setLoadingAsyncAction = AsyncAction('AppStoreBase.setLoading', context: context);
 
   @override
   Future<void> setLoading(bool value) {
     return _$setLoadingAsyncAction.run(() => super.setLoading(value));
   }
 
-  late final _$setCurrencyAsyncAction =
-      AsyncAction('AppStoreBase.setCurrency', context: context);
+  late final _$setCurrencyAsyncAction = AsyncAction('AppStoreBase.setCurrency', context: context);
 
   @override
   Future<void> setCurrency(String value, {bool initialize = false}) {
-    return _$setCurrencyAsyncAction
-        .run(() => super.setCurrency(value, initialize: initialize));
+    return _$setCurrencyAsyncAction.run(() => super.setCurrency(value, initialize: initialize));
   }
 
-  late final _$setCurrencySymbolAsyncAction =
-      AsyncAction('AppStoreBase.setCurrencySymbol', context: context);
+  late final _$setCurrencySymbolAsyncAction = AsyncAction('AppStoreBase.setCurrencySymbol', context: context);
 
   @override
   Future<void> setCurrencySymbol(String val, {bool isInitializing = false}) {
-    return _$setCurrencySymbolAsyncAction.run(
-        () => super.setCurrencySymbol(val, isInitializing: isInitializing));
+    return _$setCurrencySymbolAsyncAction.run(() => super.setCurrencySymbol(val, isInitializing: isInitializing));
   }
 
-  late final _$setCurrencyCodeAsyncAction =
-      AsyncAction('AppStoreBase.setCurrencyCode', context: context);
+  late final _$setCurrencyCodeAsyncAction = AsyncAction('AppStoreBase.setCurrencyCode', context: context);
 
   @override
   Future<void> setCurrencyCode(String val, {bool isInitializing = false}) {
-    return _$setCurrencyCodeAsyncAction
-        .run(() => super.setCurrencyCode(val, isInitializing: isInitializing));
+    return _$setCurrencyCodeAsyncAction.run(() => super.setCurrencyCode(val, isInitializing: isInitializing));
   }
 
-  late final _$setCurrencyPostfixAsyncAction =
-      AsyncAction('AppStoreBase.setCurrencyPostfix', context: context);
+  late final _$setWcCurrencyAsyncAction = AsyncAction('AppStoreBase.setWcCurrency', context: context);
+
+  @override
+  Future<void> setWcCurrency(String val, {bool isInitializing = false}) {
+    return _$setWcCurrencyAsyncAction.run(() => super.setWcCurrency(val, isInitializing: isInitializing));
+  }
+
+  late final _$setCurrencyPostfixAsyncAction = AsyncAction('AppStoreBase.setCurrencyPostfix', context: context);
 
   @override
   Future<void> setCurrencyPostfix(String value, {bool initialize = false}) {
-    return _$setCurrencyPostfixAsyncAction
-        .run(() => super.setCurrencyPostfix(value, initialize: initialize));
+    return _$setCurrencyPostfixAsyncAction.run(() => super.setCurrencyPostfix(value, initialize: initialize));
   }
 
-  late final _$setCurrencyPrefixAsyncAction =
-      AsyncAction('AppStoreBase.setCurrencyPrefix', context: context);
+  late final _$setCurrencyPrefixAsyncAction = AsyncAction('AppStoreBase.setCurrencyPrefix', context: context);
 
   @override
   Future<void> setCurrencyPrefix(String value, {bool initialize = false}) {
-    return _$setCurrencyPrefixAsyncAction
-        .run(() => super.setCurrencyPrefix(value, initialize: initialize));
+    return _$setCurrencyPrefixAsyncAction.run(() => super.setCurrencyPrefix(value, initialize: initialize));
   }
 
-  late final _$setBaseUrlAsyncAction =
-      AsyncAction('AppStoreBase.setBaseUrl', context: context);
+  late final _$setBaseUrlAsyncAction = AsyncAction('AppStoreBase.setBaseUrl', context: context);
 
   @override
   Future<void> setBaseUrl(String value, {bool initialize = false}) {
-    return _$setBaseUrlAsyncAction
-        .run(() => super.setBaseUrl(value, initialize: initialize));
+    return _$setBaseUrlAsyncAction.run(() => super.setBaseUrl(value, initialize: initialize));
   }
 
-  late final _$setUserProEnabledAsyncAction =
-      AsyncAction('AppStoreBase.setUserProEnabled', context: context);
+  late final _$setTeleMedEnabledAsyncAction = AsyncAction('AppStoreBase.setUserProEnabled', context: context);
+
+  @override
+  Future<void> setTeleMedEnabled(bool value) {
+    return _$setTeleMedEnabledAsyncAction.run(() => super.setTeleMedEnabled(value));
+  }
+
+  late final _$setEnableEncounterEditAfterCloseStatusAsyncAction =
+    AsyncAction('AppStoreBase.setEnableEncounterEditAfterCloseStatus', context: context);
+
+ @override
+  Future<void> setEnableEncounterEditAfterCloseStatus(bool value) {
+    return _$setEnableEncounterEditAfterCloseStatusAsyncAction.run(() => super.setEnableEncounterEditAfterCloseStatus(value));
+  }
+
+
+  late final _$setUserProEnabledAsyncAction = AsyncAction('AppStoreBase.setUserProEnabled', context: context);
 
   @override
   Future<void> setUserProEnabled(bool value, {bool initialize = false}) {
-    return _$setUserProEnabledAsyncAction
-        .run(() => super.setUserProEnabled(value, initialize: initialize));
+    return _$setUserProEnabledAsyncAction.run(() => super.setUserProEnabled(value, initialize: initialize));
   }
 
-  late final _$setLanguageAsyncAction =
-      AsyncAction('AppStoreBase.setLanguage', context: context);
+  late final _$setLanguageAsyncAction = AsyncAction('AppStoreBase.setLanguage', context: context);
 
   @override
   Future<void> setLanguage(String val, {BuildContext? context}) {
-    return _$setLanguageAsyncAction
-        .run(() => super.setLanguage(val, context: context));
+    return _$setLanguageAsyncAction.run(() => super.setLanguage(val, context: context));
   }
 
-  late final _$setPlayerIdAsyncAction =
-      AsyncAction('AppStoreBase.setPlayerId', context: context);
+  late final _$setPlayerIdAsyncAction = AsyncAction('AppStoreBase.setPlayerId', context: context);
 
   @override
   Future<void> setPlayerId(String val, {bool isInitializing = false}) {
-    return _$setPlayerIdAsyncAction
-        .run(() => super.setPlayerId(val, isInitializing: isInitializing));
+    return _$setPlayerIdAsyncAction.run(() => super.setPlayerId(val, isInitializing: isInitializing));
   }
 
-  late final _$AppStoreBaseActionController =
-      ActionController(name: 'AppStoreBase', context: context);
+  late final _$AppStoreBaseActionController = ActionController(name: 'AppStoreBase', context: context);
 
   @override
   void setUpcoming(int status) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setUpcoming');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setUpcoming');
     try {
       return super.setUpcoming(status);
     } finally {
@@ -971,8 +910,7 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   void setAppVersion(String version) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setAppVersion');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setAppVersion');
     try {
       return super.setAppVersion(version);
     } finally {
@@ -982,8 +920,7 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   void setDemoEmails() {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setDemoEmails');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setDemoEmails');
     try {
       return super.setDemoEmails();
     } finally {
@@ -993,8 +930,7 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   void setGoogleMeetEnabled(bool googleMeetEnable) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setGoogleMeetEnabled');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setGoogleMeetEnabled');
     try {
       return super.setGoogleMeetEnabled(googleMeetEnable);
     } finally {
@@ -1004,8 +940,7 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   void setInternetStatus(bool val) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setInternetStatus');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setInternetStatus');
     try {
       return super.setInternetStatus(val);
     } finally {
@@ -1015,8 +950,7 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   void setStatus(String aStatus) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setStatus');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setStatus');
     try {
       return super.setStatus(aStatus);
     } finally {
@@ -1026,8 +960,7 @@ mixin _$AppStore on AppStoreBase, Store {
 
   @override
   void setLocationPermission(bool val) {
-    final _$actionInfo = _$AppStoreBaseActionController.startAction(
-        name: 'AppStoreBase.setLocationPermission');
+    final _$actionInfo = _$AppStoreBaseActionController.startAction(name: 'AppStoreBase.setLocationPermission');
     try {
       return super.setLocationPermission(val);
     } finally {
@@ -1054,6 +987,7 @@ restrictAppointmentPre: ${restrictAppointmentPre},
 currency: ${currency},
 currencySymbol: ${currencySymbol},
 currencyCode: ${currencyCode},
+wcCurrency: ${wcCurrency},
 isRazorPayEnable: ${isRazorPayEnable},
 isStripePayEnable: ${isStripePayEnable},
 isWoocommerceEnable: ${isWoocommerceEnable},

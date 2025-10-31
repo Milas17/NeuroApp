@@ -5,6 +5,7 @@ import 'package:kivicare_flutter/screens/doctor/screens/add_qualification_screen
 import 'package:kivicare_flutter/screens/receptionist/components/qualification_item_widget.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+// ignore: must_be_immutable
 class QualificationWidget extends StatefulWidget {
   List<Qualification> qualificationList;
   bool showAdd;

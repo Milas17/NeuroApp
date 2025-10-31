@@ -1,11 +1,11 @@
 {
-    "name": "kivicare_flutter",
-    "short_name": "kivicare_flutter",
+    "name": "NeuroCare Telemed",
+    "short_name": "NeuroCare Telemed",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Plateforme de telemedecine neurologique et psychiatrique",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

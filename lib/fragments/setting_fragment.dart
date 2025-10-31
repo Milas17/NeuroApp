@@ -6,6 +6,7 @@ import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/network/auth_repository.dart';
 import 'package:kivicare_flutter/screens/auth/components/edit_profile_component.dart';
+import 'package:kivicare_flutter/screens/auth/screens/sign_in_screen.dart';
 import 'package:kivicare_flutter/screens/patient/components/general_setting_component.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
@@ -39,58 +40,77 @@ class _SettingFragmentState extends State<SettingFragment> {
       fit: StackFit.expand,
       children: [
         SafeArea(
-          child: AnimatedScrollView(
-            padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 60),
-            listAnimationType: ListAnimationType.None,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              EditProfileComponent(refreshCallback: () {
-                setState(() {});
-              }),
-              Divider(
-                height: isReceptionist() || isPatient() ? 30 : 40,
-                color: context.dividerColor,
-              ),
-              Text(locale.lblGeneralSetting, textAlign: TextAlign.center, style: secondaryTextStyle()),
-              16.height,
-              if (isPatient()) GeneralSettingComponent(callBack: () => setState(() {})),
-              if (isDoctor() || isReceptionist()) DoctorReceptionistGeneralSettingComponent(),
-              CommonShopSettingComponent().visible(appStore.wcNonce.validate().isNotEmpty),
-              Column(
-                children: [
-                  Divider(
-                    height: 24,
-                    color: context.dividerColor,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      showConfirmDialogCustom(
-                        context,
-                        primaryColor: primaryColor,
-                        negativeText: locale.lblCancel,
-                        positiveText: locale.lblYes,
-                        onAccept: (c) async {
-                          appStore.setLoading(true);
+          child: RefreshIndicator(
+            onRefresh: () async {
+              final req = {
+                "username": userStore.userEmail!,
+                "password": appStore.password,
+              };
 
-                          await logout().catchError((e) {
-                            appStore.setLoading(false);
-
-                            throw e;
-                          }).whenComplete(() {
-                            appStore.setLoading(false);
-                          });
-                        },
-                        title: locale.lblDoYouWantToLogout,
-                      );
-                    },
-                    child: Text(
-                      locale.lblLogOut,
-                      style: primaryTextStyle(color: primaryColor,weight: FontWeight.bold),
+              await loginAPI(req).then((value) {
+                if (value == null) {
+                  toast(locale.lblSessionDeleted);
+                  SignInScreen().launch(context, isNewTask: true); // redirect with nb_utils
+                } else {
+                  setState(() {});
+                }
+              }).catchError((e) {
+                toast(e.toString());
+                SignInScreen().launch(context, isNewTask: true); // redirect with nb_utils
+              });
+            },
+            child: AnimatedScrollView(
+              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 60),
+              listAnimationType: ListAnimationType.None,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                EditProfileComponent(refreshCallback: () {
+                  setState(() {});
+                }),
+                Divider(
+                  height: isReceptionist() || isPatient() ? 30 : 40,
+                  color: context.dividerColor,
+                ),
+                Text(locale.lblGeneralSetting, textAlign: TextAlign.center, style: secondaryTextStyle()),
+                16.height,
+                if (isPatient()) GeneralSettingComponent(callBack: () => setState(() {})),
+                if (isDoctor() || isReceptionist()) DoctorReceptionistGeneralSettingComponent(),
+                CommonShopSettingComponent().visible(appStore.wcNonce.validate().isNotEmpty),
+                Column(
+                  children: [
+                    Divider(
+                      height: 24,
+                      color: context.dividerColor,
                     ),
-                  ).center(),
-                ],
-              ).visible(appStore.wcNonce.validate().isNotEmpty)
-            ],
+                    TextButton(
+                      onPressed: () {
+                        showConfirmDialogCustom(
+                          context,
+                          primaryColor: primaryColor,
+                          negativeText: locale.lblCancel,
+                          positiveText: locale.lblYes,
+                          onAccept: (c) async {
+                            appStore.setLoading(true);
+
+                            await logout().catchError((e) {
+                              appStore.setLoading(false);
+                              throw e;
+                            }).whenComplete(() {
+                              appStore.setLoading(false);
+                            });
+                          },
+                          title: locale.lblDoYouWantToLogout,
+                        );
+                      },
+                      child: Text(
+                        locale.lblLogOut,
+                        style: primaryTextStyle(color: primaryColor, weight: FontWeight.bold),
+                      ),
+                    ).center(),
+                  ],
+                ).visible(appStore.wcNonce.validate().isNotEmpty)
+              ],
+            ),
           ),
         ),
         Positioned(
@@ -107,7 +127,6 @@ class _SettingFragmentState extends State<SettingFragment> {
                       appStore.setLoading(true);
                       await logout().catchError((e) {
                         appStore.setLoading(false);
-
                         throw e;
                       });
                     },

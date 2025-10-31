@@ -53,6 +53,7 @@ class _WishListScreenState extends State<WishListScreen> {
 
       appStore.setLoading(false);
       return value;
+    // ignore: body_might_complete_normally_catch_error
     }).catchError((e) {
       appStore.setLoading(false);
       toast(e.toString());

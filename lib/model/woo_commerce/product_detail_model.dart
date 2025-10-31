@@ -16,7 +16,8 @@ class ProductDetailModel {
   String? buttonText;
   String? catalogVisibility;
   List<Category>? categories;
-  List<dynamic>? crossSellIds;
+  //List<dynamic>? crossSellIds;
+  List<int>? crossSellIds;
   String? dateCreated;
   String? dateModified;
   String? dateOnSaleFrom;
@@ -29,6 +30,7 @@ class ProductDetailModel {
   String? externalUrl;
   bool? featured;
   List<ProductDetailModel>? groupedProducts;
+  //List<int>? groupedProducts;
   int? id;
   List<ImageModel>? images;
   bool? inStock;
@@ -48,6 +50,7 @@ class ProductDetailModel {
   List<RelatedProductModel>? relatedIds;
   bool? reviewsAllowed;
   String? salePrice;
+  String? discount;
   String? shippingClass;
   bool? shippingRequired;
   bool? shippingTaxable;
@@ -61,7 +64,8 @@ class ProductDetailModel {
   String? taxStatus;
   String? type;
   List<dynamic>? upsellId;
-  List<dynamic>? upsellIds;
+  List<int>? upsellIds;
+  //List<dynamic>? upsellIds;
   List<ProductDetailModel>? variations;
   bool? virtual;
   String? weight;
@@ -110,6 +114,7 @@ class ProductDetailModel {
     this.relatedIds,
     this.reviewsAllowed,
     this.salePrice,
+    this.discount,
     this.shippingClass,
     this.shippingRequired,
     this.shippingTaxable,
@@ -145,7 +150,8 @@ class ProductDetailModel {
       buttonText: json['button_text'],
       catalogVisibility: json['catalog_visibility'],
       categories: json['categories'] != null ? (json['categories'] as List).map((i) => Category.fromJson(i)).toList() : null,
-      crossSellIds: json['cross_sell_ids'] != null ? (json['cross_sell_ids'] as List).map((i) => i.fromJson(i)).toList() : null,
+      //crossSellIds: json['cross_sell_ids'] != null ? (json['cross_sell_ids'] as List).map((i) => i.fromJson(i)).toList() : null,
+      crossSellIds: json['cross_sell_ids'] != null ? List<int>.from(json['cross_sell_ids']) : null,
       dateCreated: json['date_created'],
       dateModified: json['date_modified'],
       dateOnSaleFrom: json['date_on_sale_from'],
@@ -158,6 +164,7 @@ class ProductDetailModel {
       externalUrl: json['external_url'],
       featured: json['featured'],
       groupedProducts: json['grouped_products'] != null ? (json['grouped_products'] as List).map((e) => ProductDetailModel.fromJson(e)).toList() : null,
+      //groupedProducts: json['grouped_products'] != null ? List<int>.from(json['grouped_products']) : null,
       id: json['id'],
       images: json['images'] != null ? (json['images'] as List).map((i) => ImageModel.fromJson(i)).toList() : null,
       inStock: json['in_stock'],
@@ -177,6 +184,7 @@ class ProductDetailModel {
       relatedProductList: json['related_id'] != null ? (json['related_id'] as List).map((i) => RelatedProductModel.fromJson(i)).toList() : null,
       reviewsAllowed: json['reviews_allowed'],
       salePrice: json['sale_price'],
+      discount: json['discount'],
       shippingClass: json['shipping_class'],
       shippingRequired: json['shipping_required'],
       shippingTaxable: json['shipping_taxable'],
@@ -190,7 +198,8 @@ class ProductDetailModel {
       taxStatus: json['tax_status'],
       type: json['type'],
       upsellId: json['upsell_id'] != null ? (json['upsell_id'] as List).map((i) => i.fromJson(i)).toList() : null,
-      upsellIds: json['upsell_ids'] != null ? (json['upsell_ids'] as List).map((i) => i.fromJson(i)).toList() : null,
+      //upsellIds: json['upsell_ids'] != null ? (json['upsell_ids'] as List).map((i) => i.fromJson(i)).toList() : null,
+      upsellIds: json['upsell_ids'] != null ? List<int>.from(json['upsell_ids']) : null,
       variations: json['variations'] != null ? (json['variations'] as List).map((e) => ProductDetailModel.fromJson(e)).toList() : null,
       virtual: json['virtual'],
       weight: json['weight'],
@@ -232,6 +241,7 @@ class ProductDetailModel {
     data['regular_price'] = this.regularPrice;
     data['reviews_allowed'] = this.reviewsAllowed;
     data['sale_price'] = this.salePrice;
+    data['discount'] = this.discount;
     data['shipping_class'] = this.shippingClass;
     data['shipping_required'] = this.shippingRequired;
     data['shipping_taxable'] = this.shippingTaxable;
@@ -251,8 +261,11 @@ class ProductDetailModel {
     if (this.categories != null) {
       data['categories'] = this.categories!.map((v) => v.toJson()).toList();
     }
+    // if (this.crossSellIds != null) {
+    //   data['cross_sell_ids'] = this.crossSellIds!.map((v) => v.toJson()).toList();
+    // }
     if (this.crossSellIds != null) {
-      data['cross_sell_ids'] = this.crossSellIds!.map((v) => v.toJson()).toList();
+      data['cross_sell_ids'] = this.crossSellIds;
     }
     if (this.defaultAttributes != null) {
       data['default_attributes'] = this.defaultAttributes!.map((v) => v.toJson()).toList();
@@ -279,8 +292,11 @@ class ProductDetailModel {
     if (this.upsellId != null) {
       data['upsell_id'] = this.upsellId!.map((v) => v.toJson()).toList();
     }
+    // if (this.upsellIds != null) {
+    //   data['upsell_ids'] = this.upsellIds!.map((v) => v.toJson()).toList();
+    // }
     if (this.upsellIds != null) {
-      data['upsell_ids'] = this.upsellIds!.map((v) => v.toJson()).toList();
+      data['upsell_ids'] = this.upsellIds;
     }
     if (this.variations != null) {
       data['variations'] = this.variations;

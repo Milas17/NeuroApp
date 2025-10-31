@@ -39,30 +39,21 @@ class PatientBillModule {
   factory PatientBillModule.fromJson(Map<String, dynamic> json) {
     return PatientBillModule(
       actualAmount: json['actual_amount'],
-      billItems: json['billItems'] != null
-          ? (json['billItems'] as List)
-              .map((i) => BillItem.fromJson(i))
-              .toList()
-          : null,
+      billItems: json['billItems'] != null ? (json['billItems'] as List).map((i) => BillItem.fromJson(i)).toList() : null,
       clinic: json['clinic'] != null ? Clinic.fromJson(json['clinic']) : null,
       createdAt: json['created_at'],
       discount: json['discount'],
       encounterId: json['encounter_id'],
       id: json['id'],
-      patient:
-          json['patient'] != null ? Patient.fromJson(json['patient']) : null,
-      patientEncounter: json['patientEncounter'] != null
-          ? PatientEncounter.fromJson(json['patientEncounter'])
-          : null,
+      patient: json['patient'] != null ? Patient.fromJson(json['patient']) : null,
+      patientEncounter: json['patientEncounter'] != null ? PatientEncounter.fromJson(json['patientEncounter']) : null,
       paymentStatus: json['payment_status'],
       status: json['status'],
       title: json['title'],
       //extra: json['extra'] != null ? Extra.fromJson(json['extra']) : null,
       totalAmount: json['total_amount'],
       totalTax: json['tax_total'],
-      taxes: json['taxes'] != null
-          ? (json['taxes'] as List).map((i) => TaxModule.fromJson(i)).toList()
-          : null,
+      taxes: json['taxes'] != null ? (json['taxes'] as List).map((i) => TaxModule.fromJson(i)).toList() : null,
     );
   }
 
@@ -113,17 +104,7 @@ class PatientEncounter {
   String? patientId;
   String? status;
 
-  PatientEncounter(
-      {this.addedBy,
-      this.appointmentId,
-      this.clinicId,
-      this.createdAt,
-      this.description,
-      this.doctorId,
-      this.encounterDate,
-      this.id,
-      this.patientId,
-      this.status});
+  PatientEncounter({this.addedBy, this.appointmentId, this.clinicId, this.createdAt, this.description, this.doctorId, this.encounterDate, this.id, this.patientId, this.status});
 
   factory PatientEncounter.fromJson(Map<String, dynamic> json) {
     return PatientEncounter(
@@ -169,15 +150,7 @@ class BillItem {
 
   String? serviceId;
 
-  BillItem(
-      {this.billId,
-      this.mappingTableId,
-      this.id,
-      this.serviceId,
-      this.itemId,
-      this.label,
-      this.price,
-      this.qty});
+  BillItem({this.billId, this.mappingTableId, this.id, this.serviceId, this.itemId, this.label, this.price, this.qty});
 
   factory BillItem.fromJson(Map<String, dynamic> json) {
     return BillItem(
@@ -243,10 +216,7 @@ class TaxModule {
 
   // Factory constructor for creating a TaxModule from a JSON map
   factory TaxModule.fromJson(Map<String, dynamic> json) {
-    return TaxModule(
-        taxName: json['name'],
-        taxRate: json['tax_value'],
-        charges: json['charges']);
+    return TaxModule(taxName: json['name'], taxRate: json['tax_value'], charges: json['charges']);
   }
 
   // Method to convert a TaxModule to a JSON map

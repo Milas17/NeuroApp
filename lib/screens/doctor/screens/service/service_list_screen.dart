@@ -1,25 +1,25 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/empty_error_state_component.dart';
 import 'package:kivicare_flutter/components/internet_connectivity_widget.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/service_model.dart';
 import 'package:kivicare_flutter/network/service_repository.dart';
 import 'package:kivicare_flutter/screens/doctor/screens/service/add_service_screen.dart';
 import 'package:kivicare_flutter/screens/doctor/screens/service/components/service_widget.dart';
+import 'package:kivicare_flutter/screens/doctor/screens/service/view_service_data_screen.dart';
+import 'package:kivicare_flutter/screens/receptionist/receptionist_service_data_screen.dart';
 import 'package:kivicare_flutter/screens/shimmer/components/services_shimmer_component.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
-import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
-
 import '../../../../utils/constants/sharedpreference_constants.dart';
 
 class ServiceListScreen extends StatefulWidget {
@@ -29,11 +29,14 @@ class ServiceListScreen extends StatefulWidget {
 
 class _ServiceListScreenState extends State<ServiceListScreen> {
   Future<List<ServiceData>>? future;
+  String? selectedType;
+  String? selectedDoctor;
+  String? selectedClinic;
 
   TextEditingController searchCont = TextEditingController();
 
   List<ServiceData> serviceList = [];
-  int total = 0;
+  List<ServiceData> fullServiceList = []; // 🔹 NEW: full unfiltered data
   int page = 1;
 
   bool isLastPage = false;
@@ -46,25 +49,43 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
   }
 
   Future<void> init({bool showLoader = true}) async {
-    if (showLoader) {
-      appStore.setLoading(true);
-    }
+    if (showLoader) appStore.setLoading(true);
+
+    final fetchId = (isReceptionist() || isPatient()) ? userStore.userClinicId.validate().toInt() : userStore.userId.validate();
+
+    print('Fetching services for ID: $fetchId');
 
     future = getServiceListAPI(
       searchString: searchCont.text,
-      id: isReceptionist() ? userStore.userClinicId.validate().toInt() : userStore.userId.validate(),
+      id: fetchId,
       perPages: 50,
       page: page,
       lastPageCallback: (b) => isLastPage = b,
     ).then((value) {
       appStore.setLoading(false);
-      if (searchCont.text.isNotEmpty) {
-        showClear = true;
-      } else {
-        showClear = false;
+
+      showClear = searchCont.text.isNotEmpty;
+
+      fullServiceList = value;
+      List<ServiceData> filteredList = value;
+
+      if (selectedType != null && selectedType!.isNotEmpty) {
+        filteredList = filteredList.where((e) => e.type == selectedType).toList();
       }
+      if (selectedDoctor != null && selectedDoctor!.isNotEmpty) {
+        filteredList = filteredList
+            .where(
+              (e) => e.doctorList?.any((doc) => doc.displayName == selectedDoctor) ?? false,
+            )
+            .toList();
+      }
+      if (selectedClinic != null && selectedClinic!.isNotEmpty) {
+        filteredList = filteredList.where((e) => e.clinicId == selectedClinic).toList();
+      }
+
+      serviceList = filteredList;
       setState(() {});
-      return value;
+      return filteredList;
     }).catchError((e) {
       appStore.setLoading(false);
       setState(() {});
@@ -74,26 +95,14 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
 
   Future<void> _onClearSearch() async {
     hideKeyboard(context);
-
     searchCont.clear();
     init(showLoader: true);
   }
 
   @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
-  @override
   void dispose() {
     getDisposeStatusBarColor();
-
     super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant ServiceListScreen oldWidget) {
-    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -104,7 +113,107 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
           locale.lblServices,
           textColor: Colors.white,
           systemUiOverlayStyle: defaultSystemUiOverlayStyle(context),
-          actions: [],
+          actions: [
+            Badge(
+              backgroundColor: appSecondaryColor,
+              isLabelVisible: selectedType != null || selectedDoctor != null || selectedClinic != null,
+              label: GestureDetector(
+                onTap: () {
+                  selectedType = null;
+                  selectedDoctor = null;
+                  selectedClinic = null;
+                  init(showLoader: true);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 15,
+                  decoration: BoxDecoration(shape: BoxShape.rectangle),
+                  child: Icon(
+                    Icons.close,
+                    size: 12,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              // child: IconButton(
+              //   icon: Icon(
+              //     Icons.filter_list,
+              //     color: Colors.white,
+              //   ),
+              //   iconSize: 24, // Set the size of the main icon
+              //   onPressed: () async {
+              //     final selected = await Navigator.push<Map<String, String?>>(
+              //       context,
+              //       MaterialPageRoute(
+              //         builder: (context) => ServiceFilterScreen(
+              //           serviceData: fullServiceList, // 🔹 Unfiltered
+              //           currentType: selectedType,
+              //           currentDoctor: selectedDoctor,
+              //           currentClinic: selectedClinic,
+              //         ),
+              //       ),
+              //     );
+              //     if (selected != null) {
+              //       selectedType = selected['type'];
+              //       selectedDoctor = selected['doctor'];
+              //       selectedClinic = selected['clinic'];
+
+              //       page = 1;
+              //       await init(showLoader: true);
+              //     }
+              //   },
+              //   padding: EdgeInsets.zero,
+              //   constraints: BoxConstraints(),
+              // ),
+              // alignment: Alignment.topRight,
+              offset: Offset(0, 0),
+            ),
+
+            // GestureDetector(
+            //   onTap: () async {
+            //     final selected = await Navigator.push<Map<String, String?>>(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => ServiceFilterScreen(
+            //           serviceData: fullServiceList, // 🔹 Unfiltered
+            //           currentType: selectedType,
+            //           currentDoctor: selectedDoctor,
+            //           currentClinic: selectedClinic,
+            //         ),
+            //       ),
+            //     );
+
+            //     if (selected != null) {
+            //       selectedType = selected['type'];
+            //       selectedDoctor = selected['doctor'];
+            //       selectedClinic = selected['clinic'];
+
+            //       page = 1;
+            //       await init(showLoader: true);
+            //     }
+            //   },
+            //   child: Container(
+            //     height: 35,
+            //     width: 35,
+            //     decoration: BoxDecoration(
+            //       // color: appBarBackgroundColorGlobal,
+            //       borderRadius: BorderRadius.circular(8),
+            //     ),
+            //     child: Icon(Icons.filter_list, color: Colors.black),
+            //   ),
+            // ),
+            // if (selectedType != null || selectedDoctor != null || selectedClinic != null)
+            //   TextButton(
+            //     onPressed: () {
+            //       selectedType = null;
+            //       selectedDoctor = null;
+            //       selectedClinic = null;
+            //       init(showLoader: true);
+            //     },
+            //     child: Text('Clear Filter', style: primaryTextStyle(color: Colors.red)),
+            //   ),
+            16.width
+          ],
         ),
         body: InternetConnectivityWidget(
           retryCallback: () async {
@@ -123,25 +232,30 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                       context: context,
                       hintText: locale.lblSearchServices,
                       prefixIcon: ic_search.iconImage().paddingAll(16),
-                      suffixIcon: !showClear
-                          ? Offstage()
-                          : ic_clear.iconImage().paddingAll(16).appOnTap(
-                              () async {
-                                _onClearSearch();
-                              },
-                              borderRadius: radius(),
-                            ),
+                      suffixIcon: VoiceSearchSuffix(
+                        controller: searchCont,
+                        lottieAnimationPath: lt_voice,
+                        onClear: () {
+                          _onClearSearch();
+                        },
+                        onSearchChanged: (value) {
+                          if (value.isEmpty) {
+                            _onClearSearch();
+                          } else {
+                            Timer(pageAnimationDuration, () {
+                              init(showLoader: true);
+                            });
+                          }
+                        },
+                        onSearchSubmitted: (value) {
+                          hideKeyboard(context);
+                          init(showLoader: true);
+                        },
+                      ),
                     ),
                     onChanged: (newValue) {
-                      if (newValue.isEmpty) {
-                        showClear = false;
-                        _onClearSearch();
-                      } else {
-                        Timer(pageAnimationDuration, () {
-                          init(showLoader: true);
-                        });
-                        showClear = true;
-                      }
+                      showClear = newValue.isNotEmpty;
+                      Timer(pageAnimationDuration, () => init(showLoader: true));
                       setState(() {});
                     },
                     onFieldSubmitted: (searchString) async {
@@ -155,28 +269,19 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               ).paddingSymmetric(horizontal: 16, vertical: 16),
               SnapHelperWidget<List<ServiceData>>(
                 future: future,
-                errorBuilder: (p0) {
-                  return ErrorStateWidget(
-                    error: p0.toString(),
-                  );
-                },
+                errorBuilder: (p0) => ErrorStateWidget(error: p0.toString()),
                 loadingWidget: AnimatedWrap(
                   runSpacing: 16,
                   spacing: 16,
                   listAnimationType: listAnimationType,
                   crossAxisAlignment: WrapCrossAlignment.center,
-                  children: List.generate(
-                    4,
-                    (index) => ServicesShimmerComponent(isForDoctorServicesList: isDoctor()),
-                  ),
+                  children: List.generate(4, (index) => ServicesShimmerComponent(isForDoctorServicesList: isDoctor())),
                 ).paddingSymmetric(horizontal: 16, vertical: 16),
                 onSuccess: (snap) {
                   if (snap.isEmpty && !appStore.isLoading) {
-                    return SingleChildScrollView(
-                      child: NoDataFoundWidget(
-                        iconSize: searchCont.text.isNotEmpty && appStore.isLoading ? 60 : 160,
-                        text: searchCont.text.isNotEmpty ? locale.lblCantFindServiceYouSearchedFor : locale.lblNoServicesFound,
-                      ),
+                    return NoDataFoundWidget(
+                      iconSize: searchCont.text.isNotEmpty ? 60 : 160,
+                      text: searchCont.text.isNotEmpty ? locale.lblCantFindServiceYouSearchedFor : locale.lblNoServicesFound,
                     ).center();
                   }
 
@@ -187,15 +292,13 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                     physics: AlwaysScrollableScrollPhysics(),
                     slideConfiguration: SlideConfiguration(verticalOffset: 400),
                     onSwipeRefresh: () async {
-                      init(showLoader: true);
+                      await init(showLoader: true);
                       return await 1.seconds.delay;
                     },
                     onNextPage: () async {
-                      setState(() {
-                        page++;
-                      });
-                      init(showLoader: true);
-                      await 1.seconds.delay;
+                      page++;
+                      await init(showLoader: true);
+                      return await 1.seconds.delay;
                     },
                     children: [
                       AnimatedWrap(
@@ -205,23 +308,35 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
                         listAnimationType: listAnimationType,
                         crossAxisAlignment: WrapCrossAlignment.start,
                         itemCount: snap.length,
-                        itemBuilder: (p0, index) {
+                        itemBuilder: (context, index) {
                           ServiceData data = snap[index];
-
-                          return GestureDetector(
-                            onTap: () async {
-                              if (isVisible(SharedPreferenceKey.kiviCareServiceEditKey))
-                                await AddServiceScreen(
-                                    serviceData: data,
-                                    callForRefresh: () {
-                                      init();
-                                    }).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
-                                  if (value ?? false) {
-                                    init();
+                          return ServiceWidget(
+                            data: data,
+                            onEdit: isDoctor() || isReceptionist()
+                                ? () async {
+                                    await AddServiceScreen(
+                                      serviceData: data,
+                                      callForRefresh: () => init(),
+                                    ).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
+                                      if (value ?? false) init();
+                                    });
                                   }
-                                });
+                                : null,
+                            onTap: () {
+                              if (isReceptionist()) {
+                                ReceptionistServiceDataScreen(serviceData: data).launch(
+                                  context,
+                                  pageRouteAnimation: PageRouteAnimation.Slide,
+                                  duration: pageAnimationDuration,
+                                );
+                              } else {
+                                ViewServiceDataScreen(serviceData: data).launch(
+                                  context,
+                                  pageRouteAnimation: PageRouteAnimation.Slide,
+                                  duration: pageAnimationDuration,
+                                );
+                              }
                             },
-                            child: ServiceWidget(data: data),
                           );
                         },
                       ),
@@ -238,10 +353,7 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
           onPressed: () async {
             if (appStore.isConnectedToInternet) {
               await AddServiceScreen().launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
-                if (value ?? false) {
-                  init();
-                  setState(() {});
-                }
+                if (value ?? false) init();
               });
             } else {
               toast(locale.lblNoInternetMsg);

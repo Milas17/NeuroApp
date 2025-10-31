@@ -92,136 +92,114 @@ class AppointmentQuickView extends StatelessWidget {
                     ],
                   ),
                   10.height,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: List.generate(
-                      upcomingAppointment.visitType.validate().length,
-                      (index) => Row(
-                        children: [
-                          Text(
-                            "${upcomingAppointment.visitType![index].serviceName}",
-                            style: secondaryTextStyle(size: 12),
-                          ).expand(flex: 2),
-                          FittedBox(
-                            child: Text(
-                              "${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${upcomingAppointment.visitType![index].charges.validate().toDouble().toStringAsFixed(2)}${appStore.currencyPostfix.validate()} ",
-                              style: primaryTextStyle(size: 12),
-                            ),
-                          ),
-                        ],
-                      ).paddingSymmetric(vertical: 4),
-                    ),
-                  ),
-                  Divider(
-                    height: 8,
-                    color: context.dividerColor,
-                  ),
-
-                  ///Discount
-                  Row(
-                    children: [
-                      Text(locale.lblDiscount, style: secondaryTextStyle(size: 12)).expand(),
-                      FittedBox(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${upcomingAppointment.discount.validate().toDouble().toStringAsFixed(2)}${appStore.currencyPostfix.validate()}',
-                          style: primaryTextStyle(size: 12),
-                        ),
-                      ),
-                    ],
-                  ).paddingSymmetric(vertical: 4),
-
-                  ///Subtotal
-                  Divider(
-                    height: 8,
-                    color: context.dividerColor,
-                  ),
-                  Row(
-                    children: [
-                      Text(locale.lblSubTotal, style: secondaryTextStyle(size: 12)).expand(),
-                      FittedBox(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          '${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${upcomingAppointment.allServiceCharges.validate().toDouble().toStringAsFixed(2)}${appStore.currencyPostfix.validate()}',
-                          style: primaryTextStyle(size: 12),
-                        ),
-                      ),
-                    ],
-                  ).paddingSymmetric(vertical: 4),
-
-                  ///Tax Section
-                  if (upcomingAppointment.taxData != null && upcomingAppointment.taxData!.taxList.validate().isNotEmpty)
-                    Divider(
-                      height: 8,
-                      color: context.dividerColor,
-                    ),
-                  if (upcomingAppointment.taxData != null && upcomingAppointment.taxData!.taxList.validate().isNotEmpty)
+                  if (upcomingAppointment.visitType == null || upcomingAppointment.visitType!.isEmpty)
                     Row(
                       children: [
-                        Text(locale.lblTax, style: boldTextStyle(size: 12)).expand(),
-                        16.width,
-                        Text(
-                          locale.lblTaxRate,
-                          style: boldTextStyle(size: 12),
-                          textAlign: TextAlign.center,
-                        ).expand(flex: 2),
-                        16.width,
-                        FittedBox(
+                        Icon(Icons.warning_amber_rounded, color: Colors.red),
+                        8.width,
+                        Expanded(
                           child: Text(
-                            locale.lblCharges,
-                            style: boldTextStyle(size: 12),
-                            textAlign: TextAlign.end,
+                            locale.lblServiceIsDeletedCurrentlyUnavailable,
+                            style: secondaryTextStyle(color: Colors.red, size: 12),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
-                    ),
-                  if (upcomingAppointment.taxData != null && upcomingAppointment.taxData!.taxList.validate().isNotEmpty)
-                    Divider(
-                      height: 8,
-                      color: context.dividerColor,
-                    ),
-                  if (upcomingAppointment.taxData != null)
-                    ...upcomingAppointment.taxData!.taxList.validate().map((e) {
-                      return Row(
-                        children: [
-                          Text(e.taxName.validate().replaceAll(RegExp(r'[^a-zA-Z]'), ''), maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(size: 12)).expand(),
-                          if (e.taxName.validate().contains('%'))
+                    ).paddingSymmetric(vertical: 8)
+                  else
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: List.generate(
+                        upcomingAppointment.visitType.validate().length,
+                        (index) => Row(
+                          children: [
                             Text(
-                              e.taxRate.validate().toString().suffixText(value: '%'),
-                              style: primaryTextStyle(size: 12),
-                              textAlign: TextAlign.center,
-                            ).expand(flex: 2)
-                          else
-                            PriceWidget(
-                              price: e.taxRate.validate().toStringAsFixed(2),
-                              textStyle: primaryTextStyle(size: 12),
-                              textAlign: TextAlign.center,
-                            ).paddingLeft(4).expand(flex: 2),
-                          PriceWidget(
-                            price: e.charges.validate().toStringAsFixed(2),
-                            textStyle: primaryTextStyle(size: 12),
-                            textAlign: TextAlign.end,
-                          ).paddingLeft(4).expand(),
-                        ],
-                      ).paddingSymmetric(vertical: 4);
-                    }).toList(),
-
-                  ///Total
+                              "${upcomingAppointment.visitType![index].serviceName}",
+                              style: secondaryTextStyle(size: 12),
+                            ).expand(flex: 2),
+                            FittedBox(
+                              child: Text(
+                                "${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${upcomingAppointment.visitType![index].charges.validate().toDouble().toStringAsFixed(2)}${appStore.currencyPostfix.validate()} ",
+                                style: primaryTextStyle(size: 12),
+                              ),
+                            ),
+                          ],
+                        ).paddingSymmetric(vertical: 4),
+                      ),
+                    ),
                   Divider(
                     height: 8,
                     color: context.dividerColor,
                   ),
-                  Row(
-                    children: [
-                      Text(locale.lblTotal, style: secondaryTextStyle()).expand(),
-                      FittedBox(
-                        child: Text(
-                          '${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${getTotal().toStringAsFixed(2)}${appStore.currencyPostfix.validate()}',
-                          style: boldTextStyle(color: appStore.isDarkModeOn ? white : appPrimaryColor),
+                  if (upcomingAppointment.visitType != null && upcomingAppointment.visitType!.isNotEmpty) ...[
+                    Row(
+                      children: [
+                        Text(locale.lblDiscount, style: secondaryTextStyle(size: 12)).expand(),
+                        FittedBox(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${upcomingAppointment.discount.validate().toDouble().toStringAsFixed(2)}${appStore.currencyPostfix.validate()}',
+                            style: primaryTextStyle(size: 12),
+                          ),
                         ),
+                      ],
+                    ).paddingSymmetric(vertical: 4),
+
+                    Divider(height: 8, color: context.dividerColor),
+                    Row(
+                      children: [
+                        Text(locale.lblSubTotal, style: secondaryTextStyle(size: 12)).expand(),
+                        FittedBox(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            '${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${upcomingAppointment.allServiceCharges.validate().toDouble().toStringAsFixed(2)}${appStore.currencyPostfix.validate()}',
+                            style: primaryTextStyle(size: 12),
+                          ),
+                        ),
+                      ],
+                    ).paddingSymmetric(vertical: 4),
+
+                    // tax + total parts (same as before)
+                    if (upcomingAppointment.taxData != null && upcomingAppointment.taxData!.taxList.validate().isNotEmpty) Divider(height: 8, color: context.dividerColor),
+                    if (upcomingAppointment.taxData != null && upcomingAppointment.taxData!.taxList.validate().isNotEmpty)
+                      Row(
+                        children: [
+                          Text(locale.lblTax, style: boldTextStyle(size: 12)).expand(),
+                          16.width,
+                          Text(locale.lblTaxRate, style: boldTextStyle(size: 12), textAlign: TextAlign.center).expand(flex: 2),
+                          16.width,
+                          FittedBox(child: Text(locale.lblCharges, style: boldTextStyle(size: 12), textAlign: TextAlign.end)),
+                        ],
                       ),
-                    ],
-                  ).paddingSymmetric(vertical: 4),
+                    if (upcomingAppointment.taxData != null && upcomingAppointment.taxData!.taxList.validate().isNotEmpty) Divider(height: 8, color: context.dividerColor),
+                    if (upcomingAppointment.taxData != null)
+                      ...upcomingAppointment.taxData!.taxList.validate().map((e) {
+                        return Row(
+                          children: [
+                            Text(e.taxName.validate().replaceAll(RegExp(r'[^a-zA-Z]'), ''), maxLines: 1, overflow: TextOverflow.ellipsis, style: secondaryTextStyle(size: 12)).expand(),
+                            if (e.taxName.validate().contains('%'))
+                              Text(e.taxRate.validate().toString().suffixText(value: '%'), style: primaryTextStyle(size: 12), textAlign: TextAlign.center).expand(flex: 2)
+                            else
+                              PriceWidget(price: e.taxRate.validate().toStringAsFixed(2), textStyle: primaryTextStyle(size: 12), textAlign: TextAlign.center).paddingLeft(4).expand(flex: 2),
+                            PriceWidget(price: e.charges.validate().toStringAsFixed(2), textStyle: primaryTextStyle(size: 12), textAlign: TextAlign.end).paddingLeft(4).expand(),
+                          ],
+                        ).paddingSymmetric(vertical: 4);
+                      }).toList(),
+
+                    Divider(height: 8, color: context.dividerColor),
+                    Row(
+                      children: [
+                        Text(locale.lblTotal, style: secondaryTextStyle()).expand(),
+                        FittedBox(
+                          child: Text(
+                            '${appStore.currencyPrefix.validate(value: appStore.currency.validate())}${getTotal().toStringAsFixed(2)}${appStore.currencyPostfix.validate()}',
+                            style: boldTextStyle(color: appStore.isDarkModeOn ? white : appPrimaryColor),
+                          ),
+                        ),
+                      ],
+                    ).paddingSymmetric(vertical: 4),
+                  ]
                 ],
               ),
             ),

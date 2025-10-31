@@ -36,6 +36,7 @@ class UpcomingAppointmentModel {
   bool? videoConsultation;
   RatingData? doctorRating;
   String? paymentMethod;
+  String? paymentStatus;
   String? appointmentGlobalStartDate;
   num? discount;
 
@@ -92,6 +93,7 @@ class UpcomingAppointmentModel {
     this.appointmentGlobalStartDate,
     this.videoConsultation,
     this.paymentMethod,
+    this.paymentStatus,
     this.googleMeetData,
     this.taxData,
     this.discount,
@@ -127,6 +129,7 @@ class UpcomingAppointmentModel {
       zoomData: json['zoom_data'] != null ? new ZoomData.fromJson(json['zoom_data']) : null,
       doctorRating: json['review'] != null ? new RatingData.fromJson(json['review']) : null,
       paymentMethod: json['payment_mode'],
+      paymentStatus: json['payment_status']?.toString(),
       googleMeetData: json['google_meet_data'],
       discount: json['discount'],
     );
@@ -156,6 +159,7 @@ class UpcomingAppointmentModel {
     data['discount_code'] = this.discountCode;
     data['start_date'] = this.appointmentGlobalStartDate;
     data['payment_mode'] = this.paymentMethod;
+    data['payment_status'] = this.paymentStatus;
     data['google_meet_data'] = this.googleMeetData;
     data['tax_data'] = this.taxData;
     data['discount'] = this.discount;
@@ -225,16 +229,12 @@ class VisitType {
   String? serviceId;
   String? serviceName;
   String? charges;
+  String? servicesProfileImg;
 
-  VisitType({this.id, this.serviceId, this.serviceName, this.charges});
+  VisitType({this.id, this.serviceId, this.serviceName, this.charges, this.servicesProfileImg});
 
   factory VisitType.fromJson(Map<String, dynamic> json) {
-    return VisitType(
-      id: json['id'],
-      serviceId: json['service_id'],
-      serviceName: json['service_name'],
-      charges: json['charges'],
-    );
+    return VisitType(id: json['id'], serviceId: json['service_id'], serviceName: json['service_name'], charges: json['charges'], servicesProfileImg: json['service_profile_img']);
   }
 
   Map<String, dynamic> toJson() {
@@ -243,6 +243,7 @@ class VisitType {
     data['service_id'] = this.serviceId;
     data['service_name'] = this.serviceName;
     data['charges'] = this.charges;
+    data['service_profile_img'] = this.servicesProfileImg;
     return data;
   }
 }

@@ -49,6 +49,7 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
 
   CountryModel? selectedCountry;
   StateModel? selectedState;
+  String selectedCountryCode = '+91';
 
   List<CountryModel> countries = [];
 
@@ -75,6 +76,18 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
       state.text = widget.data!.state.validate();
       postCode.text = widget.data!.postcode.validate();
       phone.text = widget.data!.phone.validate();
+      if (phone.text.isNotEmpty) {
+        // Find matching code from available list
+        List<String> codes = ['+1', '+44', '+91', '+971', '+61'];
+
+        selectedCountryCode = codes.firstWhere(
+          (c) => phone.text.startsWith(c),
+          orElse: () => '+91',
+        );
+
+        // Remove prefix for textfield
+        phone.text = phone.text.replaceFirst(selectedCountryCode, '');
+      }
       email.text = widget.data!.email.validate();
       if (widget.data!.country.validate().isNotEmpty) {
         if (countriesList.any((element) => element.name == widget.data!.country.validate())) {
@@ -82,8 +95,7 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
         }
         if (selectedCountry != null && selectedCountry!.states != null) {
           if (widget.data!.state.validate().isNotEmpty) {
-            if (selectedCountry!.states.validate().any((element) => element.name == widget.data!.state.validate()))
-              selectedState = selectedCountry!.states.validate().firstWhere((element) => element.name == widget.data!.state.validate());
+            if (selectedCountry!.states.validate().any((element) => element.name == widget.data!.state.validate())) selectedState = selectedCountry!.states.validate().firstWhere((element) => element.name == widget.data!.state.validate());
           }
         }
       } else {
@@ -298,7 +310,7 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
                 labelText: locale.lblCountry,
                 fillColor: context.scaffoldBackgroundColor,
               ),
-              value: selectedCountry,
+              initialValue: selectedCountry,
               validator: (value) {
                 if (value == null) {
                   return '${locale.lblCountry} ${locale.lblIsRequired}';
@@ -308,10 +320,10 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
               items: countriesList
                   .map(
                     (country) => DropdownMenuItem(
-                  value: country,
-                  child: Text(country.name.validate(), style: secondaryTextStyle()),
-                ),
-              )
+                      value: country,
+                      child: Text(country.name.validate(), style: secondaryTextStyle()),
+                    ),
+                  )
                   .toList(),
               onChanged: (value) {
                 selectedCountry = value;
@@ -323,41 +335,6 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
                 }
               },
             ),
-            16.height,
-              AppTextField(
-                controller: state,
-                focus: stateFocus,
-                nextFocus: cityFocus,
-                textInputAction: TextInputAction.next,
-                textFieldType: TextFieldType.OTHER,
-                decoration: inputDecoration(
-                  context: context,
-                  labelText: locale.state,
-                  fillColor: context.scaffoldBackgroundColor,
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return '${locale.state} ${locale.lblIsRequired}';
-                  }
-                  return null;
-                },
-                onChanged: (text) {
-                  if (widget.isBilling) {
-                    billingAddress.state = text;
-                  } else {
-                    shippingAddress.state = text;
-                  }
-                  setState(() {});
-                },
-                onFieldSubmitted: (text) {
-                  if (widget.isBilling) {
-                    billingAddress.state = text;
-                  } else {
-                    shippingAddress.state = text;
-                  }
-                  setState(() {});
-                },
-              ),
             16.height,
             Row(
               children: [
@@ -429,43 +406,89 @@ class _AddressFormComponentState extends State<AddressFormComponent> {
               ],
             ),
             16.height,
-            AppTextField(
-              enabled: !appStore.isLoading,
-              controller: phone,
-              focus: phoneFocus,
-              readOnly: false,
-              nextFocus: widget.isBilling ? emailFocus : null,
-              keyboardType: TextInputType.phone,
-              textInputAction: widget.isBilling ? TextInputAction.next : TextInputAction.done,
-              textFieldType: TextFieldType.PHONE,
-              textStyle: primaryTextStyle(),
-              maxLines: 1,
-              decoration: inputDecoration(
-                context: context,
-                labelText: locale.lblContactNumber,
-                fillColor: context.scaffoldBackgroundColor,
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return '${locale.lblContactNumber} ${locale.lblIsRequired}';
-                }
-                return null;
-              },
-              onChanged: (text) {
-                if (widget.isBilling) {
-                  billingAddress.phone = text;
-                } else {
-                  shippingAddress.phone = text;
-                }
-              },
-              onFieldSubmitted: (text) {
-                if (widget.isBilling) {
-                  billingAddress.phone = text;
-                } else {
-                  shippingAddress.phone = text;
-                }
-                validateAndSaveForm();
-              },
+            Row(
+              children: [
+                // Country Code Dropdown
+                DropdownButtonFormField<String>(
+                  initialValue: selectedCountryCode,
+                  isExpanded: true,
+                  borderRadius: radius(),
+                  dropdownColor: context.cardColor,
+                  decoration: inputDecoration(
+                    context: context,
+                    labelText: locale.lblCountry,
+                    fillColor: context.scaffoldBackgroundColor,
+                  ),
+                  items: countriesList
+                      .map((country) => DropdownMenuItem<String>(
+                            value: country.dial_code,
+                            child: Text(
+                              '${country.dial_code} (${country.code})',
+                              style: secondaryTextStyle(),
+                            ),
+                          ))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedCountryCode = value ?? '+91';
+                    });
+
+                    if (widget.isBilling) {
+                      billingAddress.phone = '$selectedCountryCode${phone.text}';
+                    } else {
+                      shippingAddress.phone = '$selectedCountryCode${phone.text}';
+                    }
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return '${locale.lblCountry} ${locale.lblIsRequired}';
+                    }
+                    return null;
+                  },
+                ).expand(flex: 2),
+
+                16.width,
+
+                Expanded(
+                  flex: 5,
+                  child: AppTextField(
+                    enabled: !appStore.isLoading,
+                    controller: phone,
+                    focus: phoneFocus,
+                    nextFocus: widget.isBilling ? emailFocus : null,
+                    keyboardType: TextInputType.phone,
+                    textInputAction: widget.isBilling ? TextInputAction.next : TextInputAction.done,
+                    textFieldType: TextFieldType.PHONE,
+                    textStyle: primaryTextStyle(),
+                    decoration: inputDecoration(
+                      context: context,
+                      labelText: locale.lblContactNumber,
+                      fillColor: context.scaffoldBackgroundColor,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return '${locale.lblContactNumber} ${locale.lblIsRequired}';
+                      }
+                      return null;
+                    },
+                    onChanged: (text) {
+                      if (widget.isBilling) {
+                        billingAddress.phone = '$selectedCountryCode$text';
+                      } else {
+                        shippingAddress.phone = '$selectedCountryCode$text';
+                      }
+                    },
+                    onFieldSubmitted: (text) {
+                      if (widget.isBilling) {
+                        billingAddress.phone = '$selectedCountryCode$text';
+                      } else {
+                        shippingAddress.phone = '$selectedCountryCode$text';
+                      }
+                      validateAndSaveForm();
+                    },
+                  ),
+                ),
+              ],
             ),
             16.height,
             if (widget.isBilling)

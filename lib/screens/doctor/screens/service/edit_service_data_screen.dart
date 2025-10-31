@@ -204,7 +204,7 @@ class _EditServiceDataScreenState extends State<EditServiceDataScreen> {
               child: DropdownButtonFormField<DurationModel>(
                 focusNode: serviceDurationFocus,
                 borderRadius: radius(),
-                value: selectedDuration,
+                initialValue: selectedDuration,
                 icon: SizedBox.shrink(),
                 dropdownColor: context.cardColor,
                 validator: (value) {
@@ -246,27 +246,37 @@ class _EditServiceDataScreenState extends State<EditServiceDataScreen> {
                     style: primaryTextStyle(color: textSecondaryColorGlobal),
                   ),
                   4.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 0,
-                        children: [
-                          Text(locale.lblYes, style: primaryTextStyle()),
-                          Radio.adaptive(value: true, groupValue: isMultiSelection, onChanged: changeMultiSelection),
-                        ],
-                      ).paddingLeft(38),
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 0,
-                        children: [
-                          Text(locale.lblNo, style: primaryTextStyle()),
-                          Radio.adaptive(value: false, groupValue: isMultiSelection, onChanged: changeMultiSelection),
-                        ],
-                      ).paddingRight(38),
-                    ],
-                  )
+                  RadioGroup<bool>(
+                    groupValue: isMultiSelection,
+                    onChanged: (bool? val) {
+                      if (val != null) changeMultiSelection(val);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Text(locale.lblYes, style: primaryTextStyle()),
+                            Radio<bool>(
+                              value: true,
+                            ),
+                          ],
+                        ).paddingLeft(38),
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Text(locale.lblNo, style: primaryTextStyle()),
+                            Radio<bool>(
+                              value: false,
+                            ),
+                          ],
+                        ).paddingRight(38),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -282,21 +292,37 @@ class _EditServiceDataScreenState extends State<EditServiceDataScreen> {
                     style: primaryTextStyle(color: textSecondaryColorGlobal),
                   ),
                   4.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 0,
-                        children: [Text(locale.lblActive, style: primaryTextStyle()), Radio.adaptive(value: true, groupValue: isActive, onChanged: changeStatus)],
-                      ).paddingLeft(22),
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 0,
-                        children: [Text(locale.lblInActive, style: primaryTextStyle()), Radio.adaptive(value: false, groupValue: isActive, onChanged: changeStatus)],
-                      ).paddingRight(22),
-                    ],
-                  )
+                  RadioGroup<bool>(
+                    groupValue: isActive,
+                    onChanged: (bool? val) {
+                      if (val != null) changeStatus(val);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Text(locale.lblActive, style: primaryTextStyle()),
+                            Radio<bool>(
+                              value: true,
+                            ),
+                          ],
+                        ).paddingLeft(22),
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Text(locale.lblInActive, style: primaryTextStyle()),
+                            Radio<bool>(
+                              value: false,
+                            ),
+                          ],
+                        ).paddingRight(22),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -312,21 +338,37 @@ class _EditServiceDataScreenState extends State<EditServiceDataScreen> {
                     style: primaryTextStyle(color: textSecondaryColorGlobal),
                   ),
                   4.height,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 0,
-                        children: [Text(locale.lblYes, style: primaryTextStyle()), Radio.adaptive(value: true, groupValue: isTelemed, onChanged: allowTelemed)],
-                      ).paddingLeft(38),
-                      Wrap(
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        spacing: 0,
-                        children: [Text(locale.lblNo, style: primaryTextStyle()), Radio.adaptive(value: false, groupValue: isTelemed, onChanged: allowTelemed)],
-                      ).paddingRight(38),
-                    ],
-                  )
+                  RadioGroup<bool>(
+                    groupValue: isTelemed,
+                    onChanged: (bool? val) {
+                      if (val != null) allowTelemed(val);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Text(locale.lblYes, style: primaryTextStyle()),
+                            Radio<bool>(
+                              value: true,
+                            ),
+                          ],
+                        ).paddingLeft(38),
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 6,
+                          children: [
+                            Text(locale.lblNo, style: primaryTextStyle()),
+                            Radio<bool>(
+                              value: false,
+                            ),
+                          ],
+                        ).paddingRight(38),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -337,36 +379,51 @@ class _EditServiceDataScreenState extends State<EditServiceDataScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.done, color: Colors.white),
-        onPressed: () {
-          if (formKey.currentState!.validate()) {
-            formKey.currentState!.save();
-            ServiceData data = ServiceData(
-              displayName: isDoctor() ? userStore.userDisplayName : widget.serviceData!.displayName,
-              clinicId: isDoctor() ? selectedDoctor!.clinicId.validate().toString() : userStore.userClinicId.toString(),
-              clinicName: isDoctor() ? selectedDoctor!.clinicName : userStore.userClinicName,
-              id: widget.serviceId.toString(),
-              mappingTableId: isDoctor() ? '' : widget.serviceData!.mappingTableId.validate(),
-              doctorId: widget.doctorId,
-              multiple: isMultiSelection,
-              status: isActive.getIntBool().toString(),
-              isTelemed: isTelemed,
-              charges: chargesCont.text,
-              duration: selectedDuration != null ? selectedDuration?.value.toString() : null,
-              imageFile: selectedImage,
-              image: isDoctor() ? '' : widget.serviceData!.serviceImage,
-            );
-            widget.onSubmit?.call(data);
-            finish(context);
-          } else {
-            isFirstTime = !isFirstTime;
-            if (isActive == null || isMultiSelection == null || isTelemed == null) {
-              toast(locale.lblPleaseChoose);
+          child: Icon(Icons.done, color: Colors.white),
+          onPressed: () {
+            if (formKey.currentState!.validate()) {
+              formKey.currentState!.save();
+
+              // ✅ Update the doctor (UserModel) first
+              selectedDoctor!
+                ..charges = chargesCont.text
+                ..duration = selectedDuration?.value.toString()
+                ..multiple = isMultiSelection
+                ..isTelemed = isTelemed
+                ..status = isActive.getIntBool().toString()
+                ..imageFile = selectedImage
+                ..serviceImage = isDoctor() ? '' : widget.serviceData!.serviceImage
+                ..mappingTableId = isDoctor() ? '' : widget.serviceData!.mappingTableId
+                ..clinicId = isDoctor() ? selectedDoctor!.clinicId : userStore.userClinicId
+                ..clinicName = isDoctor() ? selectedDoctor!.clinicName : userStore.userClinicName;
+
+              // ✅ Still return ServiceData for backend call
+              ServiceData data = ServiceData(
+                displayName: selectedDoctor!.displayName,
+                clinicId: selectedDoctor!.clinicId,
+                clinicName: selectedDoctor!.clinicName,
+                id: widget.serviceId.toString(),
+                mappingTableId: selectedDoctor!.mappingTableId,
+                doctorId: widget.doctorId,
+                multiple: selectedDoctor!.multiple,
+                status: selectedDoctor!.status,
+                isTelemed: selectedDoctor!.isTelemed,
+                charges: selectedDoctor!.charges,
+                duration: selectedDoctor!.duration,
+                imageFile: selectedDoctor!.imageFile,
+                image: selectedDoctor!.serviceImage,
+              );
+
+              widget.onSubmit?.call(data);
+              finish(context);
+            } else {
+              isFirstTime = !isFirstTime;
+              if (isActive == null || isMultiSelection == null || isTelemed == null) {
+                toast(locale.lblPleaseChoose);
+              }
+              setState(() {});
             }
-            setState(() {});
-          }
-        },
-      ),
+          }),
     );
   }
 }

@@ -38,10 +38,13 @@ class CartModel {
     return CartModel(
       billingAddress: json['billing_address'] != null ? BillingAddressModel.fromJson(json['billing_address']) : null,
       coupons: json['coupons'] != null ? (json['coupons'] as List).map((i) => CartCouponModel.fromJson(i)).toList() : null,
-      crossSells: json['cross_sells'] != null ? (json['cross_sells'] as List).map((i) => i.fromJson(i)).toList() : null,
-      errors: json['errors'] != null ? (json['errors'] as List).map((i) => i.fromJson(i)).toList() : null,
+      //crossSells: json['cross_sells'] != null ? (json['cross_sells'] as List).map((i) => i.fromJson(i)).toList() : null,
+      crossSells: json['cross_sells'] != null ? List<dynamic>.from(json['cross_sells']) : null,
+      //errors: json['errors'] != null ? (json['errors'] as List).map((i) => i.fromJson(i)).toList() : null,
+      errors: json['errors'] != null ? List<dynamic>.from(json['errors']) : null,
       extensions: json['extensions'] != null ? Extensions.fromJson(json['extensions']) : null,
-      fees: json['fees'] != null ? (json['fees'] as List).map((i) => i.fromJson(i)).toList() : null,
+      //fees: json['fees'] != null ? (json['fees'] as List).map((i) => i.fromJson(i)).toList() : null,
+      fees: json['fees'] != null ? List<dynamic>.from(json['fees']) : null,
       hasCalculatedShipping: json['has_calculated_shipping'],
       items: json['items'] != null ? (json['items'] as List).map((i) => CartItemModel.fromJson(i)).toList() : null,
       itemsCount: json['items_count'],
@@ -65,14 +68,18 @@ class CartModel {
     if (this.coupons != null) {
       data['coupons'] = this.coupons!.map((v) => v.toJson()).toList();
     }
+    //
     if (this.crossSells != null) {
-      data['cross_sells'] = this.crossSells!.map((v) => v.toJson()).toList();
+      data['cross_sells'] = this.crossSells;
     }
     if (this.errors != null) {
-      data['errors'] = this.errors!.map((v) => v.toJson()).toList();
+      data['errors'] = this.errors;
     }
-    if (this.extensions != null) {
-      data['extensions'] = this.extensions!.toJson();
+    // if (this.extensions != null) {
+    //   data['extensions'] = this.extensions!.toJson();
+    // }
+    if (this.fees != null) {
+      data['fees'] = this.fees;
     }
     if (this.fees != null) {
       data['fees'] = this.fees!.map((v) => v.toJson()).toList();

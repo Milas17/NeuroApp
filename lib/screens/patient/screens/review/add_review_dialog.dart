@@ -58,8 +58,13 @@ class _AddReviewDialogState extends State<AddReviewDialog> {
       await updateReviewAPI(req).then((value) {
         appStore.setLoading(false);
         toast(value.message);
-        appointmentStreamController.add(true);
-        finish(context, true);
+
+        // Return updated data
+        RatingData updatedData = widget.customerReview!;
+        updatedData.rating = selectedRating.toInt();
+        updatedData.reviewDescription = reviewCont.text.validate();
+
+        finish(context, updatedData); // 👈 return updated data
       });
     } else {
       await addReviewAPI(req).then((value) {

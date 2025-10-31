@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/user_model.dart';
 import 'package:kivicare_flutter/screens/receptionist/screens/doctor/component/doctor_list_component.dart';
@@ -11,7 +12,6 @@ import 'package:kivicare_flutter/screens/shimmer/components/doctor_shimmer_compo
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
-import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:kivicare_flutter/network/doctor_repository.dart';
@@ -109,11 +109,24 @@ class _MultiSelectDoctorDropDownState extends State<MultiSelectDoctorDropDown> {
                 context: context,
                 hintText: locale.lblSearchDoctor,
                 prefixIcon: ic_search.iconImage().paddingAll(16),
-                suffixIcon: !showClear
-                    ? Offstage()
-                    : ic_clear.iconImage().paddingAll(16).appOnTap(
-                        () async {
+                suffixIcon:  VoiceSearchSuffix(
+                        controller: searchCont,
+                        lottieAnimationPath: lt_voice, 
+                        onClear: () {
                           _onSearchClear();
+                        },
+                        onSearchChanged: (value) {
+                          if (value.isEmpty) {
+                            _onSearchClear();
+                          } else {
+                            Timer(pageAnimationDuration, () {
+                              init(showLoader: true);
+                            });
+                          }
+                        },
+                        onSearchSubmitted: (value) {
+                          hideKeyboard(context);
+                          init(showLoader: true);
                         },
                       ),
               ),

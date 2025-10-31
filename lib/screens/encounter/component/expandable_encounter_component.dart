@@ -10,6 +10,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../../../main.dart';
 import '../../../utils/constants.dart';
 
+// ignore: must_be_immutable
 class ExpandableEncounterComponent extends StatefulWidget {
   final String title;
   final EncounterTypeEnum encounterType;
@@ -17,15 +18,23 @@ class ExpandableEncounterComponent extends StatefulWidget {
   bool isExpanded;
   final VoidCallback? refreshCallBack;
   EncounterTypeValues? encounterTypeValue;
+  final bool isEditable;
 
-  ExpandableEncounterComponent({required this.title, required this.encounterType, this.refreshCallBack, required this.encounterData, this.encounterTypeValue, required this.isExpanded});
+  ExpandableEncounterComponent({
+    required this.title,
+    required this.encounterType,
+    this.refreshCallBack,
+    required this.encounterData,
+    this.encounterTypeValue,
+    required this.isExpanded,
+    this.isEditable = false,
+  });
 
   @override
   _ExpandableEncounterComponentState createState() => _ExpandableEncounterComponentState();
 }
 
 class _ExpandableEncounterComponentState extends State<ExpandableEncounterComponent> {
-
   String getTitle() {
     switch (widget.title) {
       case PROBLEM:
@@ -42,6 +51,7 @@ class _ExpandableEncounterComponentState extends State<ExpandableEncounterCompon
         return '';
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -72,6 +82,7 @@ class _ExpandableEncounterComponentState extends State<ExpandableEncounterCompon
                   EncounterExpandableView(
                     encounterType: widget.title,
                     encounterData: widget.encounterData,
+                    isEditable: widget.isEditable,
                     callForRefresh: () async {
                       widget.refreshCallBack?.call();
                     },

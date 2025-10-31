@@ -2,18 +2,24 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>1030276386601-8cb5ck8gctvqhnrhp9jf2jnj53rqh0g3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1030276386601-8cb5ck8gctvqhnrhp9jf2jnj53rqh0g3</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1030276386601-9cadjosp88kq8cqsarm7nngvg47ohova.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDe2FTjoIK44oYsWjwd51nOtkLAt5MIsrA</string>
+	<string>AIzaSyAp5mprMMlwl5WwZKMYTvKux298Zf9g1iQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>214738954591</string>
+	<string>1030276386601</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.iqonic.kivicare</string>
 	<key>PROJECT_ID</key>
-	<string>kivicareneurocare</string>
+	<string>kivicare-5d319</string>
 	<key>STORAGE_BUCKET</key>
-	<string>kivicareneurocare.firebasestorage.app</string>
+	<string>kivicare-5d319.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:214738954591:ios:20a5fa1db139a4545f6eea</string>
+	<string>1:1030276386601:ios:c8f9a1a5df8361a83ab138</string>
 </dict>
 </plist>

@@ -4,6 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'package:kivicare_flutter/main.dart';
 
+// ignore: must_be_immutable
 class TimeGreetingWidget extends StatelessWidget {
   final String? morningText;
   final String? afternoonText;

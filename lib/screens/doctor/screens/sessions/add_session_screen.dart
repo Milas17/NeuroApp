@@ -363,7 +363,7 @@ class _AddSessionsScreenState extends State<AddSessionsScreen> {
               ),
               16.height,
               DropdownButtonFormField(
-                value: timeSlotCont,
+                initialValue: timeSlotCont,
                 icon: SizedBox.shrink(),
                 isExpanded: true,
                 borderRadius: radius(),

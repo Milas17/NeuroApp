@@ -43,10 +43,12 @@ List<WeeklyAppointment> emptyGraphListYearly = [
 List<FilterModel> getProductFilters() {
   List<FilterModel> list = [];
 
-  list.add(FilterModel(value: ProductFilters.date, title: locale.lblLatest));
-  list.add(FilterModel(value: ProductFilters.rating, title: locale.lblAverageRating));
-  list.add(FilterModel(value: ProductFilters.popularity, title: locale.lblPopularity));
-  list.add(FilterModel(value: ProductFilters.price, title: locale.lblPrice));
+  list.add(FilterModel(value: ProductFilters.priceLowHigh, title: locale.lblPriceLowHigh, orderBy: "price", order: "asc"));
+  list.add(FilterModel(value: ProductFilters.priceHighLow, title: locale.lblPriceHighLow, orderBy: "price", order: "desc"));
+  list.add(FilterModel(value: ProductFilters.discount, title: locale.lblDiscount, orderBy: ProductFilters.discount));
+  list.add(FilterModel(value: ProductFilters.date, title: locale.lblLatest, orderBy: ProductFilters.date));
+  list.add(FilterModel(value: ProductFilters.rating, title: locale.lblAverageRating, orderBy: ProductFilters.rating));
+  list.add(FilterModel(value: ProductFilters.popularity, title: locale.lblPopularity, orderBy: ProductFilters.popularity));
 
   return list;
 }

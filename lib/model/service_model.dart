@@ -37,6 +37,7 @@ class ServiceData {
   String? mappingTableId;
   bool? multiple;
   String? name;
+  String? categoryName;
   String? serviceId;
   String? status;
   bool? isTelemed;
@@ -70,6 +71,7 @@ class ServiceData {
     this.mappingTableId,
     this.multiple,
     this.name,
+    this.categoryName,
     this.serviceId,
     this.status,
     this.type,
@@ -97,11 +99,12 @@ class ServiceData {
         mappingTableId: json['mapping_table_id'],
         multiple: json['is_multiple_selection'],
         name: json['name'],
+        categoryName: json['category_name'],
         clinicName: json['clinic_name'],
         clinicId: json['clinic_id'],
         serviceId: json['service_id'],
         status: json['status'],
-        type: json['type'],
+        type: json['type'] ?? json['serviceType'] ?? json['service_type'],
         label: json['label'],
         displayName: json['display_name'],
         doctorList: json['doctors'] != null ? (json['doctors'] as List).map((doctorServiceData) => UserModel.fromJson(doctorServiceData)).toList() : null,
@@ -119,6 +122,7 @@ class ServiceData {
     data['mapping_table_id'] = this.mappingTableId;
     data['is_multiple_selection'] = this.multiple;
     data['name'] = this.name;
+    data['category_name'] = this.categoryName;
     data['service_id'] = this.serviceId;
     data['status'] = this.status;
     data['is_telemed'] = this.isTelemed;

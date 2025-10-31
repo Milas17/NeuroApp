@@ -30,7 +30,7 @@ class CheckoutScreen extends StatefulWidget {
   State<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
-class _CheckoutScreenState extends State<CheckoutScreen> {
+class _CheckoutScreenState extends State<CheckoutScreen> with WidgetsBindingObserver {
   late CartModel cart;
 
   bool isPaymentGatewayLoading = true;
@@ -45,12 +45,17 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   TextEditingController orderNotesController = TextEditingController();
 
+  final FocusNode _notesFocus = FocusNode();
+  final GlobalKey _notesKey = GlobalKey();
+
   @override
   void initState() {
     cart = widget.cartDetails;
     billingAddress = widget.cartDetails.billingAddress!;
     super.initState();
     init();
+    WidgetsBinding.instance.addObserver(this);
+    _notesFocus.addListener(_onNotesFocusChange);
   }
 
   Future<void> init() async {
@@ -167,12 +172,59 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void dispose() {
     appStore.setLoading(false);
     widget.itermRemoved?.call();
+    WidgetsBinding.instance.removeObserver(this);
+    _notesFocus.removeListener(_onNotesFocusChange);
+    _notesFocus.dispose();
     super.dispose();
+  }
+
+  void _onNotesFocusChange() {
+    if (_notesFocus.hasFocus) {
+      _scrollToNotes();
+    }
+  }
+
+  void _scrollToNotes() {
+    final contextOfNotes = _notesKey.currentContext;
+    if (contextOfNotes == null) return;
+
+    Scrollable.ensureVisible(
+      contextOfNotes,
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeOut,
+      alignment: 0.05,
+      alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+    ).then((_) {
+      final scrollableState = Scrollable.of(contextOfNotes);
+      final position = scrollableState.position;
+      final mq = MediaQuery.maybeOf(context);
+      final bottomInset = mq?.viewInsets.bottom ?? 0;
+      final extra = bottomInset + 100;
+      final target = (position.pixels + extra).clamp(0.0, position.maxScrollExtent);
+      if (target > position.pixels + 16) {
+        position.animateTo(
+          target,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    if (_notesFocus.hasFocus) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(milliseconds: 180), _scrollToNotes);
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: appBarWidget(
         locale.checkout,
         textColor: Colors.white,
@@ -444,21 +496,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               10.height,
               Text(locale.lblNotesAboutOrder, style: secondaryTextStyle()),
               8.height,
-              AppTextField(
-                controller: orderNotesController,
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.done,
-                textFieldType: TextFieldType.MULTILINE,
-                textStyle: boldTextStyle(),
-                minLines: 3,
-                maxLines: 3,
-                decoration: inputDecoration(context: context),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter description';
-                  }
-                  return null;
-                },
+              Container(
+                key: _notesKey,
+                child: AppTextField(
+                  controller: orderNotesController,
+                  focus: _notesFocus,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.done,
+                  textFieldType: TextFieldType.MULTILINE,
+                  textStyle: boldTextStyle(),
+                  minLines: 3,
+                  maxLines: 3,
+                  decoration: inputDecoration(context: context),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter description';
+                    }
+                    return null;
+                  },
+                ),
               ),
               16.height,
             ],

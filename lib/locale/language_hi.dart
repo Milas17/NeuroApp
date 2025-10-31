@@ -1050,7 +1050,7 @@ class LanguageHi extends BaseLanguage {
   String get lblTotalVisitedPatients => 'कुल मरीज';
 
   @override
-  String get lblTotalAppointment => 'कुल नियुक्ति।';
+  String get lblTotalAppointment => 'कुल नियुक्ति';
 
   @override
   String get lblTotalVisitedAppointment => 'कुल यात्रा नियुक्ति';
@@ -2420,4 +2420,70 @@ class LanguageHi extends BaseLanguage {
 
   @override
   String get lblPasswordMustBeStrong => 'पासवर्ड कम से कम 8 अक्षर का होना चाहिए,\nइसमें अपरकेस, संख्या और विशेष वर्ण शामिल हों';
+
+  @override
+  String get lblFilterBy => 'फ़िल्टर करें';
+
+  @override
+  String get lblApplyFilter => 'फ़िल्टर लागू करें';
+
+  @override
+  String get lblServiceWithCategory => 'श्रेणी के साथ सेवा';
+
+  @override
+  String get lblDiagnosisDetails => 'निदान विवरण';
+
+  @override
+  String get lblPriceLowHigh => 'मूल्य उच्च-निम्न';
+
+  @override
+  String get lblPriceHighLow => 'कीमत कम-ज्यादा';
+
+  @override
+  String get lblOnwer => 'मालिक';
+
+  @override
+  String get lblSessionSummary => 'सत्र सारांश';
+
+  @override
+  String get lblDateandTime => 'दिनांक समय';
+
+  @override
+  String get lblAppointmentStatus => 'नियुक्ति स्थिति';
+
+  @override
+  String get lblMedicalHistory => 'चिकित्सा का इतिहास';
+
+  @override
+  String get lblClinicInfo => 'क्लिनिक जानकारी';
+
+  @override
+  String get lblDoctorInfo => 'डॉक्टर की जानकारी';
+
+  @override
+  String get lblPatientInfo => 'रोगी जानकारी';
+
+  @override
+  String get lblAboutService => 'सेवा के बारे में';
+
+  @override
+  String get lblServiceIsDeletedCurrentlyUnavailable => 'सेवा हटा दी गई है, वर्तमान में उपलब्ध नहीं है';
+
+  @override
+  String get lblPaymentDetails => 'भुगतान विवरण';
+
+  @override
+  String get lblServiceTotal => 'सेवा कुल';
+
+  @override
+  String get lblExclusiveTax => 'अनन्य कर';
+
+  @override
+  String get lblPaymentDetailsNotAvailable => 'भुगतान विवरण उपलब्ध नहीं है (सेवा हटा दी गई है)';
+
+  @override
+  String get lblSomeFilesExceedLimit => 'कुछ फ़ाइलें 5MB की सीमा से अधिक हैं';
+
+  @override
+  String get lblInvalidFileType => 'अमान्य फ़ाइल प्रकार चुना गया। अनुमत: PDF, DOC, DOCX, JPG, JPEG, PNG, XLS, XLSX';
 }

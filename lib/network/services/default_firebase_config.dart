@@ -9,14 +9,12 @@ class DefaultFirebaseConfig {
     if (isMobile)
       return FirebaseOptions(
         appId: isApple ? iosAppId : androidAppID,
-        apiKey: 'YOUR_API_KEY',
+        apiKey: 'AIzaSyCf4Oj9uTXzmOf9bgPuoRvB1DZaFXPHc0',
         projectId: 'kivicareneurocare',
-        messagingSenderId: '214738954591npm install firebase',
-        storageBucket: 'YOUR_STORAGE_BUCKET',
+        messagingSenderId: '214738954591',
+        storageBucket: 'kivicareneurocare.firebasestorage.app',
       );
     else
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for selected platform ',
-      );
+      throw UnsupportedError('DefaultFirebaseOptions have not been configured for selected platform ');
   }
 }

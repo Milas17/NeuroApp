@@ -4,15 +4,17 @@ class CountryModel {
   Links? links;
   String? code;
   String? name;
+  String? dial_code;
   List<StateModel>? states;
 
-  CountryModel({this.links, this.code, this.name, this.states});
+  CountryModel({this.links, this.code, this.name, this.states, this.dial_code});
 
   factory CountryModel.fromJson(Map<String, dynamic> json) {
     return CountryModel(
       links: json['_links'] != null ? Links.fromJson(json['_links']) : null,
       code: json['code'],
       name: json['name'],
+      dial_code: json['dial_code'],
       states: json['states'] != null ? (json['states'] as List).map((i) => StateModel.fromJson(i)).toList() : null,
     );
   }
@@ -21,6 +23,7 @@ class CountryModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
     data['name'] = this.name;
+    data['dial_code'] = dial_code;
     if (this.links != null) {
       data['_links'] = this.links!.toJson();
     }

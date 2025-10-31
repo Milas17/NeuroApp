@@ -1053,7 +1053,7 @@ class LanguageDe extends BaseLanguage {
   String get lblTotalVisitedPatients => 'Gesamt besuchte Patienten';
 
   @override
-  String get lblTotalAppointment => 'Totalernen Sie.';
+  String get lblTotalAppointment => 'Gesamttermin';
 
   @override
   String get lblTotalVisitedAppointment => 'Total besuchter Termin';
@@ -2423,4 +2423,70 @@ class LanguageDe extends BaseLanguage {
 
   @override
   String get lblPasswordMustBeStrong => 'Das Passwort muss mindestens 8 Zeichen lang sein und Großbuchstaben, Zahlen und Sonderzeichen enthalten.';
+
+  @override
+  String get lblFilterBy => 'Filtern nach';
+
+  @override
+  String get lblApplyFilter => 'Filter anwenden';
+
+  @override
+  String get lblServiceWithCategory => 'Dienstleistung mit Kategorie';
+
+  @override
+  String get lblDiagnosisDetails => 'Diagnosedetails';
+
+  @override
+  String get lblPriceLowHigh => 'Preis niedrig-hoch';
+
+  @override
+  String get lblPriceHighLow => 'Preis hoch-niedrig';
+
+  @override
+  String get lblOnwer => 'Eigentümer';
+
+  @override
+  String get lblSessionSummary => 'Sitzungszusammenfassung';
+
+  @override
+  String get lblDateandTime => 'Datum und Uhrzeit';
+
+  @override
+  String get lblAppointmentStatus => 'Terminstatus';
+
+  @override
+  String get lblMedicalHistory => 'Krankengeschichte';
+
+  @override
+  String get lblClinicInfo => 'Klinikinformationen';
+
+  @override
+  String get lblDoctorInfo => 'Informationen zum Arzt';
+
+  @override
+  String get lblPatientInfo => 'Patienteninformationen';
+
+  @override
+  String get lblAboutService => 'Über den Service';
+
+  @override
+  String get lblServiceIsDeletedCurrentlyUnavailable => 'Der Dienst wurde gelöscht und ist derzeit nicht verfügbar.';
+
+  @override
+  String get lblPaymentDetails => 'Zahlungsdetails';
+
+  @override
+  String get lblServiceTotal => 'Service Gesamt';
+
+  @override
+  String get lblExclusiveTax => 'Exklusive Steuern';
+
+  @override
+  String get lblPaymentDetailsNotAvailable => 'Zahlungsdetails nicht verfügbar (Dienst gelöscht)';
+
+  @override
+  String get lblSomeFilesExceedLimit => 'Einige Dateien überschreiten das 5-MB-Limit';
+
+  @override
+  String get lblInvalidFileType => 'Ungültiger Dateityp ausgewählt. Erlaubt: PDF, DOC, DOCX, JPG, JPEG, PNG, XLS, XLSX';
 }

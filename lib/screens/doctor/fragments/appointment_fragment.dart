@@ -47,6 +47,8 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
 
   bool isLastPage = false;
   bool isRangeSelected = false;
+  DateTime? start;
+  DateTime? end;
 
   String startDate = DateTime(DateTime.now().year, DateTime.now().month, 1).getFormattedDate(SAVE_DATE_FORMAT);
   String endDate = DateTime(DateTime.now().year, DateTime.now().month, Utils.lastDayOfMonth(DateTime.now()).day).getFormattedDate(SAVE_DATE_FORMAT);
@@ -54,6 +56,16 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
   DateTime selectedDate = DateTime.parse(DateFormat(SAVE_DATE_FORMAT).format(DateTime.now()));
 
   StreamSubscription? updateAppointmentApi;
+
+  int selectedStatusIndex = 0;
+
+  List<String> appointmentStatusList = [
+    locale.lblAll,
+    locale.lblBooked,
+    locale.lblCheckIn,
+    locale.lblCheckOut,
+    locale.lblCancelled,
+  ];
 
   @override
   void initState() {
@@ -66,11 +78,7 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
 
     updateAppointmentApi = appointmentStreamController.stream.listen((streamData) {
       page = 1;
-      init(
-        todayDate: selectedDate.getFormattedDate(SAVE_DATE_FORMAT),
-        startDate: null,
-        endDate: null,
-      );
+      showData(selectedDate);
     });
 
     init(startDate: startDate, endDate: endDate, showLoader: false);
@@ -82,6 +90,18 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
 
   Future<void> init({bool showLoader = true, String? todayDate, String? startDate, String? endDate}) async {
     if (showLoader) appStore.setLoading(true);
+
+    if (cachedDoctorAppointment!.isNotEmpty && page == 1) {
+      setState(() {
+        future = Future.value(cachedDoctorAppointment);
+      });
+    }
+
+    // 🚀 Clear old events when new fetch begins
+    if (startDate != null && endDate != null) {
+      _events.clear();
+    }
+
     future = getAppointment(
       pages: page,
       perPage: PER_PAGE,
@@ -95,23 +115,23 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
         if (value.isNotEmpty) {
           groupAppointmentByDates(appointmentList: value).forEach((key, value) {
             DateTime date = key;
-            _events.putIfAbsent(DateTime(date.year, date.month, date.day), () => value);
+            _events[DateTime(date.year, date.month, date.day)] = value;
           });
         } else {
           DateTime date = DateFormat(SAVE_DATE_FORMAT).parse(todayDate);
-          if (_events.containsKey(DateTime(date.year, date.month, date.day))) {
-            _events.remove(DateTime(date.year, date.month, date.day));
-          }
+          _events.remove(DateTime(date.year, date.month, date.day));
         }
       }
 
-      if (startDate != null && endDate != null)
+      if (startDate != null && endDate != null) {
         groupAppointmentByDates(appointmentList: value).forEach((key, value) {
           DateTime date = key;
           _events.addAll({
             DateTime(date.year, date.month, date.day): value,
           });
         });
+      }
+
       setState(() {});
       appStore.setLoading(false);
       return value;
@@ -125,46 +145,52 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
     setState(() {
       isRangeSelected = false;
     });
-    appStore.setLoading(true);
-    init(
-      todayDate: selectedDate.getFormattedDate(SAVE_DATE_FORMAT),
-      startDate: null,
-      endDate: null,
-    );
+
+    showData(selectedDate);
+
     return await 1.seconds.delay;
   }
 
-  void showData(DateTime dateTime) async {
-    appStore.setLoading(true);
-    if (isRangeSelected) {
-      appStore.setLoading(false);
-      return;
-    }
-    800.milliseconds.delay;
+  void showData(DateTime dateTime) {
     selectedDate = DateTime.parse(DateFormat(SAVE_DATE_FORMAT).format(dateTime));
     setState(() {});
-    init(
-      todayDate: dateTime.getFormattedDate(SAVE_DATE_FORMAT),
-      startDate: null,
-      endDate: null,
-    );
-  }
 
-  void onNextPage() {
-    if (!isLastPage) {
-      appStore.setLoading(true);
-      page++;
+    // 👉 Range selected hoy
+    if (isRangeSelected && start != null && end != null) {
+      init(
+        todayDate: null,
+        startDate: start!.getFormattedDate(SAVE_DATE_FORMAT),
+        endDate: end!.getFormattedDate(SAVE_DATE_FORMAT),
+      );
+      return;
+    }
+
+    // 👉 Single date hoy
+    if (selectedDate.getFormattedDate(SAVE_DATE_FORMAT) == DateTime.now().getFormattedDate(SAVE_DATE_FORMAT)) {
+      // Aaje ni date → todayDate param
       init(
         todayDate: selectedDate.getFormattedDate(SAVE_DATE_FORMAT),
         startDate: null,
         endDate: null,
-        showLoader: true,
+      );
+    } else {
+      // Any other date → start & end same
+      init(
+        todayDate: null,
+        startDate: selectedDate.getFormattedDate(SAVE_DATE_FORMAT),
+        endDate: selectedDate.getFormattedDate(SAVE_DATE_FORMAT),
       );
     }
   }
 
+  void onNextPage() {
+    if (!isLastPage) {
+      page++;
+      showData(selectedDate);
+    }
+  }
+
   Future<void> onRangeSelected(Range range) async {
-    appStore.setLoading(true);
     isRangeSelected = true;
     page = 1;
     init(
@@ -221,7 +247,6 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
               weekDays: [locale.lblMon, locale.lblTue, locale.lblWed, locale.lblThu, locale.lblFri, locale.lblSat, locale.lblSun],
               events: _events,
               onDateSelected: (e) {
-                appStore.setLoading(true);
                 showData(e);
               },
               initialDate: selectedDate,
@@ -238,6 +263,36 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
               dayOfWeekStyle: TextStyle(color: appStore.isDarkModeOn ? Colors.white : Colors.black, fontWeight: FontWeight.w800, fontSize: 11),
             ),
           ),
+          HorizontalList(
+            itemCount: appointmentStatusList.length,
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            itemBuilder: (context, index) {
+              bool isSelected = selectedStatusIndex == index;
+
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    selectedStatusIndex = index;
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  margin: EdgeInsets.only(right: 8),
+                  decoration: boxDecorationDefault(
+                    color: isSelected ? context.primaryColor : context.cardColor,
+                    borderRadius: radius(20),
+                  ),
+                  child: Text(
+                    appointmentStatusList[index],
+                    style: primaryTextStyle(
+                      color: isSelected ? Colors.white : textPrimaryColorGlobal,
+                      size: 14,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ).paddingBottom(8),
           SnapHelperWidget<List<UpcomingAppointmentModel>>(
             initialData: cachedDoctorAppointment,
             future: future,
@@ -260,16 +315,38 @@ class _AppointmentFragmentState extends State<AppointmentFragment> {
               ],
             ).paddingSymmetric(horizontal: 16),
             onSuccess: (snap) {
+              List<UpcomingAppointmentModel> filteredList;
+
+              switch (selectedStatusIndex) {
+                case 1: // Booked
+                  filteredList = snap.where((e) => e.status == '1').toList();
+                  break;
+                case 2: // checkIn
+                  filteredList = snap.where((e) => e.status == '4').toList();
+                  break;
+                case 3: // Checkout
+                  filteredList = snap.where((e) => e.status == '3').toList();
+                  break;
+                case 4: // Cancelled
+                  filteredList = snap.where((e) => e.status == '0').toList();
+                  break;
+
+                default: // All
+                  filteredList = snap;
+              }
+
+              List<UpcomingAppointmentModel> groupedList = groupAppointmentByDates(appointmentList: filteredList)[selectedDate].validate();
+
               return AppointmentFragmentAppointmentComponent(
-                data: groupAppointmentByDates(appointmentList: snap)[selectedDate].validate(),
+                data: groupedList,
                 refreshCallForRefresh: () {
                   onSwipeRefresh(isFirst: true);
                 },
               ).visible(
-                groupAppointmentByDates(appointmentList: snap)[selectedDate].validate().isNotEmpty,
+                groupedList.isNotEmpty,
                 defaultWidget: NoDataFoundWidget(
                   text: selectedDate.getFormattedDate(SAVE_DATE_FORMAT) == DateTime.now().getFormattedDate(SAVE_DATE_FORMAT) ? locale.lblNoAppointmentForToday : locale.lblNoAppointmentForThisDay,
-                ).center().visible(groupAppointmentByDates(appointmentList: snap)[selectedDate].validate().isEmpty && !appStore.isLoading),
+                ).center().visible(groupedList.isEmpty && !appStore.isLoading),
               );
             },
           ),

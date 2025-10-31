@@ -7,6 +7,7 @@ class TaxModel {
     this.totalAmount,
     this.totalTax,
     this.taxList,
+    required int rate,
   });
 
   TaxModel.fromJson(json) {
@@ -30,7 +31,9 @@ class TaxData {
   String? taxName;
 
   String? rate;
-
+  String? moduleType;
+  String? moduleId;
+  String? taxType;
   String? slug;
   num? taxRate;
 
@@ -42,6 +45,9 @@ class TaxData {
     this.id,
     this.taxName,
     this.taxRate,
+    this.moduleId,
+    this.moduleType,
+    this.taxType,
     this.taxSuffix,
     this.taxStatus,
     this.charges,
@@ -52,6 +58,9 @@ class TaxData {
     id = json['id'];
     taxName = json['name'];
     taxRate = json['tax_value'];
+    moduleType = json['module_type'];
+    moduleId = json['module_id']?.toString();
+    taxType = json['tax_type'];
     taxSuffix = json['tax_suffix'];
     taxStatus = json['status'];
     charges = json['charges'];
@@ -64,6 +73,9 @@ class TaxData {
     json['id'] = this.id;
     json['name'] = this.taxName;
     json['tax_value'] = this.taxRate;
+    json['module_type'] = this.moduleType;
+    json['module_id'] = this.moduleId;
+    json['tax_type'] = this.taxType;
     json['tax_suffix'] = this.taxSuffix;
     json['status'] = this.taxStatus;
     json['slug'] = this.slug;
@@ -73,7 +85,7 @@ class TaxData {
 }
 
 class ServiceRequestModel {
-  String? serviceId;
+  int? serviceId;
   int? quantity;
 
   ServiceRequestModel({this.serviceId, this.quantity});
@@ -85,7 +97,7 @@ class ServiceRequestModel {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
-    json['id'] = this.serviceId;
+    json['id'] = serviceId;
     json['quantity'] = this.quantity;
     return json;
   }

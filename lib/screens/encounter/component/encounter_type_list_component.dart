@@ -20,9 +20,10 @@ class EncounterTypeList extends StatefulWidget {
   final String encounterType;
   final EncounterModel encounterData;
   final VoidCallback? refreshCall;
+  final bool isEditable;
   final void Function({required int id, required EncounterTypeEnum encounterTypeEnum}) callDelete;
 
-  EncounterTypeList({required this.encounterData, this.refreshCall, required this.encounterType, required this.callDelete});
+  EncounterTypeList({required this.encounterData, this.refreshCall, required this.encounterType, required this.callDelete, this.isEditable = false});
 
   @override
   State<EncounterTypeList> createState() => _EncounterTypeListState();
@@ -66,7 +67,7 @@ class _EncounterTypeListState extends State<EncounterTypeList> {
           refreshReportData: () {
             widget.refreshCall?.call();
           },
-          showDelete: widget.encounterData.status == '1',
+          showDelete: widget.isEditable || widget.encounterData.status == '1',
           deleteReportData: () {
             showConfirmDialogCustom(
               context,
@@ -93,7 +94,7 @@ class _EncounterTypeListState extends State<EncounterTypeList> {
 
         return GestureDetector(
           onTap: () {
-            if (widget.encounterData.status == '1')
+            if (widget.isEditable || widget.encounterData.status == '1')
               AddPrescriptionScreen(encounterId: prescriptionData.encounterId.toInt(), prescriptionData: prescriptionData).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
                 if (value ?? false) {
                   widget.refreshCall?.call();
@@ -102,7 +103,7 @@ class _EncounterTypeListState extends State<EncounterTypeList> {
           },
           child: EncounterPrescriptionComponent(
             prescriptionData: prescriptionData,
-            isDeleteOn: widget.encounterData.status == '1',
+            isDeleteOn: widget.isEditable || widget.encounterData.status == '1',
             onTap: () {
               showConfirmDialogCustom(
                 context,
@@ -132,7 +133,7 @@ class _EncounterTypeListState extends State<EncounterTypeList> {
         EncounterType encounterData = data.$1[index];
         return EncounterTypeComponent(
           data: encounterData,
-          isDeleteOn: widget.encounterData.status == '1' && isVisible(SharedPreferenceKey.kiviCareMedicalRecordsDeleteKey),
+          isDeleteOn: widget.isEditable || widget.encounterData.status == '1' && isVisible(SharedPreferenceKey.kiviCareMedicalRecordsDeleteKey),
           onTap: () {
             String deleteTitle;
             switch (widget.encounterType) {

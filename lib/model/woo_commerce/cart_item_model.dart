@@ -134,6 +134,7 @@ class Prices {
   RawPrices? rawPrices;
   String? regularPrice;
   String? salePrice;
+  String? discount;
 
   Prices(
       {this.currencyCode,
@@ -147,7 +148,8 @@ class Prices {
       this.priceRange,
       this.rawPrices,
       this.regularPrice,
-      this.salePrice});
+      this.salePrice,
+      this.discount});
 
   factory Prices.fromJson(Map<String, dynamic> json) {
     return Prices(
@@ -163,6 +165,7 @@ class Prices {
       rawPrices: json['raw_prices'] != null ? RawPrices.fromJson(json['raw_prices']) : null,
       regularPrice: json['regular_price'],
       salePrice: json['sale_price'],
+      discount: json['discount'],
     );
   }
 
@@ -178,6 +181,7 @@ class Prices {
     data['price'] = this.price;
     data['regular_price'] = this.regularPrice;
     data['sale_price'] = this.salePrice;
+    data['discount'] = this.discount;
     if (this.priceRange != null) {
       data['price_range'] = this.priceRange;
     }

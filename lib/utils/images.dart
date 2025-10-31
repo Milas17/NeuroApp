@@ -65,6 +65,7 @@ const ic_dollar_icon = "images/icons/dollarIcon.png";
 const ic_timer = "images/icons/timer.png";
 const ic_camera = "images/icons/camera.png";
 const ic_clear = 'images/icons/ic_clear.png';
+const ic_microphone = 'images/icons/ic_microphone.png';
 const ic_no_search = 'images/icons/ic_no_search.png';
 
 const ic_graduation_cap = "images/icons/graduationCap.png";
@@ -102,6 +103,10 @@ const ic_orderList = 'images/icons/ic_orderList.png';
 const ic_checkList = 'images/icons/ic_checklist.png';
 const ic_noProduct = 'images/ic_no_product.jpg';
 const ic_addToCart = 'images/icons/ic_addToCart.png';
+
+//Lottie
+const lt_voice = 'images/lottie/voice_animation.json';
+
 //Flags
 const String flagsIcAr = 'images/flags/icAr.png';
 const String flagsIcFrench = 'images/flags/icFrench.png';

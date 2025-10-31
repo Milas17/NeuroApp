@@ -25,7 +25,8 @@ import 'package:kivicare_flutter/utils/constants/woocommerce_constants.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
 import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:nb_utils/nb_utils.dart' hide ReadMoreText, TrimMode;
+import 'package:readmore/readmore.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final int productId;
@@ -83,20 +84,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
       if (value.type == ProductTypes.grouped) {
         appStore.setLoading(true);
-        value.groupedProducts.validate().forEach((e) {
-          groupProductList.add(GroupProductModel(id: e.id.validate(), product: e));
-          if (value.id == widget.productId) {
-            productData = value;
-          }
+
+        // value.groupedProducts.validate().forEach((productId) {
+        //   groupProductList.add(GroupProductModel(id: productId, product: null));
+        //   // product is optional, you can fetch details later if required
+        // });
+        value.groupedProducts.validate().forEach((gp) {
+          groupProductList.add(GroupProductModel(id: gp.id!, product: gp));
         });
+
+        if (value.id == widget.productId) {
+          productData = value;
+        }
+
         setState(() {});
       }
 
       if (value.type == ProductTypes.variable) {
         mainProduct = value;
         value.attributes.validate().forEach((attribute) {
-          attribute.options!.insert(0, '${locale.chooseAnOption}');
+          if (attribute.variation == true && attribute.options != null) {
+            attribute.options!.insert(0, '${locale.chooseAnOption}');
+          }
         });
+
         value.variations.validate().forEach((e) {
           groupProductList.add(GroupProductModel(id: e.id.validate(), product: e));
           if (e.id == widget.productId) {
@@ -318,13 +329,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ).visible(productData.onSale.validate()),
                       Text(productData.name.validate().capitalizeFirstLetter(), style: boldTextStyle(size: 20)).paddingSymmetric(horizontal: 16, vertical: 8),
-                      PriceWidget(
-                        price: productData.price.validate(),
-                        priceHtml: productData.priceHtml,
-                        salePrice: productData.salePrice,
-                        regularPrice: productData.regularPrice,
-                        showDiscountPercentage: true,
-                        size: 16,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          PriceWidget(
+                            price: productData.price.validate(),
+                            priceHtml: productData.priceHtml,
+                            salePrice: productData.salePrice,
+                            regularPrice: productData.regularPrice,
+                            prefix: appStore.wcCurrency.validate(),
+                            showDiscountPercentage: true,
+                            size: 16,
+                          ),
+                          8.width,
+                          if (productData.discount.validate().isNotEmpty)
+                            Text(
+                              '(${productData.discount} OFF)',
+                              style: boldTextStyle(color: Colors.red, size: 14),
+                            ),
+                        ],
                       ).paddingSymmetric(horizontal: 16),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -402,8 +425,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ).expand(),
                           ],
                         ).paddingSymmetric(horizontal: 16),
-                      if ((groupProductList.validate().isNotEmpty && productData.type == ProductTypes.grouped) || (groupProductList.validate().isNotEmpty && productData.type == ProductTypes.variable))
-                        16.height,
+                      if ((groupProductList.validate().isNotEmpty && productData.type == ProductTypes.grouped) || (groupProductList.validate().isNotEmpty && productData.type == ProductTypes.variable)) 16.height,
                       if ((groupProductList.validate().isNotEmpty && productData.type == ProductTypes.grouped) || (groupProductList.validate().isNotEmpty && productData.type == ProductTypes.variable))
                         Text(locale.lblChooseFromCollection, style: primaryTextStyle()).paddingSymmetric(horizontal: 16),
                       if ((groupProductList.validate().isNotEmpty && productData.type == ProductTypes.grouped) || (groupProductList.validate().isNotEmpty && productData.type == ProductTypes.variable))
@@ -427,20 +449,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   CachedImageWidget(
-                                    url: e.product.productImage.validate(),
+                                    url: e.product!.productImage.validate(),
                                     height: 50,
                                     width: 50,
                                     fit: BoxFit.cover,
                                   ).cornerRadiusWithClipRRect(defaultRadius),
                                   16.width,
-                                  Text(e.product.name.validate(), style: primaryTextStyle(size: 14), overflow: TextOverflow.ellipsis, maxLines: 1).expand(),
+                                  Text(e.product!.name.validate(), style: primaryTextStyle(size: 14), overflow: TextOverflow.ellipsis, maxLines: 1).expand(),
                                   16.width,
                                   PriceWidget(
-                                    price: e.product.price.validate(),
-                                    priceHtml: e.product.priceHtml,
-                                    salePrice: e.product.salePrice,
-                                    regularPrice: e.product.regularPrice,
+                                    price: e.product!.price.validate(),
+                                    priceHtml: e.product!.priceHtml,
+                                    salePrice: e.product!.salePrice,
+                                    regularPrice: e.product!.regularPrice,
                                     showDiscountPercentage: false,
+                                    prefix: appStore.wcCurrency.validate(),
                                     textSize: 12,
                                   ),
                                   16.width,
@@ -465,13 +488,21 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       if (!getBoolAsync(AppKeys.hasInReviewKey) && productData.description.validate().isNotEmpty) Text(locale.lblDescription, style: boldTextStyle()).paddingSymmetric(horizontal: 16),
                       if (!getBoolAsync(AppKeys.hasInReviewKey) && productData.description.validate().isNotEmpty) 8.height,
                       if (!getBoolAsync(AppKeys.hasInReviewKey) && productData.description.validate().isNotEmpty)
-                        ReadMoreText(
-                          parseHtmlString(productData.description.validate()),
-                          trimLines: 4,
-                          textAlign: TextAlign.justify,
-                          trimMode: TrimMode.Line,
-                          style: secondaryTextStyle(),
-                        ).paddingSymmetric(horizontal: 16),
+                        ReadMoreText(parseHtmlString(productData.description.validate()),
+                            trimLines: 4,
+                            textAlign: TextAlign.justify,
+                            trimMode: TrimMode.Line,
+                            style: secondaryTextStyle(),
+                            moreStyle: TextStyle(
+                              fontSize: 14,
+                              color: appStore.isDarkModeOn ? appPrimaryColor : redColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            lessStyle: TextStyle(
+                              fontSize: 14,
+                              color: appStore.isDarkModeOn ? appPrimaryColor : redColor,
+                              fontWeight: FontWeight.bold,
+                            )).paddingSymmetric(horizontal: 16),
                       if (!getBoolAsync(AppKeys.hasInReviewKey) && productData.description.validate().isNotEmpty) 24.height,
                       if (productData.attributes.validate().isNotEmpty)
                         Column(
@@ -498,25 +529,26 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       style: primaryTextStyle(),
                                       textAlign: TextAlign.start,
                                     ).paddingSymmetric(vertical: 8, horizontal: 16),
-                                    productData.type == ProductTypes.variation
-                                        ? Text(
-                                            e.optionString.validate(),
-                                            style: primaryTextStyle(),
-                                            textAlign: TextAlign.start,
-                                          ).paddingSymmetric(horizontal: 16)
-                                        : Wrap(
-                                            children: e.options.validate().map((option) {
-                                              if (option != 'Choose an option') {
-                                                return Text(
-                                                  option.validate(),
-                                                  style: primaryTextStyle(),
-                                                  textAlign: TextAlign.start,
-                                                ).paddingSymmetric(horizontal: 16, vertical: 8);
-                                              } else {
-                                                return Offstage();
-                                              }
-                                            }).toList(),
-                                          ),
+                                    if ((productData.type == ProductTypes.variable || productData.type == ProductTypes.variation) && e.optionString.validate().isNotEmpty)
+                                      Text(
+                                        e.optionString.validate(),
+                                        style: primaryTextStyle(),
+                                        textAlign: TextAlign.start,
+                                      ).paddingSymmetric(horizontal: 16)
+                                    else
+                                      Wrap(
+                                        children: (e.options ?? []).map((option) {
+                                          if (option.isNotEmpty && option != 'Choose an option') {
+                                            return Text(
+                                              option.validate(),
+                                              style: primaryTextStyle(),
+                                              textAlign: TextAlign.start,
+                                            ).paddingSymmetric(horizontal: 16, vertical: 8);
+                                          } else {
+                                            return Offstage();
+                                          }
+                                        }).toList(),
+                                      ),
                                   ],
                                 );
                               }).toList(),
@@ -526,9 +558,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                       ProductReviewComponent(
                         productId: productData.id.validate(),
-                        callback: () {
-                          init(showLoader: true);
-                        },
                       ),
                       if (productData.relatedProductList.validate().isNotEmpty)
                         Column(

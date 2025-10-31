@@ -5,7 +5,7 @@ class ConfigurationModel {
   String? status;
   num? userId;
   String? role;
-
+  ModuleConfig? moduleConfig;
   String? termsEndCondition;
   bool? isTeleMedActive;
   bool? isKiviCareProOnName;
@@ -26,29 +26,33 @@ class ConfigurationModel {
 
   String? nonce;
 
-  ConfigurationModel({
-    this.message,
-    this.status,
-    this.userId,
-    this.role,
-    this.isTeleMedActive,
-    this.isKiviCareProOnName,
-    this.isKiviCareGoogleMeetActive,
-    this.telemedType,
-    this.isUploadFileAppointment,
-    this.restrictAppointment,
-    this.isEnableGoogleCal,
-    this.isPatientEnable,
-    this.googleClientId,
-    this.globalDateFormat,
-    this.utc,
-    this.permissions,
-    this.paymentMethod,
-    this.termsEndCondition,
-    this.nonce,
-  });
+  String? wcCurrency;
+
+  ConfigurationModel(
+      {this.moduleConfig,
+      this.message,
+      this.status,
+      this.userId,
+      this.role,
+      this.isTeleMedActive,
+      this.isKiviCareProOnName,
+      this.isKiviCareGoogleMeetActive,
+      this.telemedType,
+      this.isUploadFileAppointment,
+      this.restrictAppointment,
+      this.isEnableGoogleCal,
+      this.isPatientEnable,
+      this.googleClientId,
+      this.globalDateFormat,
+      this.utc,
+      this.permissions,
+      this.paymentMethod,
+      this.termsEndCondition,
+      this.nonce,
+      this.wcCurrency});
 
   ConfigurationModel.fromJson(dynamic json) {
+    moduleConfig = json['module_config'] != null ? ModuleConfig.fromJson(json['module_config']) : null;
     message = json['message'];
     status = json['status'];
     userId = json['user_id'];
@@ -70,10 +74,12 @@ class ConfigurationModel {
     paymentMethod = json['payment_methods'] != null ? PaymentMethods.fromJson(json['payment_methods']) : null;
     utc = json['UTC'];
     nonce = json['wc_nounce'];
+    wcCurrency = json['wc_currency'];
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
+    map['module_config'] = moduleConfig;
     map['message'] = message;
     map['status'] = status;
     map['user_id'] = userId;
@@ -94,6 +100,7 @@ class ConfigurationModel {
     map['global_date_format'] = globalDateFormat;
     map['c_nwounce'] = nonce;
     map['UTC'] = utc;
+    map['wc_currency'] = wcCurrency;
     if (paymentMethod != null) {
       map['payment_methods'] = paymentMethod!.toJson();
     }
@@ -108,12 +115,12 @@ class RestrictAppointment {
   });
 
   RestrictAppointment.fromJson(dynamic json) {
-    pre = (json['pre'] is int) ?json['pre']:int.parse(json['pre']);
-    post =(json['post'] is int) ?json['post']:int.parse(json['post']);
+    pre = (json['pre'] is int) ? json['pre'] : int.parse(json['pre']);
+    post = (json['post'] is int) ? json['post'] : int.parse(json['post']);
   }
 
   int? pre;
-  int ? post;
+  int? post;
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
@@ -168,5 +175,21 @@ class BaseResponses {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['message'] = this.message;
     return data;
+  }
+}
+
+class ModuleConfig {
+  bool? receptionist;
+  bool? billing;
+  bool? customFields;
+
+  ModuleConfig({this.receptionist, this.billing, this.customFields});
+
+  factory ModuleConfig.fromJson(Map<String, dynamic> json) {
+    return ModuleConfig(
+      receptionist: json['Receptionist'] ?? json['receptionist'] ?? true,
+      billing: json['Billing'] ?? json['billing'] ?? true,
+      customFields: json['CustomFields'] ?? json['custom_fields'] ?? true,
+    );
   }
 }

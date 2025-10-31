@@ -5,6 +5,7 @@ import 'package:kivicare_flutter/components/cached_image_widget../../../model/se
 import 'package:kivicare_flutter/components/image_border_component.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/user_model.dart';
+import 'package:kivicare_flutter/utils/common.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class CategoryWidget extends StatelessWidget {
@@ -67,17 +68,53 @@ class CategoryWidget extends StatelessWidget {
           8.height,
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: List.generate(data.doctorList.validate().length, (index) {
-                UserModel userData = data.doctorList.validate()[index];
-                return ImageBorder(
-                  src: userData.profileImage.validate(),
-                  height: 30,
-                  width: 30,
-                  nameInitial: userData.displayName.validate(value: 'D')[0],
-                ).paddingLeft(index == 0 ? 0 : (index) * 20);
-              }),
+            child: Row(
+              mainAxisSize: MainAxisSize.min, // prevents Row from expanding infinitely
+              children: [
+                Stack(
+                  alignment: isRTL ? Alignment.centerRight : Alignment.centerLeft,
+                  children: List.generate(
+                    data.doctorList.validate().length > 3 ? 4 : data.doctorList.validate().length,
+                    (index) {
+                      List<UserModel> doctorList = data.doctorList.validate();
+                      const double avatarSize = 30;
+
+                      if (index == 3) {
+                        int extraCount = doctorList.length - 3;
+                        return Container(
+                          height: avatarSize,
+                          width: avatarSize,
+                          margin: EdgeInsets.only(
+                            left: !isRTL ? index * 20 : 0,
+                            right: isRTL ? index * 20 : 0,
+                          ),
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ImageBorder(
+                                height: avatarSize,
+                                width: avatarSize,
+                                src: '',
+                                nameInitial: '',
+                              ),
+                              Text("+$extraCount", style: boldTextStyle(size: 10)),
+                            ],
+                          ),
+                        );
+                      }
+
+                      UserModel userData = doctorList[index];
+                      String image = userData.profileImage.validate();
+                      return ImageBorder(
+                        height: avatarSize,
+                        width: avatarSize,
+                        src: image,
+                        nameInitial: userData.displayName.validate(value: 'D')[0],
+                      ).paddingLeft(!isRTL ? (index == 0 ? 0 : index * 20) : 0).paddingRight(isRTL ? (index == 0 ? 0 : index * 20) : 0);
+                    },
+                  ),
+                ),
+              ],
             ),
           )
         ],

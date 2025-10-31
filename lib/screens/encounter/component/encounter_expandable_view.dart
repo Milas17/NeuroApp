@@ -20,17 +20,18 @@ class EncounterExpandableView extends StatefulWidget {
   final String encounterType;
   final EncounterModel encounterData;
   final VoidCallback? callForRefresh;
+  final bool isEditable;
 
   EncounterExpandableView({
     required this.encounterType,
     required this.encounterData,
     this.callForRefresh,
+    this.isEditable = false,
     Key? key,
   }) : super(key: key);
 
   @override
-  _EncounterExpandableViewState createState() =>
-      _EncounterExpandableViewState();
+  _EncounterExpandableViewState createState() => _EncounterExpandableViewState();
 }
 
 class _EncounterExpandableViewState extends State<EncounterExpandableView> {
@@ -38,7 +39,6 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
   TextEditingController descriptionCont = TextEditingController();
 
   bool showAdd = false;
-  late bool _isButtonDisabled = false;
 
   @override
   void initState() {
@@ -51,6 +51,7 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
   }
 
   void saveDetails() async {
+    if (!widget.isEditable) return;
     if (appStore.isLoading) return;
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -69,8 +70,9 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
         appStore.setLoading(false);
         descriptionCont.clear();
         widget.callForRefresh?.call();
-        toast(locale.lblMedicalHistoryHasBeen +
-            " ${locale.lblAddedSuccessfully}");
+
+        String encounterType = widget.encounterType.capitalizeFirstLetter();
+        toast("$encounterType ${locale.lblAddedSuccessfully}");
       }).catchError((e) {
         appStore.setLoading(false);
         toast(e.toString());
@@ -78,55 +80,48 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
     }
   }
 
-  Future<void> callForDelete(
-      {required EncounterTypeEnum encounterTypeEnum, required int id}) async {
+  Future<void> callForDelete({
+    required EncounterTypeEnum encounterTypeEnum,
+    required int id,
+  }) async {
+    if (!widget.isEditable) return;
     hideKeyboard(context);
     Map request = {
       "id": "$id",
     };
     appStore.setLoading(true);
-    switch (encounterTypeEnum) {
-      case EncounterTypeEnum.REPORTS:
-        await deleteReportAPI(request).then((value) {
-          widget.callForRefresh?.call();
-          toast(locale.lblReport + ' ' + locale.lblDeletedSuccessfully);
-        }).catchError((e) {
-          toast(e.toString());
-        });
-        break;
-      case EncounterTypeEnum.PRESCRIPTIONS:
-        await deletePrescriptionDataAPI(request).then((value) {
-          widget.callForRefresh?.call();
-          appStore.setLoading(false);
-          toast(locale.lblPrescriptionDeleted);
-        }).catchError((e) {
-          toast(e.toString());
-        });
-        break;
-      case EncounterTypeEnum.OTHERS:
-        await deleteMedicalHistoryData(request).then((value) {
-          widget.callForRefresh?.call();
-          appStore.setLoading(false);
-          toast(locale.lblMedicalHistoryHasBeen +
-              " " +
-              locale.lblDeletedSuccessfully);
-        }).catchError((e) {
-          toast(e.toString());
-        });
-        break;
+
+    try {
+      switch (encounterTypeEnum) {
+        case EncounterTypeEnum.REPORTS:
+          await deleteReportAPI(request);
+          break;
+        case EncounterTypeEnum.PRESCRIPTIONS:
+          await deletePrescriptionDataAPI(request);
+          break;
+        case EncounterTypeEnum.OTHERS:
+          await deleteMedicalHistoryData(request);
+          break;
+      }
+
+      widget.callForRefresh?.call();
+      appStore.setLoading(false);
+
+      String encounterType = encounterTypeEnum.name.capitalizeFirstLetter(); // enum → string
+      toast("$encounterType ${locale.lblDeletedSuccessfully}");
+    } catch (e) {
+      appStore.setLoading(false);
+      toast(e.toString());
     }
   }
 
-  void deleteDetails(
-      {required int id, required EncounterTypeEnum encounterTypeEnum}) async {
+  void deleteDetails({required int id, required EncounterTypeEnum encounterTypeEnum}) async {
     callForDelete(encounterTypeEnum: encounterTypeEnum, id: id);
   }
 
   Future<void> _handleSendEmailPrescriptionData() async {
     appStore.setLoading(true);
-    await sendPrescriptionMailAPI(
-            encounterId: widget.encounterData.encounterId.validate().toInt())
-        .then((value) {
+    await sendPrescriptionMailAPI(encounterId: widget.encounterData.encounterId.validate().toInt()).then((value) {
       appStore.setLoading(false);
       toast(value.message.toString());
     }).catchError((e) {
@@ -152,18 +147,15 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
   }
 
   bool get showAddPrescription {
-    return isVisible(SharedPreferenceKey.kiviCarePrescriptionAddKey) &&
-        widget.encounterData.status.getBoolInt();
+    return isVisible(SharedPreferenceKey.kiviCarePrescriptionAddKey) && widget.isEditable || widget.encounterData.status.getBoolInt();
   }
 
   bool get showAddReport {
-    return isVisible(SharedPreferenceKey.kiviCarePatientReportAddKey) &&
-        widget.encounterData.status.getBoolInt();
+    return isVisible(SharedPreferenceKey.kiviCarePatientReportAddKey) && widget.isEditable || widget.encounterData.status.getBoolInt();
   }
 
   bool get showAddOtherType {
-    return isVisible(SharedPreferenceKey.kiviCareMedicalRecordsAddKey) &&
-        widget.encounterData.status.getBoolInt();
+    return isVisible(SharedPreferenceKey.kiviCareMedicalRecordsAddKey) && widget.isEditable || widget.encounterData.status.getBoolInt();
   }
 
   @override
@@ -178,19 +170,15 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
             widget.callForRefresh?.call();
           },
         ),
-        if (widget.encounterData.status == '1')
+        if (widget.isEditable)
           RoleWidget(
             isShowDoctor: true,
             isShowReceptionist: true,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (widget.encounterType == PRESCRIPTION &&
-                    widget.encounterData.prescription.validate().isNotEmpty)
-                  TextButton(
-                      onPressed: _handleSendEmailPrescriptionData,
-                      child: Text(locale.lblSendPrescriptionOnMail,
-                          style: primaryTextStyle(color: Colors.green))),
+                if (widget.encounterType == PRESCRIPTION && widget.encounterData.prescription.validate().isNotEmpty)
+                  TextButton(onPressed: _handleSendEmailPrescriptionData, child: Text(locale.lblSendPrescriptionOnMail, style: primaryTextStyle(color: Colors.green))),
                 if (widget.encounterType == PRESCRIPTION && showAddPrescription)
                   Icon(
                     showAdd ? Icons.remove : Icons.add,
@@ -202,13 +190,7 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
                         descriptionCont.clear();
                       }
                       if (!showAdd && widget.encounterType == PRESCRIPTION)
-                        AddPrescriptionScreen(
-                                encounterId:
-                                    widget.encounterData.encounterId.toInt())
-                            .launch(context,
-                                pageRouteAnimation: pageAnimation,
-                                duration: pageAnimationDuration)
-                            .then((value) {
+                        AddPrescriptionScreen(encounterId: widget.encounterData.encounterId.toInt()).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
                           if (value ?? false) {
                             showAdd = !showAdd;
                             setState(() {});
@@ -236,13 +218,7 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
                       }
 
                       if (!showAdd && widget.encounterType == REPORT)
-                        AddReportScreen(
-                                patientId:
-                                    widget.encounterData.patientId.toInt())
-                            .launch(context,
-                                pageRouteAnimation: pageAnimation,
-                                duration: pageAnimationDuration)
-                            .then((value) {
+                        AddReportScreen(patientId: widget.encounterData.patientId.toInt()).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
                           if (value ?? false) {
                             showAdd = !showAdd;
                             setState(() {});
@@ -261,10 +237,7 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
               ],
             ).paddingOnly(top: 4, bottom: 16, right: 8),
           ),
-        if ((widget.encounterType == PROBLEM ||
-                widget.encounterType == OBSERVATION ||
-                widget.encounterType == NOTE) &&
-            showAddOtherType)
+        if ((widget.encounterType == PROBLEM || widget.encounterType == OBSERVATION || widget.encounterType == NOTE) && widget.isEditable && showAddOtherType)
           Form(
             key: formKey,
             child: AppTextField(
@@ -274,11 +247,7 @@ class _EncounterExpandableViewState extends State<EncounterExpandableView> {
               maxLines: 5,
               autoFocus: false,
               errorThisFieldRequired: locale.lblFieldIsRequired,
-              decoration: inputDecoration(
-                      context: context,
-                      labelText: locale.lblEnter + ' ${widget.encounterType}')
-                  .copyWith(
-                      filled: true, fillColor: context.scaffoldBackgroundColor),
+              decoration: inputDecoration(context: context, labelText: locale.lblEnter + ' ${widget.encounterType}').copyWith(filled: true, fillColor: context.scaffoldBackgroundColor),
               keyboardType: TextInputType.multiline,
               suffix: IconButton(
                 icon: Icon(Icons.send),

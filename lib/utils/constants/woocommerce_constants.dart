@@ -5,11 +5,12 @@ class CartKeys {
 }
 
 class ProductFilters {
-  static const String clear = 'clear';
-  static const String date = 'date';
-  static const String price = 'price';
-  static const String popularity = 'popularity';
-  static const String rating = 'rating';
+  static const String priceLowHigh = "price_asc";
+  static const String priceHighLow = "price_desc";
+  static const String discount = "discount";
+  static const String date = "date";
+  static const String rating = "rating";
+  static const String popularity = "popularity";
 }
 
 class OrderStatus {

@@ -84,7 +84,11 @@ class WishList {
       proId: json['pro_id'],
       stockQuantity: json['stock_quantity'],
       inStock: json['in_stock'],
-      gallery: List<ImageModel>.from(json['gallery']),
+      gallery: json['gallery'] != null
+          ? (json['gallery'] as List<dynamic>)
+              .map((imageString) => ImageModel(src: imageString as String))
+              .toList()
+          : [],
     );
   }
 

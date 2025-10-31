@@ -255,6 +255,18 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:open_file/open_file.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+// ✅ Common validation constants
+const int maxFileSize = 5 * 1024 * 1024;
+const List<String> allowedExtensions = ['pdf', 'doc', 'docx', 'jpg', 'jpeg', 'png', 'xls', 'xlsx'];
+
+bool isValidFileSize(int fileSize) => fileSize <= maxFileSize && fileSize > 0;
+
+bool isValidFileType(String fileName) {
+  if (fileName.isEmpty) return false;
+  final extension = fileName.split('.').last.toLowerCase();
+  return allowedExtensions.contains(extension);
+}
+
 class AddReportScreen extends StatefulWidget {
   final int? patientId;
   final ReportData? reportData;
@@ -272,16 +284,10 @@ class _AddReportScreenState extends State<AddReportScreen> {
   TextEditingController dateCont = TextEditingController();
   TextEditingController fileCont = TextEditingController();
 
-  int pages = 0;
-  int currentPage = 0;
+  DateTime current = DateTime.now();
 
-  bool isReady = false;
   bool isUpdate = false;
   bool isFirstTime = true;
-
-  String errorMessage = '';
-
-  DateTime current = DateTime.now();
 
   FilePickerResult? result;
   File? file;
@@ -325,9 +331,30 @@ class _AddReportScreenState extends State<AddReportScreen> {
       formKey.currentState!.save();
       appStore.setLoading(true);
 
+      // ✅ Validation for new file uploads
+      if (!isUpdate) {
+        if (file == null) {
+          toast(locale.lblPleaseUploadReport);
+          appStore.setLoading(false);
+          return;
+        }
+
+        if (!isValidFileSize(file!.lengthSync())) {
+          toast(locale.lblSomeFilesExceedLimit);
+          appStore.setLoading(false);
+          return;
+        }
+
+        if (!isValidFileType(file!.path)) {
+          toast(locale.lblInvalidFileType);
+          appStore.setLoading(false);
+          return;
+        }
+      }
+
       Map<String, dynamic> req = {
         "name": nameCont.text,
-        "patient_id": isPatient() ? userStore.userId.toString() : widget.patientId.toString(),
+        "patient_id": userStore.userId.toString(),
         "date": current.getFormattedDate(SAVE_DATE_FORMAT),
       };
 
@@ -431,20 +458,11 @@ class _AddReportScreenState extends State<AddReportScreen> {
                                 onPressed: () {
                                   commonLaunchUrl(widget.reportData!.uploadReport.validate(), launchMode: LaunchMode.externalApplication);
                                 },
-                                style: ButtonStyle(
-                                  visualDensity: VisualDensity.compact,
-                                  padding: WidgetStateProperty.all(
-                                    EdgeInsets.only(top: 0, right: 8, left: 8, bottom: 0),
-                                  ),
-                                  shape: WidgetStateProperty.all(RoundedRectangleBorder(borderRadius: radius(), side: BorderSide(color: context.scaffoldBackgroundColor))),
-                                ),
                                 child: Text('${locale.lblViewFile}', style: primaryTextStyle(size: 10)),
                               ),
                             IconButton(
                               icon: Icon(Icons.upload_file, color: context.iconColor),
-                              onPressed: () {
-                                pickSingleFile();
-                              },
+                              onPressed: pickSingleFile,
                             ),
                             if (file != null)
                               IconButton(

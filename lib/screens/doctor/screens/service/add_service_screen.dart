@@ -124,16 +124,16 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
       if (widget.serviceData!.doctorList.validate().length == 1) {
         setInitialData();
       } else {
-        widget.serviceData!.doctorList.validate().forEach((element) {
+        widget.serviceData!.doctorList!.forEach((element) {
           selectedUsersIdsList.add(element.doctorId.validate().toInt());
-          selectedDataList.add(element);
+          selectedDataList.add(element); // Directly add UserModel
         });
         isFirst = true;
       }
 
-      if (selectedDataList.length > 1)
+      if (selectedDataList.length > 1) {
         doctorCont.text = selectedDataList.length.toString() + ' ${locale.lblDoctorsAvailable}';
-      else {
+      } else {
         doctorCont.text = '${locale.lblDr}' + selectedDoctorData!.displayName.validate();
       }
     }
@@ -172,7 +172,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
       selectedClinicList.add(selectedClinicData!);
       chargesCont.text = widget.serviceData!.charges.validate();
       if (widget.serviceData!.duration != null && (widget.serviceData!.duration.toInt() != 0 || widget.serviceData!.duration.validate().isNotEmpty)) {
-        selectedDuration = durationList.firstWhere((element) => element.value == widget.serviceData!.duration.toInt());
+        selectedDuration = durationList.firstWhere(
+          (element) => element.value == widget.serviceData!.duration.toInt(),
+          orElse: () => durationList.first, // fallback element
+        );
       }
     }
   }
@@ -242,20 +245,20 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
             }
           }
           if (isReceptionist()) {
-            if (selectedDataList.length == 1) {
-              selectedDataList.clear();
-              selectedDoctorData!.charges = chargesCont.text;
-              if (selectedDuration != null) {
-                selectedDoctorData!.duration = selectedDuration!.value.toString();
-              }
-              selectedDoctorData!.status = isActive.getIntBool().toString();
-              selectedDoctorData!.isTelemed = isTelemed;
-              selectedDoctorData!.multiple = isMultiSelection;
-              if (selectedProfileImage != null) {
-                selectedDoctorData!.imageFile = selectedProfileImage;
-              }
-              if (selectedDoctorData != null) selectedDataList.add(selectedDoctorData!);
-            }
+            // if (selectedDataList.isNotEmpty) {
+            //   for (var doctor in selectedDataList) {
+            //     doctor.charges = chargesCont.text;
+            //     if (selectedDuration != null) {
+            //       doctor.duration = selectedDuration!.value.toString();
+            //     }
+            //     doctor.status = isActive.getIntBool().toString();
+            //     doctor.isTelemed = isTelemed;
+            //     doctor.multiple = isMultiSelection;
+            //     if (selectedProfileImage != null) {
+            //       doctor.imageFile = selectedProfileImage;
+            //     }
+            //   }
+            // }
 
             if (listOfMappingTableId.isNotEmpty && addMappingTableId) {
               listOfMappingTableId.removeWhere((element) => element == 0);
@@ -364,6 +367,21 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         });
       },
     );
+  }
+
+  bool validateSelectedDoctors() {
+    if (selectedDataList.isEmpty) {
+      toast("Please select at least one doctor");
+      return false;
+    }
+
+    for (var doctor in selectedDataList) {
+      if (doctor.charges.isEmptyOrNull || doctor.duration.isEmptyOrNull || doctor.isTelemed == null || doctor.multiple == null) {
+        toast("Please complete all fields (Charges, Duration, Telemed, Multi Selection) for Dr. ${doctor.displayName.validate()}");
+        return false;
+      }
+    }
+    return true;
   }
 
   Future<bool> showDeleteDialog() async {
@@ -533,16 +551,18 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                               if (snap.data != null) {
                                 if (snap.data!.staticData != null) {
                                   snap.data?.staticData!.forEach((element) {
-                                    stype.add(element!.value.validate());
+                                    stype.add(element!.label.validate().toLowerCase());
                                   });
                                   if (stype.contains(widget.serviceData!.type.validate())) {
-                                    category = snap.data?.staticData?.firstWhere((element) => element!.value == widget.serviceData!.type.validate());
-                                  } else {
-                                    category?.value = widget.serviceData!.type.validate();
+                                    final matchedList = snap.data?.staticData?.where((element) => element!.label.validate().toLowerCase() == widget.serviceData!.type.validate().toLowerCase()).toList();
 
-                                    if (category != null) {
-                                      serviceCategoryCont.text = category!.value.validate();
+                                    if (matchedList != null && matchedList.isNotEmpty) {
+                                      category = matchedList.first;
+                                    } else {
+                                      serviceCategoryCont.text = widget.serviceData!.type.validate();
                                     }
+                                  } else {
+                                    serviceCategoryCont.text = widget.serviceData!.type.validate();
                                   }
                                 }
                               }
@@ -557,7 +577,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                                 borderRadius: radius(),
                                 dropdownColor: context.cardColor,
                                 autovalidateMode: isFirstTime ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
-                                value: category,
+                                initialValue: category,
                                 items: snap.data!.staticData.validate().map<DropdownMenuItem<StaticData>>((serviceData) {
                                   return DropdownMenuItem<StaticData>(
                                     value: serviceData,
@@ -772,12 +792,13 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                                     isFirst = false;
                                   });
 
+                                  // Just update selectedDataList (no service creation here)
                                   if (selectedDoctorsList.isNotEmpty) {
                                     selectedDoctorsList.forEach((element) {
-                                      int index = selectedDataList.indexWhere((userData) => userData.doctorId.toInt() == element.doctorId.toInt());
-                                      if (index > 0) {
-                                        selectedDataList[index] = selectedDataList[index];
-                                      }
+                                      int index = selectedDataList.indexWhere(
+                                        (userData) => userData.doctorId.toInt() == element.doctorId.toInt(),
+                                      );
+
                                       if (index < 0) {
                                         if (!selectedUsersIdsList.contains(element.doctorId.toInt())) {
                                           selectedDataList.add(element);
@@ -786,6 +807,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                                     });
                                   }
 
+                                  // update doctor names in text field
+                                  doctorCont.text = selectedDataList.map((e) => e.displayName).join(", ");
+
+                                  // clear/remove mapping ids if needed
                                   if (selectedDataList.isNotEmpty) {
                                     selectedDataList.forEach((element) {
                                       if (listOfMappingTableId.contains(element.mappingTableId)) {
@@ -810,6 +835,11 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Text(
+                                  "Note: To complete Charges, Duration and other fields, tap on a doctor.",
+                                  style: secondaryTextStyle(size: 12, color: appSecondaryColor),
+                                ).paddingSymmetric(horizontal: 4, vertical: 6),
+                                8.height,
                                 Text(
                                   "${locale.lblNote} : ${locale.lblDoctorTapMsg}",
                                   style: secondaryTextStyle(size: 10, color: appSecondaryColor),
@@ -914,7 +944,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                           DropdownButtonHideUnderline(
                             child: DropdownButtonFormField<DurationModel>(
                               focusNode: serviceDurationFocus,
-                              value: selectedDuration,
+                              initialValue: selectedDuration,
                               icon: SizedBox.shrink(),
                               validator: (value) {
                                 if (selectedDuration == null) return locale.lblDurationIsRequired;
@@ -956,27 +986,37 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                                   style: primaryTextStyle(color: textSecondaryColorGlobal),
                                 ),
                                 4.height,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 0,
-                                      children: [
-                                        Text(locale.lblYes, style: primaryTextStyle()),
-                                        Radio.adaptive(value: true, groupValue: isMultiSelection, onChanged: changeMultiSelection),
-                                      ],
-                                    ).paddingLeft(38),
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 0,
-                                      children: [
-                                        Text(locale.lblNo, style: primaryTextStyle()),
-                                        Radio.adaptive(value: false, groupValue: isMultiSelection, onChanged: changeMultiSelection),
-                                      ],
-                                    ).paddingRight(38),
-                                  ],
-                                )
+                                RadioGroup<bool>(
+                                  groupValue: isMultiSelection,
+                                  onChanged: (bool? val) {
+                                    if (val != null) changeMultiSelection(val);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        children: [
+                                          Text(locale.lblYes, style: primaryTextStyle()),
+                                          Radio<bool>(
+                                            value: true,
+                                          ),
+                                        ],
+                                      ).paddingLeft(38),
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        children: [
+                                          Text(locale.lblNo, style: primaryTextStyle()),
+                                          Radio<bool>(
+                                            value: false,
+                                          ),
+                                        ],
+                                      ).paddingRight(38),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -992,21 +1032,37 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                                   style: primaryTextStyle(color: textSecondaryColorGlobal),
                                 ),
                                 4.height,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 0,
-                                      children: [Text(locale.lblActive, style: primaryTextStyle()), Radio.adaptive(value: true, groupValue: isActive, onChanged: changeStatus)],
-                                    ).paddingLeft(22),
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 0,
-                                      children: [Text(locale.lblInActive, style: primaryTextStyle()), Radio.adaptive(value: false, groupValue: isActive, onChanged: changeStatus)],
-                                    ).paddingRight(22),
-                                  ],
-                                )
+                                RadioGroup<bool>(
+                                  groupValue: isActive,
+                                  onChanged: (bool? val) {
+                                    if (val != null) changeStatus(val);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        children: [
+                                          Text(locale.lblActive, style: primaryTextStyle()),
+                                          Radio<bool>(
+                                            value: true,
+                                          ),
+                                        ],
+                                      ).paddingLeft(22),
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        children: [
+                                          Text(locale.lblInActive, style: primaryTextStyle()),
+                                          Radio<bool>(
+                                            value: false,
+                                          ),
+                                        ],
+                                      ).paddingRight(22),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -1022,21 +1078,37 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                                   style: primaryTextStyle(color: textSecondaryColorGlobal),
                                 ),
                                 4.height,
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 0,
-                                      children: [Text(locale.lblYes, style: primaryTextStyle()), Radio.adaptive(value: true, groupValue: isTelemed, onChanged: allowTelemed)],
-                                    ).paddingLeft(38),
-                                    Wrap(
-                                      crossAxisAlignment: WrapCrossAlignment.center,
-                                      spacing: 0,
-                                      children: [Text(locale.lblNo, style: primaryTextStyle()), Radio.adaptive(value: false, groupValue: isTelemed, onChanged: allowTelemed)],
-                                    ).paddingRight(38),
-                                  ],
-                                )
+                                RadioGroup<bool>(
+                                  groupValue: isTelemed,
+                                  onChanged: (bool? val) {
+                                    if (val != null) allowTelemed(val);
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        children: [
+                                          Text(locale.lblYes, style: primaryTextStyle()),
+                                          Radio<bool>(
+                                            value: true,
+                                          ),
+                                        ],
+                                      ).paddingLeft(38),
+                                      Wrap(
+                                        crossAxisAlignment: WrapCrossAlignment.center,
+                                        spacing: 6,
+                                        children: [
+                                          Text(locale.lblNo, style: primaryTextStyle()),
+                                          Radio<bool>(
+                                            value: false,
+                                          ),
+                                        ],
+                                      ).paddingRight(38),
+                                    ],
+                                  ),
+                                ),
                               ],
                             ),
                           ),
@@ -1053,7 +1125,10 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.done, color: Colors.white),
           onPressed: () {
-            if (isUpdate && listOfMappingTableId.isNotEmpty)
+            // validation for multiple doctors
+            if (!validateSelectedDoctors()) return;
+
+            if (isUpdate && listOfMappingTableId.isNotEmpty) {
               showDeleteDialog().then((value) {
                 Timer(
                   Duration(milliseconds: 400),
@@ -1062,7 +1137,7 @@ class _AddServiceScreenState extends State<AddServiceScreen> {
                   },
                 );
               });
-            else {
+            } else {
               if (isDoctor() || isReceptionist()) {
                 _handleClick();
               }

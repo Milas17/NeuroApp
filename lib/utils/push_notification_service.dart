@@ -5,6 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 import 'common.dart';
@@ -86,6 +87,9 @@ class PushNotificationService {
   }
 
   void handleNotificationClick(RemoteMessage message, {bool isForeGround = false}) {
+    if (message.data['url'] != null && message.data['url'] is String) {
+      commonLaunchUrl(message.data['url'], launchMode: LaunchMode.externalApplication);
+    }
     printLogsNotificationData(message);
 
     if (isForeGround) {
@@ -93,9 +97,7 @@ class PushNotificationService {
     } else {
       try {
         if (message.data.containsKey(FirebaseMsgConst.additionalDataKey)) {
-          final additionalData = message.data[FirebaseMsgConst.additionalDataKey];
           if (message.data.containsKey(FirebaseMsgConst.idKey)) {
-            int? notId = message.data[FirebaseMsgConst.idKey];
           }
         }
         if (isPatient()) patientStore.setBottomNavIndex(1);

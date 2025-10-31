@@ -11,6 +11,7 @@ import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+// ignore: must_be_immutable
 class OrderComponent extends StatelessWidget {
   final OrderModel orderData;
   double subTotal;
@@ -61,6 +62,7 @@ class OrderComponent extends StatelessWidget {
                       PriceWidget(
                         price: orderItem.subtotal.validate(),
                         textStyle: secondaryTextStyle(),
+                        prefix: appStore.wcCurrency.validate(),
                       ),
                     ],
                   ).expand(),
@@ -75,6 +77,7 @@ class OrderComponent extends StatelessWidget {
               PriceWidget(
                 textStyle: secondaryTextStyle(),
                 price: subTotal.toStringAsFixed(2),
+                prefix: appStore.wcCurrency.validate(),
               ),
             ],
           ),
@@ -92,7 +95,7 @@ class OrderComponent extends StatelessWidget {
                     Text(' - ', style: secondaryTextStyle(color: ratingBarLightGreenColor)),
                     PriceWidget(
                       price: orderData.discountTotal.validate(),
-                      textStyle: secondaryTextStyle(color: ratingBarLightGreenColor),
+                      textStyle: secondaryTextStyle(color: ratingBarLightGreenColor),prefix: appStore.wcCurrency.validate(),
                     )
                   ],
                 ),
@@ -105,6 +108,7 @@ class OrderComponent extends StatelessWidget {
                 PriceWidget(
                   textStyle: secondaryTextStyle(),
                   price: getPrice(orderData.totalTax.validate()).toDouble().toStringAsFixed(2),
+                  prefix: appStore.wcCurrency.validate(),
                 ),
               ],
             ),
@@ -115,6 +119,7 @@ class OrderComponent extends StatelessWidget {
                 PriceWidget(
                   textStyle: secondaryTextStyle(),
                   price: getPrice(orderData.shippingTotal.validate()),
+                  prefix: appStore.wcCurrency.validate(),
                 ),
               ],
             ),
@@ -125,7 +130,7 @@ class OrderComponent extends StatelessWidget {
           Row(
             children: [
               Text('${locale.lblTotal} - ', style: primaryTextStyle()).expand(),
-              PriceWidget(price: orderData.total.validate()),
+              PriceWidget(price: orderData.total.validate(),prefix: appStore.wcCurrency.validate(),),
             ],
           ),
         ],

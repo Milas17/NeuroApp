@@ -86,6 +86,7 @@ Future<Position> getUserLocationPosition() async {
       } else {
         throw 'Enable Location';
       }
+    // ignore: body_might_complete_normally_catch_error
     }).catchError((e) {
       toast(e.toString());
     });

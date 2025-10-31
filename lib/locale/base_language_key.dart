@@ -1614,4 +1614,48 @@ abstract class BaseLanguage {
   String get lblOldAndNewPassword;
 
   String get lblPasswordMustBeStrong;
+
+  String get lblFilterBy;
+
+  String get lblApplyFilter;
+
+  String get lblServiceWithCategory;
+
+  String get lblPriceHighLow;
+
+  String get lblPriceLowHigh;
+
+  String get lblDiagnosisDetails;
+
+  String get lblOnwer;
+
+  String get lblSessionSummary;
+
+  String get lblDateandTime;
+
+  String get lblAppointmentStatus;
+
+  String get lblMedicalHistory;
+
+  String get lblClinicInfo;
+
+  String get lblDoctorInfo;
+
+  String get lblPatientInfo;
+
+  String get lblAboutService;
+
+  String get lblServiceIsDeletedCurrentlyUnavailable;
+
+  String get lblPaymentDetails;
+
+  String get lblServiceTotal;
+
+  String get lblExclusiveTax;
+
+  String get lblPaymentDetailsNotAvailable;
+
+  String get lblSomeFilesExceedLimit;
+
+  String get lblInvalidFileType;
 }

@@ -30,11 +30,10 @@ class YearlyChartComponentState extends State<YearlyChartComponent> {
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-        BarChart(
-          mainBarData(),
-          swapAnimationDuration: animDuration,
-          swapAnimationCurve: Curves.linear,
-        ).paddingSymmetric(horizontal: 8).expand(),
+          BarChart(
+            mainBarData(),
+            duration: animDuration,
+          ).paddingSymmetric(horizontal: 8).expand(),
         ],
       ),
     );
