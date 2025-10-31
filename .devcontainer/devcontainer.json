@@ -1,0 +1,16 @@
+{
+  "name": "Flutter Dev Container",
+  "image": "ghcr.io/cirruslabs/flutter:latest",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Dart-Code.flutter",
+        "Dart-Code.dart-code"
+      ]
+    }
+  },
+  "postCreateCommand": "flutter doctor"
+}
