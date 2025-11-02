@@ -8,18 +8,17 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.24.6'
-          channel: 'beta'
-
-      - name: Check Flutter & Dart versions
-        run: flutter --version
+      # ⚙️ Installe la dernière version stable directement depuis Git (contient Dart 3.9+)
+      - name: Install Flutter manually (latest stable)
+        run: |
+          git clone https://github.com/flutter/flutter.git --branch stable --depth 1
+          echo "$PWD/flutter/bin" >> $GITHUB_PATH
+          flutter --version
 
       - name: Install dependencies
         run: flutter pub get
