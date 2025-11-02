@@ -16,8 +16,7 @@ var COPY_RIGHT_TEXT = '© ${DateTime.now().year}. Made with ♡ by Neurocare Con
 const TERMS_AND_CONDITION_URL = 'https://neurocareconnect.tech/conditions-generales-dutilisation-neurocare-telemed/';
 const PRIVACY_POLICY_URL = 'https://neurocareconnect.tech/politique-de-confidentialite-neurocare-telemed/';
 const SUPPORT_URL = 'https://neurocareconnect.tech/contact/';
-const CODE_CANYON_URL =
-    "https://codecanyon.net/item/kivicare-flutter-app-clinic-patient-management-system/30970616"
+const CODE_CANYON_URL = "https://codecanyon.net/item/kivicare-flutter-app-clinic-patient-management-system/30970616";
 const MAIL_TO = "neurocareconnect24@gmail.com";
 
 const APPSTORE_APP_LINK =
