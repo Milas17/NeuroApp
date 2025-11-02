@@ -15,13 +15,12 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.3'
+          flutter-version: '3.27.3'
           channel: 'stable'
 
       - name: Install dependencies
         run: flutter pub get
 
-      # ✅ Build Debug APK (installable sur téléphone)
       - name: Build Debug APK
         run: flutter build apk --debug
 
@@ -31,7 +30,6 @@ jobs:
           name: app-debug-apk
           path: build/app/outputs/flutter-apk/app-debug.apk
 
-      # ✅ Build Release APK (non signé)
       - name: Build Release APK
         run: flutter build apk --release
 
@@ -41,7 +39,6 @@ jobs:
           name: app-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      # ✅ Build Release AAB (non signé)
       - name: Build Release AAB
         run: flutter build appbundle --release
 
