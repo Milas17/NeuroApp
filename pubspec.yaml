@@ -81,6 +81,7 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
+  flutter_launcher_icons: ^0.14.4
 
 
 dev_dependencies:
@@ -103,3 +104,13 @@ flutter:
     - images/flags/
     - images/filesFormat/
     - images/icons/ic_addToCart.png
+
+# === ICONES D'APPLICATION ===
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "images/appIcon.png"
+  adaptive_icon_background: "#004C91"  # Bleu NeuroCare
+  adaptive_icon_foreground: "images/appIcon.png"
+  remove_alpha_ios: true
+    
