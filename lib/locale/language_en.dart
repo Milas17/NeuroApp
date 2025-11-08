@@ -11,7 +11,7 @@ class LanguageEn extends BaseLanguage {
   String get lblRemoveCouponConfirmation => 'Do you want to remove coupon?';
 
   @override
-  String get lblNoCouponAvailable => 'No Coupons Available';
+  String get lblNoCouponAvailable => 'Aucun coupon disponible ';
 
   @override
   String get lblVisitingDays => 'Visiting Days';
@@ -103,7 +103,7 @@ class LanguageEn extends BaseLanguage {
   String get lblAddressSubTitle => "Delivery Destination";
 
   @override
-  String get lblOrders => "Orders ";
+  String get lblOrders => "Commandes ";
 
   @override
   String get lblOrdersSubtitle => "Purchase Overview";

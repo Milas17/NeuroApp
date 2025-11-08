@@ -83,7 +83,7 @@ class _OrderListScreenState extends State<OrderListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarWidget(
-        'Your Orders',
+        'Vos commandes',
         systemUiOverlayStyle: defaultSystemUiOverlayStyle(context),
         textColor: Colors.white,
       ),
