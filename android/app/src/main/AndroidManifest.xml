@@ -16,7 +16,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="NeuroCare Telemed"
+        android:label="KiviCare"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:enableOnBackInvokedCallback="true">
@@ -51,7 +51,7 @@
         <!--Todo removed Key before making code zip;      DO NOT REMOVE THIS TODO />-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCI40j9uTXzmOf9bqPuoRvB1DZaFXPXHc0" />
+            android:value="please add your key" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
