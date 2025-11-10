@@ -4,7 +4,7 @@ const APP_SECOND_NAME = 'Telemed';
 const APP_NAME_TAG_LINE = 'Télémédecine neurologique et psychiatrique – consultations, suivi et dossier patient';
 
 // LIVE
-const DOMAIN_URL = 'https://telemed.neurocareconnect.tech';
+const DOMAIN_URL = 'https://neurocareconnect.tech';
 
 const BASE_URL = '$DOMAIN_URL/wp-json/';
 
