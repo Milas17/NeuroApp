@@ -6318,7 +6318,7 @@ J_(a,b){$.rL().a4(a,new A.vj(a,b,null))},
 OE(a,b){var s="flutterfire-"+a+"-"+b,r=v.G
 if(r.window.sessionStorage.getItem(s)==null){r.window.sessionStorage.setItem(s,b)
 r=r.firebase_core
-r.registerVersion(a,b,"flutter-firebase")}},
+r.registerVersion(a,b,null)}},
 Lf(a,b){if(B.c.t(J.aS(a),"of undefined"))throw A.c(A.Ue())
 A.hn(a,b)},
 LR(a,b){var s,r,q,p,o
@@ -9931,7 +9931,7 @@ A.lP.prototype={$imU:1}
 A.E6.prototype={
 $1(a){var s=A.bb().b
 s=s==null?null:s.canvasKitBaseUrl
-return(s==null?"https://www.gstatic.com/flutter-canvaskit/a5cb96369ef86c7e85abf5d662a1ca5d89775053/":s)+a},
+return(s==null?"https://www.gstatic.com/flutter-canvaskit/1527ae0ec577a4ef50e65f6fefcfc1326707d9bf/":s)+a},
 $S:18}
 A.nR.prototype={
 gjV(){var s=this.b
@@ -20229,7 +20229,7 @@ k=$.rL()
 l=A.n(k).i("bs<2>")
 s=3
 return A.x(A.cP(A.xp(new A.bs(k,l),new A.vb(p,m,n),l.i("k.E"),t.x),t.H),$async$ft)
-case 3:$.vc.n(0,"flutter-fire-core","4.2.1")
+case 3:$.vc.n(0,"flutter-fire-core","4.3.0")
 $.vc.J(0,A.UA())
 case 1:return A.t(q,r)}})
 return A.u($async$ft,r)},
@@ -26865,12 +26865,12 @@ k=new A.v9()
 j.n(0,k,l)
 A.aV(k,l,!0)
 $.OI=k
-$.vc.n(0,"flutter-fire-fcm","16.0.4")
+$.vc.n(0,"flutter-fire-fcm","16.1.0")
 A.J_("messaging",n)
 k=A.J2(n)
 A.aV(k,$.rM(),!0)
 $.vl=k
-$.vc.n(0,"flutter-fire-rc","6.1.2")
+$.vc.n(0,"flutter-fire-rc","6.1.3")
 A.J_("remote-config","remote_config")
 k=$.Mc()
 l=new A.vt(n)
