@@ -50,6 +50,25 @@ Future<List<BillListData>> getBillListApi({
   return billList;
 }
 
+Future<BaseResponses> deleteServiceApi(String id) async {
+  // JSON body banavvo
+  final Map<String, dynamic> body = {
+    "bill_item_id": id,
+  };
+
+  // DELETE request with JSON body
+  return BaseResponses.fromJson(
+    await handleResponse(
+      await buildHttpResponse(
+        getEndPoint(endPoint: ApiEndPoints.serviceDeleteEndPoint),
+        method: HttpMethod.DELETE,
+        request: body, // <---- JSON body add karvama aavyu
+      ),
+    ),
+  );
+}
+
+
 //ORDERS
 
 //RAZOR

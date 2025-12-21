@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/role_widget.dart';
 import 'package:kivicare_flutter/main.dart';
+import 'package:kivicare_flutter/model/extra_model.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
@@ -15,8 +16,9 @@ import 'package:nb_utils/nb_utils.dart';
 class ConfirmAppointmentStep1Component extends StatefulWidget {
   final Function(String)? changeIndexCallback;
   final bool isUpdate;
+  final Extra? extraData;
 
-  ConfirmAppointmentStep1Component({this.changeIndexCallback, this.isUpdate = false});
+  ConfirmAppointmentStep1Component({this.changeIndexCallback, this.isUpdate = false, this.extraData});
 
   @override
   State<ConfirmAppointmentStep1Component> createState() => _ConfirmAppointmentStep1ComponentState();
@@ -97,7 +99,7 @@ class _ConfirmAppointmentStep1ComponentState extends State<ConfirmAppointmentSte
               TextSpan(text: locale.lblAmount, style: secondaryTextStyle(size: 16)),
               TextSpan(text: " : ", style: primaryTextStyle()),
               TextSpan(
-                text: '$currencyDollar${(multiSelectStore.taxData?.totalAmount ?? 0) + (multiSelectStore.taxData?.totalTax ?? 0)}',
+                text: '${appStore.wcCurrency}${(multiSelectStore.taxData?.totalAmount ?? 0) + (multiSelectStore.taxData?.totalTax ?? 0)}',
                 style: primaryTextStyle(),
               )
             ],
@@ -193,6 +195,7 @@ class _ConfirmAppointmentStep1ComponentState extends State<ConfirmAppointmentSte
               textStyle: boldTextStyle(color: Colors.white),
               onTap: () {
                 if (isPatient() && !widget.isUpdate) {
+                  appointmentAppStore.setBookingStatus(BookedStatusInt);
                   if (paymentMethodList.isNotEmpty && selectedIndex != null) {
                     widget.changeIndexCallback?.call(paymentModeList[selectedIndex!]);
                   } else {
@@ -202,7 +205,8 @@ class _ConfirmAppointmentStep1ComponentState extends State<ConfirmAppointmentSte
                       toast(locale.lblPleaseSelectPayment);
                   }
                 } else {
-                  if (isDoctor() || isReceptionist()) appointmentAppStore.setBookingStatus(BookedStatusInt);
+                  //if (isDoctor() || isReceptionist())
+                  appointmentAppStore.setBookingStatus(BookedStatusInt);
                   widget.changeIndexCallback?.call('');
                 }
               }).visible(

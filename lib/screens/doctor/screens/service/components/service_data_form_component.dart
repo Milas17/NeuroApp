@@ -117,7 +117,7 @@ class _ServiceDataFormComponentState extends State<ServiceDataFormComponent> {
           child: DropdownButtonFormField<DurationModel>(
             focusNode: serviceDurationFocus,
             borderRadius: radius(),
-            value: selectedDuration,
+            initialValue: selectedDuration,
             icon: SizedBox.shrink(),
             dropdownColor: context.cardColor,
             validator: (value) {
@@ -155,27 +155,37 @@ class _ServiceDataFormComponentState extends State<ServiceDataFormComponent> {
                 style: primaryTextStyle(color: textSecondaryColorGlobal),
               ),
               4.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 0,
-                    children: [
-                      Text(locale.lblYes, style: primaryTextStyle()),
-                      Radio.adaptive(value: true, groupValue: isMultiSelection, onChanged: changeMultiSelection),
-                    ],
-                  ).paddingLeft(38),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 0,
-                    children: [
-                      Text(locale.lblNo, style: primaryTextStyle()),
-                      Radio.adaptive(value: false, groupValue: isMultiSelection, onChanged: changeMultiSelection),
-                    ],
-                  ).paddingRight(38),
-                ],
-              )
+              RadioGroup<bool>(
+                groupValue: isMultiSelection,
+                onChanged: (bool? val) {
+                  if (val != null) changeMultiSelection(val);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Text(locale.lblYes, style: primaryTextStyle()),
+                        Radio<bool>(
+                          value: true,
+                        ),
+                      ],
+                    ).paddingLeft(38),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Text(locale.lblNo, style: primaryTextStyle()),
+                        Radio<bool>(
+                          value: false,
+                        ),
+                      ],
+                    ).paddingRight(38),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -191,21 +201,37 @@ class _ServiceDataFormComponentState extends State<ServiceDataFormComponent> {
                 style: primaryTextStyle(color: textSecondaryColorGlobal),
               ),
               4.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 0,
-                    children: [Text(locale.lblActive, style: primaryTextStyle()), Radio.adaptive(value: true, groupValue: isActive, onChanged: changeStatus)],
-                  ).paddingLeft(22),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 0,
-                    children: [Text(locale.lblInActive, style: primaryTextStyle()), Radio.adaptive(value: false, groupValue: isActive, onChanged: changeStatus)],
-                  ).paddingRight(22),
-                ],
-              )
+              RadioGroup<bool>(
+                groupValue: isActive,
+                onChanged: (bool? val) {
+                  if (val != null) changeStatus(val);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Text(locale.lblActive, style: primaryTextStyle()),
+                        Radio<bool>(
+                          value: true,
+                        ),
+                      ],
+                    ).paddingLeft(22),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Text(locale.lblInActive, style: primaryTextStyle()),
+                        Radio<bool>(
+                          value: false,
+                        ),
+                      ],
+                    ).paddingRight(22),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -221,21 +247,37 @@ class _ServiceDataFormComponentState extends State<ServiceDataFormComponent> {
                 style: primaryTextStyle(color: textSecondaryColorGlobal),
               ),
               4.height,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 0,
-                    children: [Text(locale.lblYes, style: primaryTextStyle()), Radio.adaptive(value: true, groupValue: isTelemed, onChanged: allowTelemed)],
-                  ).paddingLeft(38),
-                  Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 0,
-                    children: [Text(locale.lblNo, style: primaryTextStyle()), Radio.adaptive(value: false, groupValue: isTelemed, onChanged: allowTelemed)],
-                  ).paddingRight(38),
-                ],
-              )
+              RadioGroup<bool>(
+                groupValue: isTelemed,
+                onChanged: (bool? val) {
+                  if (val != null) allowTelemed(val);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Text(locale.lblYes, style: primaryTextStyle()),
+                        Radio<bool>(
+                          value: true,
+                        ),
+                      ],
+                    ).paddingLeft(38),
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 6,
+                      children: [
+                        Text(locale.lblNo, style: primaryTextStyle()),
+                        Radio<bool>(
+                          value: false,
+                        ),
+                      ],
+                    ).paddingRight(38),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

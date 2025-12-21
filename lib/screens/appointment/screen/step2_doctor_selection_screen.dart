@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/empty_error_state_component.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/user_model.dart';
 import 'package:kivicare_flutter/network/doctor_repository.dart';
@@ -15,7 +16,6 @@ import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
-import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -39,7 +39,7 @@ class _Step2DoctorSelectionScreenState extends State<Step2DoctorSelectionScreen>
 
   bool isLastPage = false;
   bool showClear = false;
-
+  Timer? _debounce;
   int page = 1;
 
   @override
@@ -82,9 +82,10 @@ class _Step2DoctorSelectionScreenState extends State<Step2DoctorSelectionScreen>
   }
 
   Future<void> _onClearSearch() async {
-    hideKeyboard(context);
     searchCont.clear();
-
+    doctorList.clear();
+    page = 1;
+    hideKeyboard(context);
     init(showLoader: true);
   }
 
@@ -94,9 +95,9 @@ class _Step2DoctorSelectionScreenState extends State<Step2DoctorSelectionScreen>
   }
 
   @override
-  void dispose() async {
+  void dispose() {
+    _debounce?.cancel();
     appointmentAppStore.setSelectedDoctor(null);
-
     super.dispose();
   }
 
@@ -121,25 +122,42 @@ class _Step2DoctorSelectionScreenState extends State<Step2DoctorSelectionScreen>
                       context: context,
                       hintText: locale.lblSearchDoctor,
                       prefixIcon: ic_search.iconImage().paddingAll(16),
-                      suffixIcon: showClear
-                          ? ic_clear.iconImage().paddingAll(16).appOnTap(
-                              () async {
-                                _onClearSearch();
-                              },
-                            )
-                          : Offstage(),
+                      suffixIcon: VoiceSearchSuffix(
+                        controller: searchCont,
+                        lottieAnimationPath: lt_voice,
+                        onClear: () {
+                          _onClearSearch();
+                        },
+                        onSearchChanged: (value) {
+                          if (value.isEmpty) {
+                            _onClearSearch();
+                          } else {
+                            Timer(pageAnimationDuration, () {
+                              init(showLoader: true);
+                            });
+                          }
+                        },
+                        onSearchSubmitted: (value) {
+                          hideKeyboard(context);
+                          init(showLoader: true);
+                        },
+                      ),
                     ),
                     onChanged: (newValue) {
-                      if (newValue.isEmpty) {
-                        showClear = false;
-                        _onClearSearch();
-                      } else {
-                        Timer(Duration(milliseconds: 500), () {
+                      if (_debounce?.isActive ?? false) _debounce!.cancel();
+
+                      _debounce = Timer(Duration(milliseconds: 500), () {
+                        if (newValue.isEmpty) {
+                          showClear = false;
+                          _onClearSearch();
+                        } else {
+                          showClear = true;
+                          page = 1; // reset pagination
+                          doctorList.clear(); // old data remove
                           init(showLoader: true);
-                        });
-                        showClear = true;
-                      }
-                      setState(() {});
+                        }
+                        setState(() {});
+                      });
                     },
                     onFieldSubmitted: (searchString) async {
                       hideKeyboard(context);

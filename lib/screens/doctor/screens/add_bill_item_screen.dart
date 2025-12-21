@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, body_might_complete_normally_catch_error
+
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:kivicare_flutter/main.dart';
@@ -109,7 +111,7 @@ class _AddBillItemScreenState extends State<AddBillItemScreen> {
                     DropdownButtonFormField<ServiceData>(
                       dropdownColor: context.cardColor,
                       borderRadius: radius(),
-                      value: serviceData,
+                      initialValue: serviceData,
                       decoration: inputDecoration(
                         context: context,
                         labelText: locale.lblSelectServices,

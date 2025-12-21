@@ -394,7 +394,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             focusColor: primaryColor,
                             dropdownColor: context.cardColor,
                             focusNode: bloodGroupFocus,
-                            value: bloodGroup,
+                            initialValue: bloodGroup,
                             decoration: inputDecoration(context: context, labelText: locale.lblBloodGroup, suffixIcon: ic_arrow_down.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
                             onChanged: (dynamic value) {
                               bloodGroup = value;

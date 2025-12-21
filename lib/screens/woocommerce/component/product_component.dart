@@ -109,6 +109,20 @@ class _ProductComponentState extends State<ProductComponent> {
                 topLeft: defaultRadius.toInt(),
               ),
               Positioned(
+                left: 0,
+                bottom: 0,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
+                  child: Text(
+                    locale.outOfStock,
+                    style: secondaryTextStyle(size: 10, color: Colors.white),
+                  ),
+                ),
+              ).visible(widget.product.stockStatus == "outofstock"),
+              Positioned(
                 top: widget.product.onSale.validate() && widget.product.ratingCount.validate() > 0 ? null : 12,
                 bottom: widget.product.onSale.validate() && widget.product.ratingCount.validate() > 0 ? 8 : null,
                 right: 0,
@@ -167,13 +181,12 @@ class _ProductComponentState extends State<ProductComponent> {
           Marquee(
             child: Text(widget.product.name.validate().capitalizeFirstLetter(), style: boldTextStyle(size: 14)).paddingSymmetric(horizontal: 4),
           ),
-          PriceWidget(
-            price: widget.product.price.validate(value: '0'),
-            salePrice: widget.product.salePrice,
-            regularPrice: widget.product.regularPrice,
-            showDiscountPercentage: false,
-            textSize: 14,
-          ).paddingSymmetric(vertical: 4),
+          buildPriceWidget(),
+          if (widget.product.discount.validate().isNotEmpty)
+            Text(
+              '${widget.product.discount} OFF',
+              style: boldTextStyle(size: 12, color: Colors.green),
+            ),
           if (isVisibleCart.validate())
             ic_addToCart.iconImageColored().appOnTap(() {
               addToCart();
@@ -199,6 +212,36 @@ class _ProductComponentState extends State<ProductComponent> {
       },
       splashColor: appPrimaryColor,
     );
+  }
+
+  Widget buildPriceWidget() {
+    // Grouped product check
+    if (widget.product.groupedProducts != null && widget.product.groupedProducts!.isNotEmpty) {
+      // Parse all prices from grouped products
+      List<double> prices = widget.product.groupedProducts!.map((gp) => double.tryParse(gp.price.validate()) ?? 0).toList();
+
+      if (prices.isNotEmpty) {
+        double minPrice = prices.reduce((a, b) => a < b ? a : b);
+        double maxPrice = prices.reduce((a, b) => a > b ? a : b);
+
+        return Text(
+          "${appStore.wcCurrency.validate()}${minPrice.toStringAsFixed(2)} - ${appStore.wcCurrency.validate()}${maxPrice.toStringAsFixed(2)}",
+          style: boldTextStyle(size: 14),
+        ).paddingSymmetric(vertical: 4);
+      } else {
+        return SizedBox();
+      }
+    } else {
+      // Normal product price
+      return PriceWidget(
+        price: widget.product.price.validate(value: '0'),
+        salePrice: widget.product.salePrice,
+        regularPrice: widget.product.regularPrice,
+        showDiscountPercentage: false,
+        textSize: 14,
+        prefix: appStore.wcCurrency.validate(),
+      ).paddingSymmetric(vertical: 4);
+    }
   }
 }
 
@@ -264,7 +307,13 @@ class _RelatedProductCardComponentState extends State<RelatedProductCardComponen
               salePrice: product.salePrice,
               regularPrice: product.regularPrice,
               showDiscountPercentage: false,
+              prefix: appStore.wcCurrency.validate(),
             ).paddingSymmetric(horizontal: 10),
+            // if (product.discount.validate().isNotEmpty)
+            //   Text(
+            //     '${product.discount} OFF',
+            //     style: boldTextStyle(size: 12, color: Colors.green),
+            //   ).paddingSymmetric(horizontal: 10),
             14.height,
           ],
         ),

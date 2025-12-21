@@ -134,6 +134,11 @@ class SharedPreferenceKey {
   static const kiviCarePatientAddKey = 'kiviCarePatientAdd';
   static const kiviCarePatientDeleteKey = 'kiviCarePatientDelete';
   static const kiviCarePatientClinicKey = 'kiviCarePatientClinic';
+  static const kiviCarePatientClinicNameKey = 'kiviCarePatientClinicName';
+  static const kiviCarePatientClinicStatusKey = 'kiviCarePatientClinicStatusKey';
+  static const kiviCarePatientClinicAddressKey = 'kiviCarePatientClinicAddressKey';
+  static const kiviCarePatientClinicImageKey = 'kiviCarePatientClinicImageKey';
+  static const String kiviCarePatientClinicVisibleKey = 'kiviCarePatientClinicVisibleKey';
   static const kiviCarePatientProfileKey = 'kiviCarePatientProfile';
   static const kiviCarePatientEditKey = 'kiviCarePatientEdit';
   static const kiviCarePatientListKey = 'kiviCarePatientList';

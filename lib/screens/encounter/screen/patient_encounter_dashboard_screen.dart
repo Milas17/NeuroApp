@@ -315,6 +315,10 @@ class _PatientEncounterDashboardScreenState extends State<PatientEncounterDashbo
       errorWidget: ErrorStateWidget(),
       loadingWidget: LoaderWidget(),
       onSuccess: (snap) {
+        // if (isPatient() && snap.status == '1') {
+        //   return Center(child: Text(locale.lblNoDataFound, style: secondaryTextStyle()));
+        // }
+
         return AnimatedScrollView(
           padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
           physics: AlwaysScrollableScrollPhysics(),

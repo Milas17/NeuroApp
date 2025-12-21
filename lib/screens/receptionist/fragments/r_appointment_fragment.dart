@@ -33,7 +33,7 @@ class _RAppointmentFragmentState extends State<RAppointmentFragment> {
 
   DateTime current = DateTime.now();
 
-  int selectIndex = 1;
+  int selectIndex = 0;
   int page = 1;
 
   bool isLastPage = false;
@@ -41,7 +41,7 @@ class _RAppointmentFragmentState extends State<RAppointmentFragment> {
   @override
   void initState() {
     super.initState();
-    appStore.setStatus('1');
+    appStore.setStatus('All');
     String res = getStringAsync(SharedPreferenceKey.cachedAppointmentListKey);
     if (res.isNotEmpty) {
       cachedReceptionistAppointment = (jsonDecode(res) as List).map((e) => UpcomingAppointmentModel.fromJson(e)).toList();

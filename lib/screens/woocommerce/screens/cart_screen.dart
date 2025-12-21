@@ -1,3 +1,5 @@
+// ignore_for_file: body_might_complete_normally_catch_error
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/cached_image_widget.dart';
@@ -10,8 +12,10 @@ import 'package:kivicare_flutter/model/woo_commerce/cart_model.dart';
 import 'package:kivicare_flutter/network/shop_repository.dart';
 import 'package:kivicare_flutter/screens/shimmer/screen/cart_shimmer_screen.dart';
 import 'package:kivicare_flutter/screens/woocommerce/component/coupon_component.dart';
+
 import 'package:kivicare_flutter/screens/woocommerce/screens/checkout_screen.dart';
 import 'package:kivicare_flutter/screens/woocommerce/screens/coupon_list_screen.dart';
+
 import 'package:kivicare_flutter/screens/woocommerce/screens/product_detail_screen.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
@@ -240,16 +244,22 @@ class _CartScreenState extends State<CartScreen> {
                                       ),
                                       4.height,
                                       PriceWidget(
-                                        price: getPrice(cartItem.prices!.price.validate()),
-                                        salePrice: getPrice(cartItem.prices!.salePrice.validate()),
-                                        regularPrice: getPrice(cartItem.prices!.regularPrice.validate()),
+                                        price: (getPrice(cartItem.prices!.price.validate()).toDouble() * cartItem.quantity.validate()).toString(),
+                                        salePrice: (getPrice(cartItem.prices!.salePrice.validate()).toDouble() * cartItem.quantity.validate()).toString(),
+                                        regularPrice: (getPrice(cartItem.prices!.regularPrice.validate()).toDouble() * cartItem.quantity.validate()).toString(),
                                         prefix: cartItem.prices!.currencyPrefix,
                                         postFix: cartItem.prices!.currencySuffix,
+                                        showDiscountPercentage: true,
                                       ).appOnTap(
                                         () {
                                           ProductDetailScreen(productId: cartItem.id.validate()).launch(context);
                                         },
                                       ),
+                                      if (cartItem.prices!.discount.validate().isNotEmpty)
+                                        Text(
+                                          '${cartItem.prices!.discount} OFF',
+                                          style: boldTextStyle(size: 12, color: Colors.red),
+                                        ),
                                       8.height,
                                       Row(
                                         children: [
@@ -399,6 +409,7 @@ class _CartScreenState extends State<CartScreen> {
                                     price: subTotal.toStringAsFixed(2),
                                     size: 16,
                                     textAlign: TextAlign.start,
+                                    prefix: cart!.totals!.currencyPrefix.validate(),
                                   ),
                                 ],
                               ),
@@ -418,6 +429,7 @@ class _CartScreenState extends State<CartScreen> {
                                           price: getPrice(cart!.totals!.totalDiscount.validate()),
                                           textAlign: TextAlign.start,
                                           textStyle: primaryTextStyle(color: ratingBarLightGreenColor),
+                                          prefix: cart!.totals!.currencyPrefix.validate(),
                                         )
                                       ],
                                     ),
@@ -432,6 +444,7 @@ class _CartScreenState extends State<CartScreen> {
                                       price: cart!.totals!.totalShipping.validate(),
                                       size: 16,
                                       textAlign: TextAlign.start,
+                                      prefix: cart!.totals!.currencyPrefix.validate(),
                                     ),
                                   ],
                                 ),
@@ -443,6 +456,7 @@ class _CartScreenState extends State<CartScreen> {
                                     price: total.toString(),
                                     size: 16,
                                     textAlign: TextAlign.start,
+                                    prefix: cart!.totals!.currencyPrefix.validate(),
                                   ),
                                 ],
                               ),

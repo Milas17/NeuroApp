@@ -26,9 +26,9 @@ class NonceModel {
 class GroupProductModel {
   int count;
   final int id;
-  final ProductDetailModel product;
+  final ProductDetailModel? product;
 
-  GroupProductModel({this.count = 0, required this.id, required this.product});
+  GroupProductModel({this.count = 0, required this.id, this.product});
 }
 
 class ImageModel {
@@ -208,11 +208,14 @@ class Downloads {
 class FilterModel {
   String? title;
   String? value;
-
+  String? orderBy;
+  String? order;
   Color? statusColor;
 
-  FilterModel({this.value, this.title, this.statusColor});
+  FilterModel({this.value, this.title, this.statusColor, this.order, this.orderBy});
 }
+
+
 
 List<FilterModel> getOrderStatus() {
   List<FilterModel> list = [];

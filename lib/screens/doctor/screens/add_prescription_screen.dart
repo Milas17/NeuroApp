@@ -36,7 +36,6 @@ class _AddPrescriptionScreenState extends State<AddPrescriptionScreen> {
 
   List<String> pName = [];
   List<String> pFrequency = [];
-
   bool isUpdate = false;
   bool isFirstTime = true;
 
@@ -202,7 +201,6 @@ class _AddPrescriptionScreenState extends State<AddPrescriptionScreen> {
         ],
       );
     }
-
     return Scaffold(
       appBar: appBarWidget(
         isUpdate ? locale.lblEditPrescriptionDetail : locale.lblAddNewPrescription,

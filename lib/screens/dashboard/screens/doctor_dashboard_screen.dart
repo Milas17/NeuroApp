@@ -73,84 +73,104 @@ class _DoctorDashboardScreenState extends State<DoctorDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DoublePressBackWidget(
-      child: Observer(builder: (context) {
-        if (doctorAppStore.bottomNavIndex >= getScreens().length) doctorAppStore.setBottomNavIndex(getScreens().length - 1);
-        Color disabledIconColor = appStore.isDarkModeOn ? Colors.white : secondaryTxtColor;
-        return Scaffold(
-          appBar: doctorAppStore.bottomNavIndex != getScreens().length - 1
-              ? appBarWidget(
-                  '',
-                  titleWidget: AppBarTitleWidget(),
-                  showBack: false,
-                  color: context.scaffoldBackgroundColor,
-                  elevation: 0,
-                  systemUiOverlayStyle: defaultSystemUiOverlayStyle(
-                    context,
-                    color: appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withValues(alpha: 0.02),
-                    statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
-                  ),
-                  actions: [
-                    ic_shop.iconImageColored().paddingAll(14).appOnTap(() {
-                      ProductListScreen().launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
-                    }).visible(appStore.wcNonce.validate().isNotEmpty),
-                    DashboardTopProfileWidget(
-                      refreshCallback: () => setState(() {}),
+    return PopScope(
+      canPop: false, // prevent default exit
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          if (doctorAppStore.bottomNavIndex != 0) {
+            doctorAppStore.setBottomNavIndex(0);
+          } else {
+            finish(context);
+          }
+        }
+      },
+      child: DoublePressBackWidget(
+        child: Observer(builder: (context) {
+          if (doctorAppStore.bottomNavIndex >= getScreens().length) {
+            doctorAppStore.setBottomNavIndex(getScreens().length - 1);
+          }
+
+          Color disabledIconColor = appStore.isDarkModeOn ? Colors.white : secondaryTxtColor;
+
+          return Scaffold(
+            appBar: doctorAppStore.bottomNavIndex != getScreens().length - 1
+                ? appBarWidget(
+                    '',
+                    titleWidget: AppBarTitleWidget(),
+                    showBack: false,
+                    color: context.scaffoldBackgroundColor,
+                    elevation: 0,
+                    systemUiOverlayStyle: defaultSystemUiOverlayStyle(
+                      context,
+                      color: appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withValues(alpha: 0.02),
+                      statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
+                    ),
+                    actions: [
+                      ic_shop.iconImageColored().paddingAll(14).appOnTap(() {
+                        ProductListScreen().launch(
+                          context,
+                          pageRouteAnimation: pageAnimation,
+                          duration: pageAnimationDuration,
+                        );
+                      }).visible(appStore.wcNonce.validate().isNotEmpty),
+                      DashboardTopProfileWidget(
+                        refreshCallback: () => setState(() {}),
+                      ),
+                    ],
+                  )
+                : null,
+            body: getScreens()[doctorAppStore.bottomNavIndex],
+            bottomNavigationBar: Blur(
+              blur: 30,
+              borderRadius: radius(0),
+              child: NavigationBarTheme(
+                data: NavigationBarThemeData(
+                  backgroundColor: context.primaryColor.withValues(alpha: 0.02),
+                  indicatorColor: context.primaryColor.withValues(alpha: 0.1),
+                  labelTextStyle: WidgetStateProperty.all(primaryTextStyle(size: 10)),
+                  surfaceTintColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                ),
+                child: NavigationBar(
+                  height: 66,
+                  surfaceTintColor: context.scaffoldBackgroundColor,
+                  selectedIndex: doctorAppStore.bottomNavIndex,
+                  backgroundColor: context.cardColor,
+                  animationDuration: 1000.milliseconds,
+                  destinations: [
+                    if (showDashboard)
+                      NavigationDestination(
+                        icon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: disabledIconColor),
+                        label: locale.lblDashboard,
+                        selectedIcon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: primaryColor),
+                      ),
+                    if (showAppointment)
+                      NavigationDestination(
+                        icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disabledIconColor),
+                        label: locale.lblAppointments,
+                        selectedIcon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: primaryColor),
+                      ),
+                    if (showPatientList)
+                      NavigationDestination(
+                        icon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: disabledIconColor),
+                        label: locale.lblPatients,
+                        selectedIcon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: primaryColor),
+                      ),
+                    NavigationDestination(
+                      icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disabledIconColor),
+                      label: locale.lblSettings,
+                      selectedIcon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: primaryColor),
                     ),
                   ],
-                )
-              : null,
-          body: getScreens()[doctorAppStore.bottomNavIndex],
-          bottomNavigationBar: Blur(
-            blur: 30,
-            borderRadius: radius(0),
-            child: NavigationBarTheme(
-              data: NavigationBarThemeData(
-                backgroundColor: context.primaryColor.withValues(alpha: 0.02),
-                indicatorColor: context.primaryColor.withValues(alpha: 0.1),
-                labelTextStyle: WidgetStateProperty.all(primaryTextStyle(size: 10)),
-                surfaceTintColor: Colors.transparent,
-                shadowColor: Colors.transparent,
-              ),
-              child: NavigationBar(
-                height: 66,
-                surfaceTintColor: context.scaffoldBackgroundColor,
-                selectedIndex: doctorAppStore.bottomNavIndex,
-                backgroundColor: context.cardColor,
-                animationDuration: 1000.milliseconds,
-                destinations: [
-                  if (showDashboard)
-                    NavigationDestination(
-                      icon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: disabledIconColor),
-                      label: locale.lblDashboard,
-                      selectedIcon: Image.asset(ic_dashboard, height: iconSize, width: iconSize, color: primaryColor),
-                    ),
-                  if (showAppointment)
-                    NavigationDestination(
-                      icon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: disabledIconColor),
-                      label: locale.lblAppointments,
-                      selectedIcon: Image.asset(ic_calendar, height: iconSize, width: iconSize, color: primaryColor),
-                    ),
-                  if (showPatientList)
-                    NavigationDestination(
-                      icon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: disabledIconColor),
-                      label: locale.lblPatients,
-                      selectedIcon: Image.asset(ic_patient, height: iconSize, width: iconSize, color: primaryColor),
-                    ),
-                  NavigationDestination(
-                    icon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: disabledIconColor),
-                    label: locale.lblSettings,
-                    selectedIcon: Image.asset(ic_more_item, height: iconSize, width: iconSize, color: primaryColor),
-                  ),
-                ],
-                onDestinationSelected: (index) {
-                  doctorAppStore.setBottomNavIndex(index);
-                },
+                  onDestinationSelected: (index) {
+                    doctorAppStore.setBottomNavIndex(index);
+                  },
+                ),
               ),
             ),
-          ),
-        );
-      }),
+          );
+        }),
+      ),
     );
   }
 }

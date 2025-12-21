@@ -16,12 +16,13 @@ import 'package:kivicare_flutter/screens/dashboard/screens/doctor_dashboard_scre
 import 'package:kivicare_flutter/screens/dashboard/screens/patient_dashboard_screen.dart';
 import 'package:kivicare_flutter/screens/dashboard/screens/receptionist_dashboard_screen.dart';
 import 'package:kivicare_flutter/screens/demo_scanners/qr_info_screen.dart';
-import 'package:kivicare_flutter/utils/app_widgets.dart';
+import 'package:kivicare_flutter/screens/demo_scanners/scanner_screen.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:kivicare_flutter/utils/constants/woocommerce_constants.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
+import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -44,7 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
   bool isRemember = false;
   bool isFirstTime = true;
 
-  List<DemoLoginModel> demoLoginData = demoLoginList();
+  List<DemoLoginModel> demoLoginData = [];
 
   int? selectedIndex;
 
@@ -52,22 +53,20 @@ class _SignInScreenState extends State<SignInScreen> {
   void initState() {
     super.initState();
 
-    afterBuildCreated(
-      () => () {
-        setStatusBarColor(
-          appStore.isDarkModeOn
-              ? context.scaffoldBackgroundColor
-              : appPrimaryColor.withValues(alpha: 0.02),
-          statusBarIconBrightness:
-              appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
-        );
-      },
-    );
+    afterBuildCreated(() => () {
+          setStatusBarColor(
+            appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withValues(alpha: 0.02),
+            statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
+          );
+        });
 
     init();
   }
 
   init() async {
+    demoLoginData = buildDemoLoginData();
+    setState(() {});
+
     if (getBoolAsync(IS_REMEMBER_ME)) {
       isRemember = true;
       emailCont.text = getStringAsync(USER_NAME);
@@ -98,41 +97,19 @@ class _SignInScreenState extends State<SignInScreen> {
           }
 
           await getConfigurationAPI().whenComplete(() {
-            shopStore.setCartCount(
-              getIntAsync(
-                '${CartKeys.cartItemCountKey} of ${userStore.userName}',
-              ),
-            );
+            shopStore.setCartCount(getIntAsync('${CartKeys.cartItemCountKey} of ${userStore.userName}'));
             if (userStore.userRole!.toLowerCase() == UserRoleDoctor) {
               doctorAppStore.setBottomNavIndex(0);
               toast(locale.lblLoginSuccessfullyAsADoctor + '!! 🎉');
-              DoctorDashboardScreen().launch(
-                context,
-                isNewTask: true,
-                pageRouteAnimation: signInAnimation,
-                duration: pageAnimationDuration,
-              );
+              DoctorDashboardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration);
             } else if (userStore.userRole!.toLowerCase() == UserRolePatient) {
               toast(locale.lblLoginSuccessfullyAsAPatient + '!! 🎉');
               patientStore.setBottomNavIndex(0);
-              PatientDashBoardScreen().launch(
-                context,
-                isNewTask: true,
-                pageRouteAnimation: signInAnimation,
-                duration: pageAnimationDuration,
-              );
-            } else if (userStore.userRole!.toLowerCase() ==
-                UserRoleReceptionist) {
-              toast(
-                locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉',
-              );
+              PatientDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration);
+            } else if (userStore.userRole!.toLowerCase() == UserRoleReceptionist) {
+              toast(locale.lblLoginSuccessfullyAsAReceptionist + '!! 🎉');
               receptionistAppStore.setBottomNavIndex(0);
-              RDashBoardScreen().launch(
-                context,
-                isNewTask: true,
-                pageRouteAnimation: signInAnimation,
-                duration: pageAnimationDuration,
-              );
+              RDashBoardScreen().launch(context, isNewTask: true, pageRouteAnimation: signInAnimation, duration: pageAnimationDuration);
             } else {
               toast(locale.lblWrongUser);
             }
@@ -163,9 +140,7 @@ class _SignInScreenState extends State<SignInScreen> {
       builder: (context) {
         return AppCommonDialog(
           title: locale.lblForgotPassword,
-          child: ForgotPasswordDialogComponent().cornerRadiusWithClipRRect(
-            defaultRadius,
-          ),
+          child: ForgotPasswordDialogComponent().cornerRadiusWithClipRRect(defaultRadius),
         );
       },
     );
@@ -184,6 +159,44 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+  }
+
+  // SignInScreen.dart (or wherever you create demoLoginData)
+
+  List<DemoLoginModel> buildDemoLoginData() {
+    final List<DemoLoginModel> items = [];
+
+    // Patient
+    items.add(DemoLoginModel(
+      loginTypeImage: "images/icons/user.png", // (Add appropriate icon path)
+      onTap: () {
+        emailCont.text = appStore.tempBaseUrl != BASE_URL ? appStore.demoPatient.validate() : patientEmail;
+        passwordCont.text = loginPassword;
+      },
+    ));
+
+    // ✅ Receptionist — only add if enabled
+    if (appStore.isReceptionistEnabled) {
+      items.add(DemoLoginModel(
+        // (Add appropriate icon path)
+        loginTypeImage: "images/icons/receptionistIcon.png",
+        onTap: () {
+          emailCont.text = appStore.tempBaseUrl != BASE_URL ? appStore.demoReceptionist.validate() : receptionistEmail;
+          passwordCont.text = loginPassword;
+        },
+      ));
+    }
+
+    // Doctor
+    items.add(DemoLoginModel(
+      loginTypeImage: "images/icons/doctorIcon.png", // (Add appropriate icon path)
+      onTap: () {
+        emailCont.text = appStore.tempBaseUrl != BASE_URL ? appStore.demoDoctor.validate() : doctorEmail;
+        passwordCont.text = loginPassword;
+      },
+    ));
+
+    return items;
   }
 
   Widget buildIconicWidget() {
@@ -206,34 +219,14 @@ class _SignInScreenState extends State<SignInScreen> {
                     onTap: () {
                       selectedIndex = index;
                       setState(() {});
-
-                      if (index == 0) {
-                        if (appStore.tempBaseUrl != BASE_URL) {
-                          emailCont.text = appStore.demoPatient.validate();
-                          passwordCont.text = loginPassword;
-                        } else {
-                          emailCont.text = patientEmail;
-                          passwordCont.text = loginPassword;
-                        }
-                      } else if (index == 1) {
-                        if (appStore.tempBaseUrl != BASE_URL) {
-                          emailCont.text = appStore.demoReceptionist.validate();
-                          passwordCont.text = loginPassword;
-                        } else {
-                          emailCont.text = receptionistEmail;
-                          passwordCont.text = loginPassword;
-                        }
-                      } else if (index == 2) {
-                        if (appStore.tempBaseUrl != BASE_URL) {
-                          emailCont.text = appStore.demoDoctor.validate();
-                          passwordCont.text = loginPassword;
-                        } else {
-                          emailCont.text = doctorEmail;
-                          passwordCont.text = loginPassword;
-                        }
-                      }
+                      data.onTap?.call();
                     },
                     child: Container(
+                      padding: EdgeInsets.all(12),
+                      decoration: boxDecorationWithRoundedCorners(
+                        boxShape: BoxShape.circle,
+                        backgroundColor: isSelected ? appSecondaryColor : (appStore.isDarkModeOn ? cardDarkColor : white),
+                      ),
                       child: Image.asset(
                         data.loginTypeImage.validate(),
                         height: 22,
@@ -241,43 +234,57 @@ class _SignInScreenState extends State<SignInScreen> {
                         fit: BoxFit.cover,
                         color: isSelected ? white : appSecondaryColor,
                       ),
-                      decoration: boxDecorationWithRoundedCorners(
-                        boxShape: BoxShape.circle,
-                        backgroundColor: isSelected
-                            ? appSecondaryColor
-                            : appStore.isDarkModeOn
-                                ? cardDarkColor
-                                : white,
-                      ),
-                      padding: EdgeInsets.all(12),
                     ),
                   );
                 },
               ),
               16.height,
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.qr_code_scanner_sharp, color: primaryColor),
+                  16.width,
+                  Text(locale.lblScanToTest, style: primaryTextStyle(color: primaryColor)),
+                ],
+              ).appOnTap(
+                () {
+                  ScannerScreen().launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
+                    setStatusBarColor(
+                      appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withValues(alpha: 0.02),
+                      statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
+                    );
+                    if (selectedIndex == null) {
+                      selectedIndex = 0;
+                      setState(() {});
+                    }
+                    if (value ?? false) {
+                      if (selectedIndex == 0) {
+                        emailCont.text = appStore.demoPatient.validate();
+                        passwordCont.text = loginPassword;
+                        userStore.setUserEmail(emailCont.text);
+                      } else if (selectedIndex == 1) {
+                        emailCont.text = appStore.demoReceptionist.validate();
+                        passwordCont.text = loginPassword;
+                        userStore.setUserEmail(emailCont.text);
+                      } else if (selectedIndex == 2) {
+                        emailCont.text = appStore.demoDoctor.validate();
+                        passwordCont.text = loginPassword;
+                        userStore.setUserEmail(emailCont.text);
+                      }
+                    }
+                  });
+                },
+              ),
               TextButton(
                 onPressed: () {
-                  QrInfoScreen()
-                      .launch(
-                    context,
-                    pageRouteAnimation: pageAnimation,
-                    duration: pageAnimationDuration,
-                  )
-                      .then((value) {
+                  QrInfoScreen().launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
                     setStatusBarColor(
-                      appStore.isDarkModeOn
-                          ? context.scaffoldBackgroundColor
-                          : appPrimaryColor.withValues(alpha: 0.02),
-                      statusBarIconBrightness: appStore.isDarkModeOn
-                          ? Brightness.light
-                          : Brightness.dark,
+                      appStore.isDarkModeOn ? context.scaffoldBackgroundColor : appPrimaryColor.withValues(alpha: 0.02),
+                      statusBarIconBrightness: appStore.isDarkModeOn ? Brightness.light : Brightness.dark,
                     );
                   });
                 },
-                child: Text(
-                  locale.lblHowToGenerateQRCode,
-                  style: secondaryTextStyle(),
-                ),
+                child: Text(locale.lblHowToGenerateQRCode, style: secondaryTextStyle()),
               ),
               32.height,
             ],
@@ -295,9 +302,7 @@ class _SignInScreenState extends State<SignInScreen> {
         children: [
           Form(
             key: formKey,
-            autovalidateMode: isFirstTime
-                ? AutovalidateMode.disabled
-                : AutovalidateMode.onUserInteraction,
+            autovalidateMode: isFirstTime ? AutovalidateMode.disabled : AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -307,10 +312,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 children: [
                   36.height,
                   AppLogo(),
-                  Text(
-                    locale.lblSignInToContinue,
-                    style: secondaryTextStyle(),
-                  ).center(),
+                  Text(locale.lblSignInToContinue, style: secondaryTextStyle()).center(),
                   60.height,
                   AppTextField(
                     controller: emailCont,
@@ -319,13 +321,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     textStyle: primaryTextStyle(),
                     textFieldType: TextFieldType.EMAIL,
                     errorThisFieldRequired: locale.lblEmailIsRequired,
-                    decoration: inputDecoration(
-                      context: context,
-                      labelText: locale.lblEmail,
-                      suffixIcon: ic_user
-                          .iconImage(size: 18, color: context.iconColor)
-                          .paddingAll(14),
-                    ),
+                    decoration: inputDecoration(context: context, labelText: locale.lblEmail, suffixIcon: ic_user.iconImage(size: 18, color: context.iconColor).paddingAll(14)),
                   ),
                   24.height,
                   AppTextField(
@@ -334,16 +330,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     textStyle: primaryTextStyle(),
                     textFieldType: TextFieldType.PASSWORD,
                     errorThisFieldRequired: locale.passwordIsRequired,
-                    suffixPasswordVisibleWidget: ic_showPassword
-                        .iconImage(size: 10, color: context.iconColor)
-                        .paddingAll(14),
-                    suffixPasswordInvisibleWidget: ic_hidePassword
-                        .iconImage(size: 10, color: context.iconColor)
-                        .paddingAll(14),
-                    decoration: inputDecoration(
-                      context: context,
-                      labelText: locale.lblPassword,
-                    ),
+                    suffixPasswordVisibleWidget: ic_showPassword.iconImage(size: 10, color: context.iconColor).paddingAll(14),
+                    suffixPasswordInvisibleWidget: ic_hidePassword.iconImage(size: 10, color: context.iconColor).paddingAll(14),
+                    decoration: inputDecoration(context: context, labelText: locale.lblPassword),
                     obscureText: true,
                   ),
                   4.height,
@@ -359,9 +348,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             height: 16,
                             child: Checkbox(
                               activeColor: appSecondaryColor,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: radius(4),
-                              ),
+                              shape: RoundedRectangleBorder(borderRadius: radius(4)),
                               value: isRemember,
                               onChanged: (value) async {
                                 isRemember = value.validate();
@@ -375,10 +362,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               isRemember = !isRemember;
                               setState(() {});
                             },
-                            child: Text(
-                              locale.lblRememberMe,
-                              style: secondaryTextStyle(),
-                            ),
+                            child: Text(locale.lblRememberMe, style: secondaryTextStyle()),
                           ),
                         ],
                       ),
@@ -390,10 +374,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                         child: Text(
                           locale.lblForgotPassword,
-                          style: secondaryTextStyle(
-                            color: appSecondaryColor,
-                            fontStyle: FontStyle.italic,
-                          ),
+                          style: secondaryTextStyle(color: appSecondaryColor, fontStyle: FontStyle.italic),
                         ),
                       ),
                     ],
@@ -407,31 +388,22 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     color: primaryColor,
                     padding: EdgeInsets.all(16),
-                    child: Text(
-                      locale.lblSignIn,
-                      style: boldTextStyle(color: textPrimaryDarkColor),
-                    ),
+                    child: Text(locale.lblSignIn, style: boldTextStyle(color: textPrimaryDarkColor)),
                   ),
                   40.height,
                   LoginRegisterWidget(
                     title: locale.lblNewMember,
                     subTitle: locale.lblSignUp + '?',
                     onTap: () {
-                      SignUpScreen().launch(
-                        context,
-                        pageRouteAnimation: pageAnimation,
-                        duration: pageAnimationDuration,
-                      );
+                      SignUpScreen().launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration);
                     },
                   ),
+                  buildIconicWidget(),
                 ],
               ),
             ),
           ),
-          Observer(
-            builder: (context) =>
-                LoaderWidget().visible(appStore.isLoading).center(),
-          ),
+          Observer(builder: (context) => LoaderWidget().visible(appStore.isLoading).center())
         ],
       ),
     );

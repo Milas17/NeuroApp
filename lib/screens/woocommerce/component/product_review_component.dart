@@ -8,7 +8,6 @@ import 'package:kivicare_flutter/network/shop_repository.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/extensions/double_extension.dart';
-import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ProductReviewComponent extends StatefulWidget {
@@ -24,11 +23,17 @@ class ProductReviewComponent extends StatefulWidget {
 
 class _ProductReviewComponentState extends State<ProductReviewComponent> {
   final reviewFormKey = GlobalKey<FormState>();
-
+  Future<List<ProductReviewModel>>? reviewFuture;
   TextEditingController controller = TextEditingController();
 
   double rating = 0.0;
   bool hasUserReviewed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    reviewFuture = getProductReviews(productId: widget.productId);
+  }
 
   @override
   void setState(fn) {
@@ -53,7 +58,9 @@ class _ProductReviewComponentState extends State<ProductReviewComponent> {
           toast('${locale.reviewAddedSuccessfully}');
           controller.clear();
           rating = 0.0;
-          setState(() {});
+          setState(() {
+            reviewFuture = getProductReviews(productId: widget.productId);
+          });
           widget.callback?.call();
           appStore.setLoading(false);
         }).catchError((e) {
@@ -74,9 +81,20 @@ class _ProductReviewComponentState extends State<ProductReviewComponent> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SnapHelperWidget<List<ProductReviewModel>>(
-            future: getProductReviews(productId: widget.productId),
+            future: reviewFuture,
             onSuccess: (snap) {
-              hasUserReviewed = snap.any((review) => review.reviewerEmail == userStore.userEmail);
+              bool alreadyReviewed = snap.any((review) => review.reviewerEmail == userStore.userEmail);
+
+              if (hasUserReviewed != alreadyReviewed) {
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  if (mounted) {
+                    setState(() {
+                      hasUserReviewed = alreadyReviewed;
+                    });
+                  }
+                });
+              }
+
               if (snap.isNotEmpty) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,23 +144,62 @@ class _ProductReviewComponentState extends State<ProductReviewComponent> {
                                           size: 14,
                                           allowHalfRating: true,
                                         ),
-                                        if (review.reviewerEmail == userStore.userEmail)
-                                          Text(locale.editReview, style: primaryTextStyle(size: 12)).onTap(() {
-                                            showInDialog(
-                                              context,
-                                              contentPadding: EdgeInsets.zero,
-                                              builder: (p0) {
-                                                return UpdateReviewComponent(
-                                                    rating: review.rating.validate(),
-                                                    review: review.review,
-                                                    reviewId: review.id.validate(),
-                                                    callback: () {
-                                                      setState(() {});
+                                        Row(
+                                          children: [
+                                            if (review.reviewerEmail == userStore.userEmail) ...[
+                                              Icon(Icons.edit, size: 18).onTap(() {
+                                                showInDialog(
+                                                  context,
+                                                  contentPadding: EdgeInsets.zero,
+                                                  builder: (p0) {
+                                                    return UpdateReviewComponent(
+                                                      productId: widget.productId,
+                                                      rating: review.rating.validate(),
+                                                      review: review.review,
+                                                      reviewId: review.id.validate(),
+                                                      callback: () {
+                                                        setState(() {
+                                                          hasUserReviewed = false;
+                                                          reviewFuture = getProductReviews(productId: widget.productId);
+                                                        });
+                                                        widget.callback?.call();
+                                                      },
+                                                    );
+                                                  },
+                                                );
+                                              }),
+                                              12.width,
+                                              Icon(
+                                                Icons.delete_outline,
+                                                size: 18,
+                                                color: Colors.redAccent,
+                                              ).onTap(() {
+                                                showConfirmDialogCustom(
+                                                  context,
+                                                  onAccept: (c) {
+                                                    appStore.setLoading(true);
+                                                    deleteProductReview(reviewId: review.id.validate()).then((value) {
+                                                      appStore.setLoading(false);
+                                                      toast(locale.reviewDeletedSuccessfully);
+
+                                                      setState(() {
+                                                        hasUserReviewed = false;
+                                                        reviewFuture = getProductReviews(productId: widget.productId);
+                                                      });
                                                       widget.callback?.call();
+                                                    }).catchError((e) {
+                                                      appStore.setLoading(false);
+                                                      toast(e.toString());
                                                     });
-                                              },
-                                            );
-                                          }),
+                                                  },
+                                                  dialogType: DialogType.CONFIRMATION,
+                                                  title: locale.deleteReviewConfirmation,
+                                                  positiveText: locale.lblDelete,
+                                                );
+                                              }),
+                                            ],
+                                          ],
+                                        ),
                                       ],
                                     ),
                                     6.height,
@@ -249,13 +306,14 @@ class _ProductReviewComponentState extends State<ProductReviewComponent> {
 }
 
 class UpdateReviewComponent extends StatefulWidget {
+  final int? productId;
   final int? rating;
   final String? review;
   final int? reviewId;
 
   final VoidCallback? callback;
 
-  const UpdateReviewComponent({this.review, this.rating, this.reviewId, this.callback});
+  const UpdateReviewComponent({this.review, this.rating, this.reviewId, this.callback, this.productId});
 
   @override
   State<UpdateReviewComponent> createState() => _UpdateReviewComponentState();
@@ -283,6 +341,7 @@ class _UpdateReviewComponentState extends State<UpdateReviewComponent> {
         Map request = {"review": reviewController.text, "rating": selectedRating.toString()};
         await updateProductReview(request: request, reviewId: widget.reviewId.validate()).then((value) async {
           toast(locale.reviewUpdatedSuccessfully);
+
           widget.callback?.call();
           appStore.setLoading(false);
         }).catchError((e) {
@@ -311,30 +370,6 @@ class _UpdateReviewComponentState extends State<UpdateReviewComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(locale.rating, style: boldTextStyle(color: primaryColor, size: 18)),
-                if (widget.review != null)
-                  Icon(
-                    Icons.delete_outline,
-                    size: 20,
-                  ).appOnTap(() async {
-                    showConfirmDialogCustom(
-                      context,
-                      onAccept: (c) {
-                        appStore.setLoading(true);
-                        finish(context);
-                        deleteProductReview(reviewId: widget.reviewId.validate()).then((value) {
-                          appStore.setLoading(false);
-                          toast(locale.reviewDeletedSuccessfully);
-                          widget.callback?.call();
-                        }).catchError((e) {
-                          appStore.setLoading(false);
-                          toast(e.toString());
-                        });
-                      },
-                      dialogType: DialogType.CONFIRMATION,
-                      title: locale.deleteReviewConfirmation,
-                      positiveText: locale.lblDelete,
-                    );
-                  }),
               ],
             ),
             16.height,

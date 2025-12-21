@@ -46,6 +46,12 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!getBoolAsync(IS_WALKTHROUGH_FIRST, defaultValue: false)) {
       WalkThroughScreen().launch(context, isNewTask: true, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration); // User is for first time.
     } else {
+      await getGlobalConfigurationAPI();
+
+      configurationController.stream.listen((config) {
+        print("Date Format: ${config.globalDateFormat}");
+        print("Currency: ${config.wcCurrencyPrefix}${config.wcCurrencyPostfix}");
+      });
       if (appStore.isLoggedIn) {
         shopStore.setCartCount(getIntAsync('${CartKeys.cartItemCountKey} of ${userStore.userName}'));
         getConfigurationAPI().then((v) {

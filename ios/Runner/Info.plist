@@ -33,7 +33,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1030276386601-8cb5ck8gctvqhnrhp9jf2jnj53rqh0g3</string>
+				<string>please add your key</string>
 			</array>
 		</dict>
 	</array>
@@ -46,6 +46,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+
+     <key>NSSpeechRecognitionUsageDescription</key>
+     <string>We need to use speech recognition for voice search.</string>
+     <key>NSMicrophoneUsageDescription</key>
+     <string>We need to access your microphone for voice search.</string>
+
+
+
 	<key>NSCameraUsageDescription</key>
 	<string>Kivicare app requires access to the Camera to upload your profile photo.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>

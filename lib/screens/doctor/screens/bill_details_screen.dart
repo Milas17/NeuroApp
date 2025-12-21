@@ -66,7 +66,7 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
 
       request.putIfAbsent(ConstantKeys.visitTypeKey, () => selectedServiceRequest);
       billDetail?.billItems.validate().validate().forEachIndexed((element, index) {
-        selectedServiceRequest.add(ServiceRequestModel(serviceId: element.mappingTableId, quantity: element.qty.validate().toInt()));
+        selectedServiceRequest.add(ServiceRequestModel(serviceId: element.mappingTableId.toInt(), quantity: element.qty.validate().toInt()));
       });
 
       request.putIfAbsent(ConstantKeys.visitTypeKey, () => selectedServiceRequest);
@@ -282,52 +282,58 @@ class _BillDetailsScreenState extends State<BillDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Clinic Name
+        Text(
+          patientBillData.clinic!.name.validate(),
+          style: boldTextStyle(size: 18),
+        ),
+        8.height,
+
+        // Invoice ID & Created At
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            RichTextWidget(
+              list: [
+                TextSpan(text: locale.lblInvoiceId + ': ', style: boldTextStyle(size: 15)),
+                TextSpan(text: '#${patientBillData.id.validate()} ', style: primaryTextStyle(size: 15)),
+              ],
+            ),
+            RichTextWidget(
+              list: [
+                TextSpan(text: locale.lblCreatedAt + ': ', style: boldTextStyle(size: 15)),
+                TextSpan(text: patientBillData.createdAt.validate(), style: primaryTextStyle(size: 15)),
+              ],
+            ),
+          ],
+        ),
+        12.height,
+
+        // Address, City, Country
         Row(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(child: Text('${patientBillData.clinic!.name.validate()}', style: boldTextStyle())),
-                4.height,
-                RichTextWidget(
-                  list: [
-                    TextSpan(text: locale.lblInvoiceId + ': ', style: boldTextStyle(size: 14)),
-                    TextSpan(text: '#${patientBillData.id.validate()} ', style: primaryTextStyle(size: 14)),
-                  ],
-                ),
-                4.height,
-                RichTextWidget(
-                  list: [
-                    TextSpan(text: locale.lblCreatedAt + ': ', style: boldTextStyle(size: 14)),
-                    TextSpan(
-                      text: patientBillData.createdAt?.isNotEmpty == true ? patientBillData.createdAt.validate() : '----',
-                      style: primaryTextStyle(size: 14),
-                    ),
-                  ],
-                ),
-              ],
-            ).expand(),
-            12.width,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text('${patientBillData.clinic!.address.validate()}', style: primaryTextStyle(size: 14)),
-                2.height,
-                Text('${patientBillData.clinic!.city.validate()}', style: primaryTextStyle(size: 14)),
-                2.height,
-                Text('${patientBillData.clinic!.country.validate()}', style: primaryTextStyle(size: 14)),
-                2.height,
-                FittedBox(child: Text('${patientBillData.clinic!.email.validate()} ', style: primaryTextStyle(size: 14))),
-                2.height,
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(locale.lblPaymentStatus + ': ', style: primaryTextStyle(size: 14)),
-                    StatusWidget(status: patientBillData.paymentStatus == 'paid' ? '1' : '0', isPaymentStatus: true),
-                  ],
-                ),
-              ],
-            ).expand(),
+            Text(locale.lblAddress + ': ', style: boldTextStyle(size: 14)),
+            Text('${patientBillData.clinic!.address.validate()}, ${patientBillData.clinic!.city.validate()}, ${patientBillData.clinic!.country.validate()}', style: primaryTextStyle(size: 14)),
+          ],
+        ),
+        6.height,
+        // Email
+        Row(
+          children: [
+            Text(locale.lblEmail + ': ', style: boldTextStyle(size: 14)),
+            Text(patientBillData.clinic!.email.validate(), style: primaryTextStyle(size: 14)),
+          ],
+        ),
+        6.height,
+
+        // Payment Status
+        Row(
+          children: [
+            Text(locale.lblPaymentStatus + ': ', style: boldTextStyle(size: 14)),
+            StatusWidget(
+              status: patientBillData.paymentStatus == 'paid' ? '1' : '0',
+              isPaymentStatus: true,
+            ),
           ],
         ),
       ],

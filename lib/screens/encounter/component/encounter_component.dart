@@ -14,7 +14,8 @@ import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:kivicare_flutter/utils/constants/sharedpreference_constants.dart';
 import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:nb_utils/nb_utils.dart' hide ReadMoreText, TrimMode;
+import 'package:readmore/readmore.dart';
 
 class EncounterComponent extends StatelessWidget {
   final EncounterModel data;
@@ -133,6 +134,15 @@ class EncounterComponent extends StatelessWidget {
                       style: isPatient() ? boldTextStyle() : primaryTextStyle(),
                     ),
                   ),
+                if (data.appointmentId.validate().isNotEmpty) ...[
+                  4.height,
+                  RichTextWidget(
+                    list: [
+                      TextSpan(text: "Appointment ID : ", style: secondaryTextStyle(size: 14)),
+                      TextSpan(text: "#" "${data.appointmentId.validate()}", style: primaryTextStyle(size: 14)),
+                    ],
+                  ),
+                ],
                 if (isReceptionist() || isPatient())
                   RichTextWidget(list: [
                     TextSpan(text: locale.lblDoctor + ' : ', style: secondaryTextStyle(size: 14)),
@@ -154,7 +164,22 @@ class EncounterComponent extends StatelessWidget {
                       trimMode: TrimMode.Length,
                       trimLength: 30,
                       colorClickableText: appPrimaryColor,
-                      style: secondaryTextStyle(size: 14,color: appStore.isDarkModeOn? white : null),
+                      trimCollapsedText: locale.lblReadMore,
+                      trimExpandedText: locale.lblReadLess,
+                      style: secondaryTextStyle(
+                        size: 14,
+                        color: appStore.isDarkModeOn ? white : null,
+                      ),
+                      moreStyle: TextStyle(
+                        fontSize: 14,
+                        color: appStore.isDarkModeOn ? appPrimaryColor : redColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      lessStyle: TextStyle(
+                        fontSize: 14,
+                        color: appStore.isDarkModeOn ? appPrimaryColor : redColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ]

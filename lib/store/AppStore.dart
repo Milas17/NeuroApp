@@ -24,6 +24,9 @@ abstract class AppStoreBase with Store {
   String password = '';
 
   @observable
+  bool isReceptionistEnabled = true;
+
+  @observable
   bool isDarkModeOn = false;
 
   @observable
@@ -64,6 +67,9 @@ abstract class AppStoreBase with Store {
 
   @observable
   String currencyCode = '';
+
+  @observable
+  String wcCurrency = '';
 
   @observable
   bool isRazorPayEnable = false;
@@ -146,12 +152,81 @@ abstract class AppStoreBase with Store {
   @observable
   bool? isLocationEnabled;
   @observable
-  int isFromUpcoming= -1;
+  int isFromUpcoming = -1;
+
+  @observable
+  bool teleMedEnabled = false;
+
+  @observable
+  bool enableEncounterEditAfterCloseStatus = false;
+
+  @observable
+  bool isProblem = false;
+
+  @observable
+  bool isobservation = false;
+
+  @observable
+  bool isNotes = false;
+
+  @observable
+  bool isPrescription = false;
+
+  @observable
+  bool isBilling = false;
+
+  @action
+  Future<void> setbilling(bool val) async {
+    isBilling = val;
+    await setValue('isBilling', val);
+  }
+
+  @action
+  Future<void> setProblem(bool val) async {
+    isProblem = val;
+    await setValue('isproblem', val);
+  }
+
+  @action
+  Future<void> setObservation(bool val) async {
+    isobservation = val;
+    await setValue('isobservation', val);
+  }
+
+  @action
+  Future<void> setNote(bool val) async {
+    isNotes = val;
+    await setValue('isnotes', val);
+  }
+
+  @action
+  Future<void> setPrescription(bool val) async {
+    isPrescription = val;
+    await setValue('isprescription', val);
+  }
+
+  @action
+  Future<void> setTeleMedEnabled(bool val) async {
+    teleMedEnabled = val;
+  }
+
+  @action
+  Future<void> setEnableEncounterEditAfterCloseStatus(bool value) async {
+    enableEncounterEditAfterCloseStatus = value;
+    await setValue('isEnableEncounterEditAfterCloseStatus', value);
+  }
+
+  @action
+  Future<void> setReceptionistEnabled(bool value) async {
+    isReceptionistEnabled = value;
+    await setValue('isReceptionistEnabled', value); // optional: persist
+  }
 
   @action
   void setUpcoming(int status) {
     isFromUpcoming = status;
   }
+
   @action
   void setAppVersion(String version) {
     appVersion = version;
@@ -164,7 +239,7 @@ abstract class AppStoreBase with Store {
   }
 
   void setPassword(String pwd, {bool initialize = false}) {
-    password = password;
+    password = pwd;
     if (initialize) setValue(AppKeys.passwordKey, password);
   }
 
@@ -315,6 +390,12 @@ abstract class AppStoreBase with Store {
   Future<void> setCurrencyCode(String val, {bool isInitializing = false}) async {
     currencyCode = val;
     if (!isInitializing) await setValue(CURRENCY_CODE, val);
+  }
+
+  @action
+  Future<void> setWcCurrency(String val, {bool isInitializing = false}) async {
+    wcCurrency = val;
+    if (!isInitializing) await setValue(WC_CURRENCY_CODE, val);
   }
 
   @action

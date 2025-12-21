@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/clinic_list_model.dart';
 import 'package:kivicare_flutter/network/clinic_repository.dart';
@@ -12,7 +13,6 @@ import 'package:kivicare_flutter/screens/shimmer/components/clinic_shimmer_compo
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
-import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -77,6 +77,13 @@ class _MultiSelectClinicDropDownState extends State<MultiSelectClinicDropDown> {
     });
   }
 
+
+  Future<void> _onClearSearch() async {
+    searchCont.clear();
+    hideKeyboard(context);
+    init(showLoader: true);
+  }
+
   Future<void> _onSearchClear() async {
     hideKeyboard(context);
 
@@ -108,11 +115,24 @@ class _MultiSelectClinicDropDownState extends State<MultiSelectClinicDropDown> {
                 context: context,
                 hintText: locale.lblSearchClinic,
                 prefixIcon: ic_search.iconImage().paddingAll(16),
-                suffixIcon: !showClear
-                    ? Offstage()
-                    : ic_clear.iconImage().paddingAll(16).appOnTap(
-                        () async {
-                          _onSearchClear();
+                suffixIcon:  VoiceSearchSuffix(
+                        controller: searchCont,
+                        lottieAnimationPath: lt_voice, 
+                        onClear: () {
+                          _onClearSearch();
+                        },
+                        onSearchChanged: (value) {
+                          if (value.isEmpty) {
+                            _onClearSearch();
+                          } else {
+                            Timer(pageAnimationDuration, () {
+                              init(showLoader: true);
+                            });
+                          }
+                        },
+                        onSearchSubmitted: (value) {
+                          hideKeyboard(context);
+                          init(showLoader: true);
                         },
                       ),
               ),

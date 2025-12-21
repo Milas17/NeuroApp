@@ -1046,7 +1046,7 @@ class LanguageEn extends BaseLanguage {
   String get lblTotalVisitedPatients => "Total visited patients";
 
   @override
-  String get lblTotalAppointment => "Total Appoint.";
+  String get lblTotalAppointment => "Total Appointment";
 
   @override
   String get lblTotalVisitedAppointment => "Total visited appointment";
@@ -2406,9 +2406,6 @@ class LanguageEn extends BaseLanguage {
   String get lblTotalService => 'Total Service';
 
   @override
-  String get lblOldAndNewPasswordShouldNotBeSame => 'Old and new password should not be the same';
-
-  @override
   String get lblEnterValidDetails => 'Enter Valid Details';
 
   @override
@@ -2422,4 +2419,70 @@ class LanguageEn extends BaseLanguage {
 
   @override
   String get lblPasswordMustBeStrong => 'Password must be at least 8 characters,\ninclude uppercase, number & special character';
+
+  @override
+  String get lblFilterBy => 'Filter By';
+
+  @override
+  String get lblApplyFilter => 'Apply Filter';
+
+  @override
+  String get lblServiceWithCategory => 'Service with Category';
+
+  @override
+  String get lblPriceLowHigh => 'Price Low-High';
+
+  @override
+  String get lblPriceHighLow => 'Price High-Low';
+
+  @override
+  String get lblDiagnosisDetails => 'Diagnosis details';
+
+  @override
+  String get lblOnwer => 'Onwer';
+
+  @override
+  String get lblSessionSummary => 'Session Summary';
+
+  @override
+  String get lblDateandTime => 'Date & Time';
+
+  @override
+  String get lblAppointmentStatus => 'Appointment Status';
+
+  @override
+  String get lblMedicalHistory => 'Medical History';
+
+  @override
+  String get lblClinicInfo => 'Clinic Info';
+
+  @override
+  String get lblDoctorInfo => 'Doctor Info';
+
+  @override
+  String get lblPatientInfo => 'Patient Info';
+
+  @override
+  String get lblAboutService => 'About Service';
+
+  @override
+  String get lblServiceIsDeletedCurrentlyUnavailable => 'Service is deleted, currently unavailable';
+
+  @override
+  String get lblPaymentDetails => 'Payment Details';
+
+  @override
+  String get lblServiceTotal => 'Service Total';
+
+  @override
+  String get lblExclusiveTax => 'Exclusive Tax';
+
+  @override
+  String get lblPaymentDetailsNotAvailable => 'Payment details not available (Service deleted)';
+
+  @override
+  String get lblSomeFilesExceedLimit => 'Some files exceed the 5MB limit';
+
+  @override
+  String get lblInvalidFileType => 'Invalid file type selected. Allowed: PDF, DOC, DOCX, JPG, JPEG, PNG, XLS, XLSX';
 }

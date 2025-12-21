@@ -153,6 +153,7 @@ const PLAYER_ID = "PLAYER_ID";
 
 const CURRENCY_SYMBOL = 'CURRENCY_SYMBOL';
 const CURRENCY_CODE = 'CURRENCY_CODE';
+const WC_CURRENCY_CODE = 'WC_CURRENCY_CODE';
 
 const RAZOR_PAY_KEY = 'RAZOR_PAY_KEY';
 const RAZOR_PAY_SECRET_KEY = 'RAZOR_PAY_SECRET_KEY';
@@ -216,6 +217,7 @@ class ApiResponseKeys {
 
 class ApiEndPoints {
   static const getConfigurationEndPoint = 'kivicare/api/v1/user/get-configuration';
+  static const globalConfigurationEndPoint = 'kivicare/api/v1/global-config';
   static const appointmentEndPoint = 'kivicare/api/v1/appointment';
 
   static const saveLanguageApiEndPoint = 'kivicare/api/v1/save-language';
@@ -244,7 +246,7 @@ class ApiEndPoints {
   static const reviewEndPoint = 'kivicare/api/v1/review';
 
   static const billEndPoint = 'kivicare/api/v1/bill';
-
+  static const serviceDeleteEndPoint = 'kivicare/api/v1/bill/delete-bill-item';
   static const billDeleteEndPoint = 'kivicare/api/v1/patient/delete-bill';
 
   static const taxEndPoint = 'kivicare/api/v1/tax/get';
@@ -335,6 +337,7 @@ class ConstantKeys {
 
   static const doctorsKey = 'doctors';
   static const chargesKey = 'charges';
+  static const appointmentIdKey = 'appointment_id';
   static const clinicIdKey = 'clinic_id';
   static const doctorIdKey = 'doctor_id';
 

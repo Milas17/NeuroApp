@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:kivicare_flutter/components/cached_image_widget.dart';
 import 'package:kivicare_flutter/components/status_widget.dart';
 import 'package:kivicare_flutter/main.dart';
+
 import 'package:kivicare_flutter/screens/auth/screens/edit_profile_screen.dart';
 import 'package:kivicare_flutter/screens/dashboard/screens/common_settings_screen.dart';
+import 'package:kivicare_flutter/screens/patient/screens/patient_clinic_selection_screen.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:kivicare_flutter/utils/common.dart';
@@ -14,26 +16,32 @@ import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-class EditProfileComponent extends StatelessWidget {
+class EditProfileComponent extends StatefulWidget {
   final VoidCallback? refreshCallback;
 
   EditProfileComponent({this.refreshCallback});
 
+  @override
+  State<EditProfileComponent> createState() => _EditProfileComponentState();
+}
+
+class _EditProfileComponentState extends State<EditProfileComponent> {
   bool get showClinic {
-    if (isReceptionist() || isPatient())
-      return isVisible(SharedPreferenceKey.kiviCarePatientClinicKey) && userStore.userClinic != null;
-    else
-      return false;
+    // if (isReceptionist() || isPatient() ) {
+    //   return isVisible(SharedPreferenceKey.kiviCarePatientClinicVisibleKey);
+    // } else {
+    //   return false;
+    // }
+    return isVisible(SharedPreferenceKey.kiviCarePatientClinicVisibleKey);
   }
 
   bool get showEdit {
-    if (isPatient())
+    if (isPatient() || isDoctor())
       return isVisible(SharedPreferenceKey.kiviCarePatientProfileKey);
     else
       return true;
   }
 
-  @override
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -45,10 +53,16 @@ class EditProfileComponent extends StatelessWidget {
               children: [
                 if (userStore.profileImage.validate().isNotEmpty)
                   GradientBorder(
-                      borderRadius: 65,
-                      padding: 2,
-                      gradient: LinearGradient(colors: [viewLineColor, viewLineColor]),
-                      child: CachedImageWidget(url: userStore.profileImage.validate(), height: 65, circle: true, fit: BoxFit.cover))
+                    borderRadius: 65,
+                    padding: 2,
+                    gradient: LinearGradient(colors: [viewLineColor, viewLineColor]),
+                    child: CachedImageWidget(
+                      url: userStore.profileImage.validate(),
+                      height: 65,
+                      circle: true,
+                      fit: BoxFit.cover,
+                    ),
+                  )
                 else
                   PlaceHolderWidget(
                     shape: BoxShape.circle,
@@ -56,7 +70,10 @@ class EditProfileComponent extends StatelessWidget {
                     width: 65,
                     border: Border.all(color: context.dividerColor, width: 2),
                     alignment: Alignment.center,
-                    child: Text(userStore.firstName.validate(value: '')[0].capitalizeFirstLetter(), style: boldTextStyle(color: Colors.black, size: 20)),
+                    child: Text(
+                      userStore.firstName.validate(value: '')[0].capitalizeFirstLetter(),
+                      style: boldTextStyle(color: Colors.black, size: 20),
+                    ),
                   ),
                 if (showEdit)
                   Positioned(
@@ -86,15 +103,30 @@ class EditProfileComponent extends StatelessWidget {
                 Text(userStore.userEmail.validate(), style: secondaryTextStyle()),
               ],
             ).expand(),
-            ic_settings.iconImageColored(color: appStore.isDarkModeOn ? Colors.white : appSecondaryColor).paddingAll(14).appOnTap(() {
-              CommonSettingsScreen().launch(context, duration: Duration(milliseconds: 600), pageRouteAnimation: pageAnimation);
+            ic_settings
+                .iconImageColored(
+                  color: appStore.isDarkModeOn ? Colors.white : appSecondaryColor,
+                )
+                .paddingAll(14)
+                .appOnTap(() {
+              CommonSettingsScreen().launch(
+                context,
+                duration: Duration(milliseconds: 600),
+                pageRouteAnimation: pageAnimation,
+              );
             })
           ],
         ).appOnTap(
           () {
             if (showEdit)
-              EditProfileScreen().launch(context, duration: Duration(milliseconds: 600), pageRouteAnimation: pageAnimation).then((value) {
-                refreshCallback?.call();
+              EditProfileScreen()
+                  .launch(
+                context,
+                duration: Duration(milliseconds: 600),
+                pageRouteAnimation: pageAnimation,
+              )
+                  .then((value) {
+                widget.refreshCallback?.call();
               });
           },
         ),
@@ -114,29 +146,60 @@ class EditProfileComponent extends StatelessWidget {
                   Row(
                     children: [
                       ic_clinicPlaceHolder.iconImageColored(size: 26),
-                      Text(userStore.userClinic!.name.validate(), style: primaryTextStyle()).expand(),
-                      if(userStore.userClinic!.status.validate().isNotEmpty)StatusWidget(
-                        status: userStore.userClinic!.status.validate(),
-                        isClinicStatus: true,
-                        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                      )
+                      Text(userStore.userClinicName.validate(), style: primaryTextStyle()).expand(),
+                      if (userStore.userClinic?.status.validate().isNotEmpty ?? false)
+                        StatusWidget(
+                          status: userStore.userClinic?.status.validate() ?? '',
+                          isClinicStatus: true,
+                          padding: EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+                        )
                     ],
                   ),
                   if (userStore.userClinicAddress.validate().isNotEmpty) 6.height,
                   if (userStore.userClinicAddress.validate().isNotEmpty)
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        ic_location.iconImage(size: 18).paddingOnly(top: 4, bottom: 4),
-                        4.width,
-                        Text(userStore.userClinicAddress.validate(), style: secondaryTextStyle()),
-                      ],
-                    ).paddingLeft(4)
+                    GestureDetector(
+                      onTap: () {
+                        PatientClinicSelectionScreen(
+                          callback: () {
+                            widget.refreshCallback?.call();
+                          },
+                        ).launch(context);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ic_location.iconImage(size: 18).paddingOnly(top: 4, bottom: 4),
+                          4.width,
+                          Expanded(
+                            child: Marquee(
+                              direction: Axis.horizontal,
+                              child: Text(
+                                userStore.userClinicAddress.validate(),
+                                style: secondaryTextStyle(),
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Change Clinic",
+                                style: secondaryTextStyle(color: context.primaryColor),
+                              ),
+                              Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: context.primaryColor,
+                                size: 16,
+                              )
+                            ],
+                          )
+                        ],
+                      ).paddingLeft(4),
+                    )
                 ],
               ).expand(),
             ],
-          ).paddingSymmetric(vertical: 8)
+          ).paddingSymmetric(vertical: 8),
       ],
     );
   }

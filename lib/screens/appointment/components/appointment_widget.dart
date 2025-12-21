@@ -9,6 +9,7 @@ import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/upcoming_appointment_model.dart';
 import 'package:kivicare_flutter/network/appointment_repository.dart';
 import 'package:kivicare_flutter/network/encounter_repository.dart';
+import 'package:kivicare_flutter/screens/appointment/appointment_detail_screen.dart';
 import 'package:kivicare_flutter/screens/appointment/appointment_functions.dart';
 import 'package:kivicare_flutter/screens/appointment/components/appointment_quick_view.dart';
 import 'package:kivicare_flutter/screens/doctor/fragments/appointment_fragment.dart';
@@ -65,11 +66,25 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
   }
 
   //region Visible Button conditions
+  // bool get showEncounterButton {
+  //   if (isReceptionist() || isDoctor()) {
+  //     return ((isVisible(SharedPreferenceKey.kiviCarePatientEncounterAddKey)) && (widget.upcomingData.status.toInt() == CheckInStatusInt));
+  //   }
+  //   return (widget.upcomingData.status.toInt() == CheckInStatusInt && (isVisible(SharedPreferenceKey.kiviCarePatientEncounterViewKey)));
+  // }
+
   bool get showEncounterButton {
     if (isReceptionist() || isDoctor()) {
-      return ((isVisible(SharedPreferenceKey.kiviCarePatientEncounterAddKey)) && (widget.upcomingData.status.toInt() == CheckInStatusInt));
+      // Doctor & Receptionist → Show encounter when appointment is Check-In
+      return (isVisible(SharedPreferenceKey.kiviCarePatientEncounterAddKey) && widget.upcomingData.status.toInt() == CheckInStatusInt);
     }
-    return (widget.upcomingData.status.toInt() == CheckInStatusInt && (isVisible(SharedPreferenceKey.kiviCarePatientEncounterViewKey)));
+
+    if (isPatient()) {
+      // Patient → Show encounter ONLY after doctor closes (Check-Out)
+      return (isVisible(SharedPreferenceKey.kiviCarePatientEncounterViewKey) && widget.upcomingData.status.toInt() == CheckOutStatusInt);
+    }
+
+    return false;
   }
 
   bool get showViewButton {
@@ -250,6 +265,26 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
       },
     );
   }
+
+  // void _handleViewButton() async {
+  //   appStore.setLoading(true);
+  //   // AppointmentDetailScreen(
+  //   //   appointment: getDummyAppointment(),
+  //   // ).launch(context);
+  //   try {
+  //     final detail = await getAppointmentDetailsAPI(
+  //       appointmentId: widget.upcomingData.id.toString(),
+  //     );
+
+  //     AppointmentDetailScreen(
+  //       appointment: detail,
+  //     ).launch(context);
+  //   } catch (e) {
+  //     toast(e.toString());
+  //   } finally {
+  //     appStore.setLoading(false);
+  //   }
+  // }
 
   void _handleEncounterButton() {
     if (isPatient()) {
@@ -465,9 +500,19 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
                 color: appPrimaryColor,
                 topLeft: defaultRadius,
                 bottomLeft: defaultRadius,
-                topRight: (showEncounterButton || showCheckInButton || showReviewButton || showGoogleMeet) ? 0 : defaultRadius,
-                bottomRight: (showEncounterButton || showCheckInButton || showReviewButton || showGoogleMeet) ? 0 : defaultRadius,
+                topRight: (showEncounterButton || showCheckInButton || showReviewButton || showGoogleMeet || showZoom) ? 0 : defaultRadius,
+                bottomRight: (showEncounterButton || showCheckInButton || showReviewButton || showGoogleMeet || showZoom) ? 0 : defaultRadius,
               ).visible(showViewButton),
+              // commonAppButton(
+              //   buttonText: "Summary",
+              //   onTap: _handleSummaryButton,
+              //   color: appPrimaryColor,
+              //   topLeft: showViewButton ? 0 : defaultRadius,
+              //   bottomLeft: showViewButton ? 0 : defaultRadius,
+              //   topRight: (showEncounterButton || showCheckInButton || showReviewButton) ? 0 : defaultRadius,
+              //   bottomRight: (showEncounterButton || showCheckInButton || showReviewButton) ? 0 : defaultRadius,
+              // ).visible(showViewButton),
+
               commonAppButton(
                 buttonText: isPatient() ? locale.lblJoin : locale.lblStart,
                 onTap: _handleTelemedButton,
@@ -505,15 +550,40 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
                   textStyle: boldTextStyle(size: 12, color: Colors.white),
                 ),
               ).visible(showZoom),
-              commonAppButton(
-                buttonText: ifCheckIn ? locale.lblCheckOut : locale.lblCheckIn,
-                onTap: _handleCheckInOutButton,
-                color: appSecondaryColor,
-                topLeft: 0,
-                bottomLeft: 0,
-                topRight: showReviewButton ? 0 : defaultRadius,
-                bottomRight: showReviewButton ? 0 : defaultRadius,
-              ).visible(showCheckInButton),
+              // commonAppButton(
+              //   buttonText: ifCheckIn ? locale.lblCheckOut : locale.lblCheckIn,
+              //   onTap: _handleCheckInOutButton,
+              //   color: appSecondaryColor,
+              //   topLeft: 0,
+              //   bottomLeft: 0,
+              //   topRight: showReviewButton ? 0 : defaultRadius,
+              //   bottomRight: showReviewButton ? 0 : defaultRadius,
+              // ).visible(showCheckInButton),
+              if (showCheckInButton) ...[
+                if (!ifCheckIn)
+                  // Allow CheckIn when encounter is open
+                  commonAppButton(
+                    buttonText: locale.lblCheckIn,
+                    onTap: _handleCheckInOutButton,
+                    color: appSecondaryColor,
+                    topLeft: 0,
+                    bottomLeft: 0,
+                    topRight: showReviewButton ? 0 : defaultRadius,
+                    bottomRight: showReviewButton ? 0 : defaultRadius,
+                  ),
+                if (ifCheckIn && widget.upcomingData.paymentStatus == 'paid' && widget.upcomingData.encounterStatus == 0)
+                  // Allow CheckOut only if Bill Paid & Encounter Open
+                  commonAppButton(
+                    buttonText: locale.lblCheckOut,
+                    onTap: _handleCheckInOutButton,
+                    color: appSecondaryColor,
+                    topLeft: 0,
+                    bottomLeft: 0,
+                    topRight: showReviewButton ? 0 : defaultRadius,
+                    bottomRight: showReviewButton ? 0 : defaultRadius,
+                  ),
+              ],
+
               commonAppButton(
                 buttonText: locale.lblReview,
                 onTap: _handleReviewButton,
@@ -589,8 +659,25 @@ class _AppointmentWidgetState extends State<AppointmentWidget> {
           ],
         ),
       ).appOnTap(
-        () {
-          if (showViewButton) _handleViewButton();
+        () async {
+          if (showViewButton) appStore.setLoading(true);
+          // AppointmentDetailScreen(
+          //   appointment: getDummyAppointment(),
+          // ).launch(context);
+          try {
+            final detail = await getAppointmentDetailsAPI(
+              appointmentId: widget.upcomingData.id.toString(),
+            );
+
+            AppointmentDetailScreen(
+              appointment: detail,
+            ).launch(context);
+          } catch (e) {
+            toast(e.toString());
+          } finally {
+            appStore.setLoading(false);
+          }
+          ;
         },
       ),
     );

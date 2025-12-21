@@ -1,7 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:kivicare_flutter/components/gender_selection_component.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/config.dart';
@@ -55,7 +56,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? selectedRole;
 
   Clinic? selectedClinicData;
-
+  List<Clinic> selectedClinics = [];
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
   FocusNode confirmPasswordFocus = FocusNode();
@@ -72,6 +73,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   late DateTime birthDate;
 
   bool isFirstTime = true;
+  String countryCode = "+91";
+  bool isAcceptedTerms = false;
 
   @override
   void initState() {
@@ -137,20 +140,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
     //   passwordFormKey.currentState!.save();
     //   return;
     // }
+
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       if (genderValue == null) {
         toast("Gender field is required");
         return;
       }
+      String rawPhone = contactNumberCont.text.validate().trim();
+      String digitsOnly = rawPhone.replaceAll(RegExp(r'\D'), '');
+
+      if (digitsOnly.isEmpty) {
+        toast(locale.contactNumberIsRequired);
+        return;
+      }
+      if (digitsOnly.length < 8 || digitsOnly.length > 15) {
+        toast("Enter a valid phone number");
+        return;
+      }
 
       appStore.setLoading(true);
+
+      String phoneNumber = digitsOnly;
 
       Map request = {
         "first_name": firstNameCont.text.validate(),
         "last_name": lastNameCont.text.validate(),
         "user_email": emailCont.text.validate(),
-        "mobile_number": contactNumberCont.text.validate(),
+        "mobile_number": "$countryCode$phoneNumber",
         "gender": genderValue.validate().toLowerCase(),
         "dob": birthDate.getFormattedDate(SAVE_DATE_FORMAT).validate(),
         "user_pass": passwordCont.text,
@@ -159,8 +176,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
       if (selectedRole == UserRolePatient && bloodGroup.validate().isNotEmpty) {
         request.putIfAbsent("blood_group", () => bloodGroup.validate());
       }
-      if (selectedClinicData != null) {
-        request.putIfAbsent('clinic_id', () => selectedClinicData!.id.validate());
+      // if (selectedClinicData != null) {
+      //   request.putIfAbsent('clinic_id', () => selectedClinicData!.id.validate());
+      // }
+      if (selectedRole == UserRoleDoctor) {
+        if (selectedClinics.isNotEmpty) {
+          request.putIfAbsent('clinic_id', () => selectedClinics.map((c) => c.id.validate()).join(","));
+        } else {
+          toast(locale.clinicIdRequired);
+          appStore.setLoading(false);
+          return;
+        }
+      } else {
+        if (selectedClinicData != null) {
+          request.putIfAbsent('clinic_id', () => selectedClinicData!.id.validate());
+        } else {
+          toast(locale.clinicIdRequired);
+          appStore.setLoading(false);
+          return;
+        }
+      }
+
+      if (!isAcceptedTerms) {
+        toast("You must agree to the Terms & Conditions before signing up");
+        return;
       }
 
       await addNewUserAPI(request).then((value) async {
@@ -347,18 +386,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: inputDecoration(context: context, labelText: locale.lblConfirmPassword, prefixIcon: ic_lock.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
                     ),
                     16.height,
-                    AppTextField(
-                      textStyle: primaryTextStyle(),
+                    IntlPhoneField(
                       controller: contactNumberCont,
-                      focus: contactNumberFocus,
-                      nextFocus: dOBFocus,
-                      textFieldType: TextFieldType.PHONE,
-                      inputFormatters: [LengthLimitingTextInputFormatter(11)],
-                      isValidationRequired: true,
-                      errorThisFieldRequired: locale.contactNumberIsRequired,
-                      decoration: inputDecoration(context: context, labelText: locale.lblContactNumber, prefixIcon: ic_phone.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
-                      onFieldSubmitted: (value) {
-                        dOBFocus.requestFocus();
+                      initialCountryCode: 'IN', // default India
+                      decoration: inputDecoration(
+                        context: context,
+                        labelText: locale.lblContactNumber,
+                        prefixIcon: ic_phone.iconImage(size: 18, color: context.iconColor).paddingAll(14),
+                      ),
+                      style: primaryTextStyle(),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        // value may be a PhoneNumber instance or a String depending on package version
+                        if (value == null) return locale.contactNumberIsRequired;
+
+                        String number;
+                        number = (value.number).trim();
+
+                        if (number.isEmpty) return locale.contactNumberIsRequired;
+
+                        // optional: basic digit-only length check
+                        final digits = number.replaceAll(RegExp(r'\D'), '');
+                        if (digits.length < 8 || digits.length > 15) return "Enter a valid phone number";
+
+                        return null;
+                      },
+                      onChanged: (phone) {
+                        // PhoneNumber object -> phone.countryCode is like '+91'
+                        if (phone.countryCode.isNotEmpty) {
+                          countryCode = phone.countryCode;
+                        }
+                      },
+                      onCountryChanged: (country) {
+                        countryCode = "+${country.dialCode}";
                       },
                     ),
                     16.height,
@@ -406,6 +466,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           decoration: inputDecoration(context: context, labelText: locale.lblSelectRole, prefixIcon: ic_user.iconImage(size: 10, color: context.iconColor).paddingAll(14)),
                           onChanged: (dynamic role) {
                             selectedRole = role;
+
+                            // 👇 Reset state on role change
+                            if (selectedRole == UserRoleDoctor) {
+                              selectedClinicData = null;
+                              selectedClinics = [];
+                              selectedClinicCont.text = "";
+                            } else {
+                              selectedClinics = [];
+                              selectedClinicData = null;
+                              selectedClinicCont.text = "";
+                            }
+
                             setState(() {});
                           },
                           items: userRoleList.map((role) {
@@ -455,22 +527,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         prefixIcon: ic_clinic.iconImage(size: 18, color: context.iconColor).paddingAll(14),
                       ),
                       validator: (value) {
-                        if (selectedClinicData == null) return locale.clinicIdRequired;
+                        if (selectedRole == UserRoleDoctor) {
+                          if (selectedClinics.isEmpty) return locale.clinicIdRequired;
+                        } else {
+                          if (selectedClinicData == null) return locale.clinicIdRequired;
+                        }
                         return null;
                       },
                       maxLines: 1,
                       onTap: () {
                         hideKeyboard(context);
+                        bool isDoctor = selectedRole == UserRoleDoctor;
+
                         PatientClinicSelectionScreen(
                           isForRegistration: true,
                           clinicId: selectedClinicData != null ? selectedClinicData!.id.toInt() : null,
+                          isDoctor: isDoctor,
+                          preselectedClinics: isDoctor ? selectedClinics : (selectedClinicData != null ? [selectedClinicData!] : []),
                         ).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
                           if (value != null) {
-                            selectedClinicData = value;
-                            selectedClinicCont.text = selectedClinicData!.name.validate();
-
+                            if (isDoctor) {
+                              selectedClinics = value as List<Clinic>;
+                              selectedClinicCont.text = selectedClinics.map((c) => c.name.validate()).join(", ");
+                            } else {
+                              selectedClinicData = value;
+                              selectedClinicCont.text = selectedClinicData!.name.validate();
+                            }
                             setState(() {});
-                          } else {}
+                          } else {
+                            print("No clinic selected");
+                          }
                         });
                       },
                     ),
@@ -496,7 +582,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     AppTextField(
                       textFieldType: TextFieldType.MULTILINE,
                       controller: addressCont,
-                      maxLines: 2,
+                      minLines: 1,
                       decoration: inputDecoration(
                         context: context,
                         labelText: locale.lblAddress,
@@ -517,6 +603,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: _handleCurrentLocationClick,
                           child: Text(locale.currentLocation, style: boldTextStyle(color: primaryColor, size: 13), textAlign: TextAlign.right),
                         ).flexible(),
+                      ],
+                    ),
+                    16.height,
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: isAcceptedTerms,
+                          onChanged: (value) {
+                            setState(() {
+                              isAcceptedTerms = value ?? false;
+                            });
+                          },
+                        ),
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              text: "I agree to the ",
+                              style: primaryTextStyle(size: 16),
+                              children: [
+                                TextSpan(text: locale.lblTermsAndCondition, style: boldTextStyle(color: primaryColor, size: 16), recognizer: TapGestureRecognizer()),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     16.height,

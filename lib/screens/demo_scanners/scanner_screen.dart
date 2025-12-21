@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:mobile_scanner/mobile_scanner_controller.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class ScannerScreen extends StatefulWidget {
@@ -69,13 +68,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
 
                       userStore.setFirstName(username);
                       appStore.setBaseUrl("$url/wp-json/", initialize: true);
-                      appStore.setDemoDoctor("doctor_$username@kivicare.com",
-                          initialize: true);
-                      appStore.setDemoReceptionist(
-                          "receptionist_$username@kivicare.com",
-                          initialize: true);
-                      appStore.setDemoPatient("patient_$username@kivicare.com",
-                          initialize: true);
+                      appStore.setDemoDoctor("doctor_$username@kivicare.com", initialize: true);
+                      appStore.setDemoReceptionist("receptionist_$username@kivicare.com", initialize: true);
+                      appStore.setDemoPatient("patient_$username@kivicare.com", initialize: true);
                     } else {
                       toast(locale.lblInvalidURL);
                     }
@@ -87,8 +82,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
             overlayBuilder: (context, constraints) {
               return CustomPaint(
                 painter: ScannerOverlay(scanWindow: scanWindow),
-                size: Size(constraints.maxWidth,
-                    constraints.maxHeight), // Pass canvas size here
+                size: Size(constraints.maxWidth, constraints.maxHeight), // Pass canvas size here
               );
             },
           ),
@@ -96,9 +90,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
             top: context.height() * 0.28,
             left: 0,
             right: 0,
-            child: Text(locale.lblQrScanner,
-                style: boldTextStyle(color: white, size: 24),
-                textAlign: TextAlign.center),
+            child: Text(locale.lblQrScanner, style: boldTextStyle(color: white, size: 24), textAlign: TextAlign.center),
           ),
           Positioned(
             top: 32,
@@ -142,8 +134,7 @@ class ScannerOverlay extends CustomPainter {
         ),
       );
 
-    final Paint backgroundPaint = Paint()
-      ..color = Colors.black.withValues(alpha: 0.5);
+    final Paint backgroundPaint = Paint()..color = Colors.black.withValues(alpha: 0.5);
 
     final backgroundWithCutout = Path.combine(
       PathOperation.difference,
@@ -172,7 +163,6 @@ class ScannerOverlay extends CustomPainter {
 
   @override
   bool shouldRepaint(ScannerOverlay oldDelegate) {
-    return scanWindow != oldDelegate.scanWindow ||
-        borderRadius != oldDelegate.borderRadius;
+    return scanWindow != oldDelegate.scanWindow || borderRadius != oldDelegate.borderRadius;
   }
 }

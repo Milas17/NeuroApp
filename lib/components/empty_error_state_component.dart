@@ -3,6 +3,7 @@ import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
+// ignore: must_be_immutable
 class EmptyStateWidget extends StatelessWidget {
   final double? height;
   final double? width;

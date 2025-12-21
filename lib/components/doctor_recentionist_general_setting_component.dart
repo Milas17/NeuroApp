@@ -50,7 +50,14 @@ class DoctorReceptionistGeneralSettingComponent extends StatelessWidget {
             widget: EncounterListScreen(),
             subTitle: locale.lblYourAllEncounters,
           ),
-        if (isProEnabled() && isVisible(SharedPreferenceKey.kiviCarePatientBillListKey))
+        // if (isVisible(SharedPreferenceKey.kiviCarePatientEncounterListKey))
+        //   AppSettingWidget(
+        //     name: locale.lblClinic,
+        //     image: ic_clinic,
+        //     widget: ClinicListWithSearchScreen(),
+        //     subTitle: locale.lblChooseYourClinic,
+        //   ),
+        if (isProEnabled() && isVisible(SharedPreferenceKey.kiviCarePatientBillListKey) && appStore.isBilling)
           AppSettingWidget(
             name: locale.lblBillingRecords,
             image: ic_bill,
@@ -61,7 +68,10 @@ class DoctorReceptionistGeneralSettingComponent extends StatelessWidget {
           AppSettingWidget(
             name: locale.lblRatingsAndReviews,
             image: ic_rateUs,
-            widget: RatingViewAllScreen(doctorId: userStore.userId.validate()),
+            widget: RatingViewAllScreen(
+              userId: userStore.userId.validate(),
+              isDoctor: true,
+            ),
             subTitle: locale.lblWhatYourCustomersSaysAboutYou,
           ),
       ],

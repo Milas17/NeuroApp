@@ -42,7 +42,7 @@ class ReportComponent extends StatelessWidget {
             children: [
               Text("${reportData.name.validate()}", style: boldTextStyle(), maxLines: 2, overflow: TextOverflow.ellipsis),
               4.height,
-              Text(reportData.date.validate(), style: secondaryTextStyle(size: 10)),
+              if (reportData.date!.isNotEmpty) Text(reportData.date.validate(), style: secondaryTextStyle(size: 10)),
             ],
           ).expand(),
           8.width,

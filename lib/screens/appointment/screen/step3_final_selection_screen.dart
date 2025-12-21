@@ -236,15 +236,9 @@ class _Step3FinalSelectionScreenState extends State<Step3FinalSelectionScreen> {
                         labelText: locale.lblSelectServices,
                         suffixIcon: Icon(Icons.arrow_drop_down, color: context.iconColor),
                       ).copyWith(
-                        border: multiSelectStore.selectedService.isNotEmpty
-                            ? OutlineInputBorder(borderSide: BorderSide.none, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius))
-                            : null,
-                        enabledBorder: multiSelectStore.selectedService.isNotEmpty
-                            ? OutlineInputBorder(borderSide: BorderSide.none, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius))
-                            : null,
-                        focusedBorder: multiSelectStore.selectedService.isNotEmpty
-                            ? OutlineInputBorder(borderSide: BorderSide.none, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius))
-                            : null,
+                        border: multiSelectStore.selectedService.isNotEmpty ? OutlineInputBorder(borderSide: BorderSide.none, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)) : null,
+                        enabledBorder: multiSelectStore.selectedService.isNotEmpty ? OutlineInputBorder(borderSide: BorderSide.none, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)) : null,
+                        focusedBorder: multiSelectStore.selectedService.isNotEmpty ? OutlineInputBorder(borderSide: BorderSide.none, borderRadius: radiusOnly(topLeft: defaultRadius, topRight: defaultRadius)) : null,
                       ),
                       readOnly: true,
                       onTap: () {
@@ -291,9 +285,7 @@ class _Step3FinalSelectionScreenState extends State<Step3FinalSelectionScreen> {
                           ),
                           Row(
                             children: [
-                              Text((multiSelectStore.taxData != null && multiSelectStore.taxData!.taxList.validate().isNotEmpty) ? locale.lblSubTotal : locale.lblTotal,
-                                      style: primaryTextStyle(size: 14))
-                                  .expand(),
+                              Text((multiSelectStore.taxData != null && multiSelectStore.taxData!.taxList.validate().isNotEmpty) ? locale.lblSubTotal : locale.lblTotal, style: primaryTextStyle(size: 14)).expand(),
                               PriceWidget(price: multiSelectStore.selectedService.sumByDouble((p0) => p0.charges.toDouble()).toStringAsFixed(2), textSize: 14),
                             ],
                           ),
@@ -411,7 +403,7 @@ class _Step3FinalSelectionScreenState extends State<Step3FinalSelectionScreen> {
               focus: descFocus,
               isValidationRequired: false,
               textFieldType: TextFieldType.MULTILINE,
-              decoration: inputDecoration(context: context, labelText: locale.lblDescription),
+              decoration: inputDecoration(context: context, labelText: locale.lblDiagnosisDetails),
             ),
             16.height,
             FileUploadComponent().paddingBottom(32),

@@ -24,6 +24,11 @@ Future<List<ServiceData>> getServiceListAPI({String? searchString, required int?
     param.add('clinic_id=$id');
   } else if (isDoctor()) {
     param.add('doctor_id=$id');
+  } else if (isPatient()) {
+    if (id != null) {
+      param.add('clinic_id=$id');
+    }
+    param.add('include_clinics=true');
   }
   if (searchString.validate().isNotEmpty) param.add('s=$searchString');
 

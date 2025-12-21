@@ -43,6 +43,8 @@ class _EncounterDashboardScreenState extends State<EncounterDashboardScreen> {
 
   bool isProblem = false, isNotes = false, isObservation = false, isPrescription = false, isMedicalReport = false;
 
+  bool isEditable = appStore.enableEncounterEditAfterCloseStatus;
+
   DateTime current = DateTime.now();
 
   @override
@@ -112,7 +114,7 @@ class _EncounterDashboardScreenState extends State<EncounterDashboardScreen> {
           context,
           title: locale.lblEncounterWillBeClosed,
           dialogType: DialogType.CONFIRMATION,
-         primaryColor: appPrimaryColor,
+          primaryColor: appPrimaryColor,
           onAccept: (p0) {
             closeEncounter(appointmentId: encounterData.appointmentId, isCheckOut: false);
           },
@@ -168,7 +170,13 @@ class _EncounterDashboardScreenState extends State<EncounterDashboardScreen> {
               Text(encounterData.doctorName.validate(), style: boldTextStyle()),
               8.height,
               Text(locale.lblDescription, style: secondaryTextStyle(size: 12)),
-              ReadMoreText(encounterData.description.validate(value: " -- "),style: boldTextStyle(),trimLines: 3,trimMode: TrimMode.Line,colorClickableText: appPrimaryColor,)
+              ReadMoreText(
+                encounterData.description.validate(value: " -- "),
+                style: boldTextStyle(),
+                trimLines: 3,
+                trimMode: TrimMode.Line,
+                colorClickableText: appPrimaryColor,
+              )
             ],
           ),
         ).expand(),
@@ -274,51 +282,59 @@ class _EncounterDashboardScreenState extends State<EncounterDashboardScreen> {
                         //region Others
                         if (isVisible(SharedPreferenceKey.kiviCareMedicalRecordsListKey)) ...[
                           16.height,
-                          ExpandableEncounterComponent(
-                            title: PROBLEM,
-                            isExpanded: isProblem,
-                            encounterData: encounterData,
-                            encounterType: EncounterTypeEnum.OTHERS,
-                            encounterTypeValue: EncounterTypeValues.PROBLEM,
-                            refreshCallBack: () {
-                              init();
-                            },
-                          ),
+                          if (appStore.isProblem)
+                            ExpandableEncounterComponent(
+                              title: PROBLEM,
+                              isExpanded: isProblem,
+                              encounterData: encounterData,
+                              isEditable: isEditable,
+                              encounterType: EncounterTypeEnum.OTHERS,
+                              encounterTypeValue: EncounterTypeValues.PROBLEM,
+                              refreshCallBack: () {
+                                init();
+                              },
+                            ),
                           16.height,
-                          ExpandableEncounterComponent(
-                            title: OBSERVATION,
-                            encounterData: encounterData,
-                            isExpanded: isObservation,
-                            encounterTypeValue: EncounterTypeValues.OBSERVATION,
-                            encounterType: EncounterTypeEnum.OTHERS,
-                            refreshCallBack: () {
-                              init();
-                            },
-                          ),
+                          if (appStore.isobservation)
+                            ExpandableEncounterComponent(
+                              title: OBSERVATION,
+                              encounterData: encounterData,
+                              isExpanded: isObservation,
+                              isEditable: isEditable,
+                              encounterTypeValue: EncounterTypeValues.OBSERVATION,
+                              encounterType: EncounterTypeEnum.OTHERS,
+                              refreshCallBack: () {
+                                init();
+                              },
+                            ),
                           16.height,
-                          ExpandableEncounterComponent(
-                            title: NOTE,
-                            isExpanded: isNotes,
-                            encounterData: encounterData,
-                            encounterTypeValue: EncounterTypeValues.NOTE,
-                            encounterType: EncounterTypeEnum.OTHERS,
-                            refreshCallBack: () {
-                              init();
-                            },
-                          )
+                          if (appStore.isNotes)
+                            ExpandableEncounterComponent(
+                              title: NOTE,
+                              isExpanded: isNotes,
+                              encounterData: encounterData,
+                              isEditable: isEditable,
+                              encounterTypeValue: EncounterTypeValues.NOTE,
+                              encounterType: EncounterTypeEnum.OTHERS,
+                              refreshCallBack: () {
+                                init();
+                              },
+                            )
                         ],
                         16.height,
                         //endregion
                         //region Prescriptions
-                        ExpandableEncounterComponent(
-                          title: PRESCRIPTION,
-                          isExpanded: isPrescription,
-                          encounterData: encounterData,
-                          encounterType: EncounterTypeEnum.PRESCRIPTIONS,
-                          refreshCallBack: () {
-                            init();
-                          },
-                        ),
+                        if (appStore.isPrescription)
+                          ExpandableEncounterComponent(
+                            title: PRESCRIPTION,
+                            isExpanded: isPrescription,
+                            encounterData: encounterData,
+                            isEditable: isEditable,
+                            encounterType: EncounterTypeEnum.PRESCRIPTIONS,
+                            refreshCallBack: () {
+                              init();
+                            },
+                          ),
                         16.height,
                         //endregion
                         //region Medical Report
@@ -335,58 +351,71 @@ class _EncounterDashboardScreenState extends State<EncounterDashboardScreen> {
                         //endregion
                       ],
                     ),
-                    if ((encounterData.status == '1') && (isDoctor() || isReceptionist()) && isVisible(SharedPreferenceKey.kiviCarePatientBillAddKey))
+                    if ((isDoctor() || isReceptionist()) && isVisible(SharedPreferenceKey.kiviCarePatientBillAddKey))
                       Positioned(
-                          bottom: 0,
-                          right: 0,
-                          left: 0,
-                          child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                8.height,
-                                Text('\t${locale.lblNote}: ${locale.lblToCloseTheEncounterInvoicePaymentIsMandatory}', style: secondaryTextStyle(size: 10, color: appSecondaryColor)),
-                                8.height,
-                                Row(
-                                  children: [
+                        bottom: 0,
+                        right: 0,
+                        left: 0,
+                        child: Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              8.height,
+                              if (encounterData.status == '1') // Show note only for active
+                                Text(
+                                  '\t${locale.lblNote}: ${locale.lblToCloseTheEncounterInvoicePaymentIsMandatory}',
+                                  style: secondaryTextStyle(size: 10, color: appSecondaryColor),
+                                ),
+                              8.height,
+                              Row(
+                                children: [
+                                  // CASE 1 & 2: Encounter still active
+                                  if (encounterData.status == '1') ...[
                                     AppButton(
                                       text: isBillPaid ? '${locale.lblClose} & ${locale.lblCheckOut}' : locale.lblClose,
                                       color: context.cardColor,
                                       textStyle: primaryTextStyle(color: Colors.red),
-                                      shapeBorder: RoundedRectangleBorder(borderRadius: radius(), side: BorderSide(color: Colors.red)),
+                                      shapeBorder: RoundedRectangleBorder(
+                                        borderRadius: radius(),
+                                        side: BorderSide(color: Colors.red),
+                                      ),
                                       onTap: () async {
-                                        _handleCloseEncounterClick(encounterData: encounterData, isCheckOut: true);
+                                        _handleCloseEncounterClick(
+                                          encounterData: encounterData,
+                                          isCheckOut: isBillPaid,
+                                        );
                                       },
                                     ).expand(),
                                     16.width,
+                                  ],
+
+                                  // CASE 1, 2, 3 → Always show Bill Details
+                                  if (!isBillPaid || encounterData.status == '1')
                                     AppButton(
                                       text: locale.lblBillDetails,
                                       color: context.cardColor,
-                                      shapeBorder: RoundedRectangleBorder(borderRadius: radius(), side: BorderSide(color: Colors.red)),
+                                      shapeBorder: RoundedRectangleBorder(
+                                        borderRadius: radius(),
+                                        side: BorderSide(color: Colors.red),
+                                      ),
                                       textStyle: primaryTextStyle(color: Colors.red),
                                       onTap: () async {
-                                        await GenerateBillScreen(
-                                          data: encounterData,
-                                        ).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
+                                        await GenerateBillScreen(data: encounterData).launch(context, pageRouteAnimation: pageAnimation, duration: pageAnimationDuration).then((value) {
                                           if (value != null) {
-                                            if (value == "paid") {
-                                              init();
-                                            }
-                                            if (value == 'unpaid') {
-                                              init();
-                                            }
+                                            init(); // refresh after update
                                           }
                                         });
                                       },
                                     ).expand(),
-                                  ],
-                                ),
-                              ],
-                            ).paddingOnly(left: 16, right: 16, bottom: 16, top: 0),
-                            decoration: boxDecorationDefault(
-                              color: context.scaffoldBackgroundColor,
-                            ),
-                          ))
+                                ],
+                              ),
+                            ],
+                          ).paddingOnly(left: 16, right: 16, bottom: 16, top: 0),
+                          decoration: boxDecorationDefault(
+                            color: context.scaffoldBackgroundColor,
+                          ),
+                        ),
+                      )
                   ],
                 );
               }

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kivicare_flutter/components/cached_image_widget.dart';
+import 'package:kivicare_flutter/main.dart';
+import 'package:kivicare_flutter/model/clinic_details_model.dart';
 import 'package:kivicare_flutter/model/clinic_list_model.dart';
+import 'package:kivicare_flutter/model/user_model.dart';
+import 'package:kivicare_flutter/network/clinic_repository.dart';
+import 'package:kivicare_flutter/network/doctor_repository.dart';
+import 'package:kivicare_flutter/screens/doctor/screens/ClinicDetailScreen.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -10,12 +16,24 @@ import 'package:kivicare_flutter/components/status_widget.dart';
 
 import 'html_widget.dart';
 
-class ClinicComponent extends StatelessWidget {
+class ClinicComponent extends StatefulWidget {
   final Clinic clinicData;
   final bool isCheck;
   final Function(bool)? onTap;
 
   ClinicComponent({required this.clinicData, this.onTap, this.isCheck = false});
+
+  @override
+  State<ClinicComponent> createState() => _ClinicComponentState();
+}
+
+class _ClinicComponentState extends State<ClinicComponent> {
+  bool isLastPage = false;
+
+  bool showClear = false;
+
+  int page = 1;
+  List<UserModel> doctorList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +48,7 @@ class ClinicComponent extends StatelessWidget {
             children: [
               28.height,
               Marquee(
-                child: HtmlWidget(postContent: clinicData.name.validate()),
+                child: HtmlWidget(postContent: widget.clinicData.name.validate()),
                 animationDuration: Duration(milliseconds: 400),
                 pauseDuration: Duration(milliseconds: 100),
               ),
@@ -38,8 +56,13 @@ class ClinicComponent extends StatelessWidget {
               TextIcon(
                 spacing: 4,
                 prefix: ic_location.iconImage(size: 16).paddingAll(4),
-                text: clinicData.city.validate(),
-                maxLine: 1,
+                text: [
+                  widget.clinicData.address.validate(),
+                  widget.clinicData.city.validate(),
+                  widget.clinicData.country.validate(),
+                  widget.clinicData.postalCode.validate(),
+                ].where((element) => element.isNotEmpty).join(", "),
+                maxLine: 2, // allow wrapping if too long
                 expandedText: true,
                 useMarquee: true,
                 textStyle: secondaryTextStyle(),
@@ -55,9 +78,9 @@ class ClinicComponent extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (clinicData.profileImage.validate().isNotEmpty)
+              if (widget.clinicData.profileImage.validate().isNotEmpty)
                 CachedImageWidget(
-                  url: clinicData.profileImage.validate(),
+                  url: widget.clinicData.profileImage.validate(),
                   height: 40,
                   width: 40,
                   fit: BoxFit.cover,
@@ -66,7 +89,7 @@ class ClinicComponent extends StatelessWidget {
                 ic_clinicPlaceHolder.iconImageColored(height: 40, width: 40).cornerRadiusWithClipRRect(8),
               16.width.expand(),
               StatusWidget(
-                status: clinicData.status.validate(),
+                status: widget.clinicData.status.validate(),
                 isClinicStatus: true,
                 borderRadius: radius(),
                 padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -79,20 +102,33 @@ class ClinicComponent extends StatelessWidget {
           right: 12,
           child: Container(
             padding: EdgeInsets.zero,
-            decoration: boxDecorationDefault(shape: BoxShape.circle, color: isCheck ? Colors.green : context.cardColor, border: Border.all(width: 2, color: Colors.green)),
-            child: isCheck
-                ? Icon(Icons.check, color: Colors.white, size: 16)
-                : Container(padding: EdgeInsets.all(isCheck ? 0 : 8), decoration: boxDecorationDefault(shape: BoxShape.circle, color: context.cardColor)),
+            decoration: boxDecorationDefault(shape: BoxShape.circle, color: widget.isCheck ? Colors.green : context.cardColor, border: Border.all(width: 2, color: Colors.green)),
+            child: widget.isCheck ? Icon(Icons.check, color: Colors.white, size: 16) : Container(padding: EdgeInsets.all(widget.isCheck ? 0 : 8), decoration: boxDecorationDefault(shape: BoxShape.circle, color: context.cardColor)),
           ).appOnTap(
             () {
-              onTap!.call(!isCheck);
+              widget.onTap!.call(!widget.isCheck);
             },
           ),
         )
       ],
     ).appOnTap(
-      () {
-        onTap!.call(!isCheck);
+      () async {
+        ClinicDetailsModel? clinicDetail = await getClinicDetailsAPI(clinicId: widget.clinicData.id!);
+        (await getDoctorListWithPagination(
+          doctorList: doctorList,
+          clinicId: widget.clinicData.id.toInt(),
+          page: page,
+          lastPageCallback: (b) => isLastPage = b,
+        ).whenComplete(() {
+          appStore.setLoading(false);
+
+          setState(() {});
+        }).catchError((e) {
+          appStore.setLoading(false);
+          setState(() {});
+          throw e;
+        }));
+        ClinicDetailScreen(clinic: clinicDetail,).launch(context);
       },
     );
   }

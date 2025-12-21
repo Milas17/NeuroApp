@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:kivicare_flutter/config.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/appoinment_model.dart';
+import 'package:kivicare_flutter/model/appointment_details_model.dart';
 import 'package:kivicare_flutter/model/appointment_slot_model.dart';
 import 'package:kivicare_flutter/model/confirm_appointment_response_model.dart';
 import 'package:kivicare_flutter/model/encounter_model.dart';
@@ -50,12 +51,64 @@ Future<List<UpcomingAppointmentModel>> getPatientAppointmentList(
   return appointmentList;
 }
 
+// Future<List<UpcomingAppointmentModel>> getAppointment({
+//   int pages = 1,
+//   int perPage = PER_PAGE,
+//   String? todayDate,
+//   String? startDate,
+//   String? endDate,
+//   required List<UpcomingAppointmentModel> appointmentList,
+//   Function(bool)? lastPageCallback,
+// }) async {
+//   if (!appStore.isConnectedToInternet) {
+//     return [];
+//   }
+
+//   AppointmentModel value;
+
+//   List<String> params = [];
+//   params.add('${ConstantKeys.pageKey}=$pages');
+//   params.add('${ConstantKeys.limitKey}=$perPage');
+//   if (todayDate != null) params.add('${ConstantKeys.dateKey}=$todayDate');
+//   if (startDate != null) params.add('${ConstantKeys.startKey}=$startDate');
+//   if (endDate != null) params.add('${ConstantKeys.endKey}=$endDate');
+
+//   value = AppointmentModel.fromJson(await (handleResponse(await buildHttpResponse(getEndPoint(
+//     endPoint: ApiEndPoints.getAppointmentEndPoint,
+//     params: params,
+//   )))));
+//   if (pages == 1) appointmentList.clear();
+
+//   appointmentList.addAll(value.appointmentData.validate());
+//   lastPageCallback?.call(value.appointmentData.validate().length != perPage);
+//   cachedDoctorAppointment = appointmentList;
+
+//   return appointmentList;
+// }
+
+Future<AppointmentDetailsModel> getAppointmentDetailsAPI({
+  required String appointmentId,
+}) async {
+  if (!appStore.isConnectedToInternet) throw errorInternetNotAvailable;
+
+  var res = await handleResponse(
+    await buildHttpResponse(
+      getEndPoint(
+        endPoint: '${ApiEndPoints.appointmentEndPoint}/${EndPointKeys.getDetailEndPointKey}/$appointmentId',
+      ),
+    ),
+  );
+
+  return AppointmentDetailsModel.fromJson(res['data']);
+}
+
 Future<List<UpcomingAppointmentModel>> getAppointment({
   int pages = 1,
   int perPage = PER_PAGE,
   String? todayDate,
   String? startDate,
   String? endDate,
+  String status = "All", // 👈 added default param
   required List<UpcomingAppointmentModel> appointmentList,
   Function(bool)? lastPageCallback,
 }) async {
@@ -68,14 +121,19 @@ Future<List<UpcomingAppointmentModel>> getAppointment({
   List<String> params = [];
   params.add('${ConstantKeys.pageKey}=$pages');
   params.add('${ConstantKeys.limitKey}=$perPage');
+  params.add('status=$status');
+
   if (todayDate != null) params.add('${ConstantKeys.dateKey}=$todayDate');
   if (startDate != null) params.add('${ConstantKeys.startKey}=$startDate');
   if (endDate != null) params.add('${ConstantKeys.endKey}=$endDate');
 
-  value = AppointmentModel.fromJson(await (handleResponse(await buildHttpResponse(getEndPoint(
-    endPoint: ApiEndPoints.getAppointmentEndPoint,
-    params: params,
-  )))));
+  value = AppointmentModel.fromJson(await (handleResponse(
+    await buildHttpResponse(getEndPoint(
+      endPoint: ApiEndPoints.getAppointmentEndPoint,
+      params: params,
+    )),
+  )));
+
   if (pages == 1) appointmentList.clear();
 
   appointmentList.addAll(value.appointmentData.validate());

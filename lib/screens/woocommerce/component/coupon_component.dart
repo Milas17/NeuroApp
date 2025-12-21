@@ -63,12 +63,12 @@ class CouponComponent extends StatelessWidget {
           14.height,
           Row(
             children: [
-              if (coupon.minimumAmount.validate().isNotEmpty)
+              if (coupon.minimumAmount.toDouble() > 0)
                 Text(
                   'Minimum Spend - ${coupon.minimumAmount.toDouble().toStringAsFixed(2).prefixText(value: appStore.currencyPrefix.validate()).suffixText(value: appStore.currencyPostfix.validate())}',
                   style: secondaryTextStyle(),
                 ).expand(),
-              if (coupon.maximumAmount.validate().isNotEmpty)
+              if (coupon.maximumAmount.toDouble() > 0)
                 Text(
                   'Maximum Spend - ${coupon.maximumAmount.toDouble().toStringAsFixed(2).prefixText(value: appStore.currencyPrefix.validate()).suffixText(value: appStore.currencyPostfix.validate())}',
                   style: secondaryTextStyle(),
@@ -171,8 +171,7 @@ class _CartCouponsComponentState extends State<CartCouponsComponent> {
                           style: secondaryTextStyle(),
                           children: <TextSpan>[
                             TextSpan(
-                              text:
-                                  '${getPrice(coupon.totals!.totalDiscount.validate()).toDouble().toStringAsFixed(2).prefixText(value: appStore.currencyPrefix.validate()).suffixText(value: appStore.currencyPostfix.validate())}',
+                              text: '${getPrice(coupon.totals!.totalDiscount.validate()).toDouble().toStringAsFixed(2).prefixText(value: appStore.currencyPrefix.validate()).suffixText(value: appStore.currencyPostfix.validate())}',
                               style: primaryTextStyle(),
                             ),
                           ],

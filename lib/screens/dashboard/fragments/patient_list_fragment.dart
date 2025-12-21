@@ -7,6 +7,7 @@ import 'package:kivicare_flutter/components/empty_error_state_component.dart';
 import 'package:kivicare_flutter/components/internet_connectivity_widget.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/user_model.dart';
 import 'package:kivicare_flutter/network/encounter_repository.dart';
@@ -166,13 +167,26 @@ class _PatientListFragmentBodyComponentState extends State<PatientListFragment> 
                       context: context,
                       hintText: locale.lblSearchPatient,
                       prefixIcon: ic_search.iconImage().paddingAll(16),
-                      suffixIcon: !showClear
-                          ? Offstage()
-                          : ic_clear.iconImage().paddingAll(16).appOnTap(
-                              () {
-                                _onClearSearch();
-                              },
-                            ),
+                      suffixIcon: VoiceSearchSuffix(
+                        controller: searchCont,
+                        lottieAnimationPath: lt_voice, 
+                        onClear: () {
+                          _onClearSearch();
+                        },
+                        onSearchChanged: (value) {
+                          if (value.isEmpty) {
+                            _onClearSearch();
+                          } else {
+                            Timer(pageAnimationDuration, () {
+                              init(showLoader: true);
+                            });
+                          }
+                        },
+                        onSearchSubmitted: (value) {
+                          hideKeyboard(context);
+                          init(showLoader: true);
+                        },
+                      ),
                     ),
                     onChanged: (newValue) {
                       if (newValue.isEmpty) {

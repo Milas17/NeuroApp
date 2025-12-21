@@ -14,17 +14,17 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 }
 
-android {
-    compileSdkVersion 35
-    ndkVersion "27.0.12077973"
 
-    namespace "com.iqonic.kivicare_flutter"   // ✅ replacé au bon endroit
+android {
+    compileSdkVersion 36
+    ndkVersion "27.0.12077973"
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -32,32 +32,34 @@ android {
 
     compileOptions {
         coreLibraryDesugaringEnabled true
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8" // Ensure Kotlin is also targeting 1.8
+        jvmTarget = "17" // Ensure Kotlin is also targeting 1.8
     }
 
     defaultConfig {
         applicationId "com.iqonic.kivicare"
         minSdkVersion 25
-        targetSdkVersion 35
-        versionCode 40
-        versionName "9.6.6"
+        targetSdkVersion 36
+        versionCode 44
+        versionName "9.6.8"
         multiDexEnabled true
     }
 
     signingConfigs {
         release {
-            // pas de configuration de clé, build non signé
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
         }
     }
-
+    
     buildTypes {
         debug {
-            // debug est toujours signé automatiquement
             signingConfig signingConfigs.debug
             minifyEnabled false
             shrinkResources false
@@ -65,26 +67,28 @@ android {
         }
 
         release {
-            // pas de signature → juste un APK non signé
+            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 
+    googleServices { disableVersionCheck = true }
+
     lint {
         disable 'InvalidPackage'
     }
+    namespace 'com.iqonic.kivicare_flutter'
 }
 
-googleServices { disableVersionCheck = true }
 
 flutter {
     source '../..'
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:33.13.0')
+    implementation platform('com.google.firebase:firebase-bom:33.16.0')
     implementation 'com.google.firebase:firebase-analytics'
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.1.5'
     implementation 'com.google.firebase:firebase-crashlytics'

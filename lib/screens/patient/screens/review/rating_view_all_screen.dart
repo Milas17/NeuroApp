@@ -9,13 +9,13 @@ import 'package:kivicare_flutter/network/review_repository.dart';
 import 'package:kivicare_flutter/screens/patient/screens/review/component/review_widget.dart';
 import 'package:kivicare_flutter/screens/shimmer/screen/review_rating_shimmer_screen.dart';
 import 'package:kivicare_flutter/utils/app_common.dart';
-import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 class RatingViewAllScreen extends StatefulWidget {
-  final int doctorId;
+  final int userId; // doctorId or patientId
+  final bool? isDoctor; // true -> doctor reviews, false -> patient reviews
 
-  RatingViewAllScreen({required this.doctorId});
+  RatingViewAllScreen({required this.userId, required this.isDoctor});
 
   @override
   State<RatingViewAllScreen> createState() => _RatingViewAllScreenState();
@@ -23,10 +23,8 @@ class RatingViewAllScreen extends StatefulWidget {
 
 class _RatingViewAllScreenState extends State<RatingViewAllScreen> {
   Future<List<RatingData>>? future;
-
   int page = 1;
   bool isLastPage = false;
-
   List<RatingData> ratingList = [];
 
   @override
@@ -37,12 +35,21 @@ class _RatingViewAllScreenState extends State<RatingViewAllScreen> {
 
   void init({bool showLoader = false}) async {
     if (showLoader) appStore.setLoading(true);
-    future = doctorReviewsListAPI(
-      ratingList: ratingList,
-      doctorId: widget.doctorId.validate(),
-      page: page,
-      lastPageCallback: (b) => isLastPage = b,
-    ).then((value) {
+
+    future = (widget.isDoctor.validate()
+            ? doctorReviewsListAPI(
+                ratingList: ratingList,
+                doctorId: widget.userId.validate(),
+                page: page,
+                lastPageCallback: (b) => isLastPage = b,
+              )
+            : patientReviewsListAPI(
+                ratingList: ratingList,
+                patientId: widget.userId.validate(),
+                page: page,
+                lastPageCallback: (b) => isLastPage = b,
+              ))
+        .then((value) {
       appStore.setLoading(false);
       return value;
     }).catchError((e) {
@@ -51,15 +58,28 @@ class _RatingViewAllScreenState extends State<RatingViewAllScreen> {
     });
   }
 
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
+  void deleteReview(int reviewId) async {
+    showConfirmDialogCustom(
+      context,
+      title: locale.lblDoYouWantToDeleteReview,
+      positiveText: locale.lblDelete,
+      negativeText: locale.lblCancel,
+      dialogType: DialogType.DELETE,
+      onAccept: (c) async {
+        appStore.setLoading(true);
+        await deleteReviewAPI(id: reviewId).then((value) {
+          toast(value.message);
 
-  @override
-  void dispose() {
-    getDisposeStatusBarColor();
-    super.dispose();
+          setState(() {
+            ratingList.removeWhere((element) => element.id == reviewId);
+
+            future = Future.value(ratingList);
+          });
+        }).catchError((e) {
+          toast(e.toString());
+        }).whenComplete(() => appStore.setLoading(false));
+      },
+    );
   }
 
   @override
@@ -71,54 +91,52 @@ class _RatingViewAllScreenState extends State<RatingViewAllScreen> {
         systemUiOverlayStyle: defaultSystemUiOverlayStyle(context),
       ),
       body: InternetConnectivityWidget(
-        retryCallback: () {
-          init();
-        },
+        retryCallback: () => init(),
         child: Stack(
           children: [
             SnapHelperWidget<List<RatingData>>(
               future: future,
               loadingWidget: ReviewRatingShimmerScreen(),
               onSuccess: (data) {
-                if (data.isNotEmpty) {
-                  return AnimatedListView(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.all(16),
-                    itemCount: data.length,
-                    itemBuilder: (context, index) => ReviewWidget(
+                ratingList = data;
+                if (ratingList.isEmpty) {
+                  return NoDataFoundWidget(text: locale.lblNoReviewsFound).center();
+                }
+                return AnimatedListView(
+                  shrinkWrap: true,
+                  padding: EdgeInsets.all(16),
+                  itemCount: data.length,
+                  onSwipeRefresh: () async {
+                    page = 1;
+                    init(showLoader: true);
+                    return await 1.seconds.delay;
+                  },
+                  onNextPage: () async {
+                    setState(() => page++);
+                    init(showLoader: true);
+                    await 1.seconds.delay;
+                  },
+                  itemBuilder: (context, index) {
+                    return ReviewWidget(
                       data: data[index],
-                      callDelete: () async {
-                        appStore.setLoading(true);
-                        await deleteReviewAPI(id: data[index].id.validate().toInt()).then((value) {
-                          toast(value.message);
-                          init();
-                          appStore.setLoading(false);
-                        }).catchError((e) {
-                          appStore.setLoading(false);
-                          toast(e.toString());
+                      isDoctor: widget.isDoctor!,
+                      callDelete: () => deleteReview(data[index].id.validate()),
+                      callUpdate: (updatedData) {
+                        setState(() {
+                          data[index] = updatedData;
                         });
                       },
-                    ),
-                  );
-                } else {
-                  return NoDataFoundWidget(
-                    text: locale.lblNoReviewsFound,
-                  ).center();
-                }
+                      addMargin: false,
+                      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                      decoration: boxDecorationDefault(color: context.cardColor),
+                    );
+                  },
+                );
               },
-            ).paddingTop(20),
-            Positioned(
-              top: 16,
-              left: 16,
-              right: 16,
-              child: Text(
-                locale.lblSwipeRightNote,
-                style: secondaryTextStyle(color: appSecondaryColor, size: 12),
-              ),
-            ),
+            ).paddingTop(8),
             Observer(
-              builder: (context) => LoaderWidget().center().visible(appStore.isLoading),
-            )
+              builder: (_) => LoaderWidget().center().visible(appStore.isLoading),
+            ),
           ],
         ),
       ),

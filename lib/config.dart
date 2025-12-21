@@ -1,25 +1,25 @@
-const APP_NAME = 'NeuroCare Connect';
-const APP_FIRST_NAME = 'NeuroCare';
-const APP_SECOND_NAME = 'Connect';
-const APP_NAME_TAG_LINE =
-    'Plateforme de telemedecine neurologique et psychiatrique';
+const APP_NAME = 'KiviCare';
+const APP_FIRST_NAME = 'Kivi';
+const APP_SECOND_NAME = 'Care';
+const APP_NAME_TAG_LINE = 'Clinic and Patient Management App';
 
-const DOMAIN_URL = 'https://neurocareconnect.tech';
+// LIVE
+const DOMAIN_URL = 'add your domain URL';
 
 const BASE_URL = '$DOMAIN_URL/wp-json/';
 
 const IQONIC_PACKAGE_NAME =
     "com.iqonic.kivicare"; // Do not change this Package Name.
-const DEFAULT_LANGUAGE = 'fr';
-var COPY_RIGHT_TEXT =
-    '© ${DateTime.now().year}. Made with ♡ by NeuroCare Connect';
+const DEFAULT_LANGUAGE = 'en';
+var COPY_RIGHT_TEXT = '© ${DateTime.now().year}. Made with ♡ by Iqonic Design';
 
 const TERMS_AND_CONDITION_URL = 'https://iqonic.design/terms-of-use/';
-const PRIVACY_POLICY_URL = 'https://iqonic.design/privacy-policy/';
+const PRIVACY_POLICY_URL =
+    'https://kivicare-wordpress.iqonic.design/privacy-policy/';
 const SUPPORT_URL = 'https://iqonic.desky.support/';
 const CODE_CANYON_URL =
     "https://codecanyon.net/item/kivicare-flutter-app-clinic-patient-management-system/30970616";
-const MAIL_TO = "neurocareconnect24@gmail.com";
+const MAIL_TO = "hello@iqonic.design";
 
 const APPSTORE_APP_LINK =
     'https://apps.apple.com/in/app/kivicare-clinic-management/id6464056030';

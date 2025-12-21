@@ -38,40 +38,39 @@ class ThemeSelectionDialogState extends State<ThemeSelectionDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: List.generate(
-        themeModeList.length,
-        (int index) {
-          return Theme(
-            data: ThemeData(unselectedWidgetColor: context.primaryColor),
-            child: RadioListTile(
+    return Theme(
+      data: ThemeData(unselectedWidgetColor: context.primaryColor),
+      child: RadioGroup<int>(
+        groupValue: currentIndex,
+        onChanged: (dynamic val) {
+          if (val != null) {
+            setState(() {
+              currentIndex = val;
+
+              if (val == THEME_MODE_SYSTEM) {
+                appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.dark);
+              } else if (val == THEME_MODE_LIGHT) {
+                appStore.setDarkMode(false);
+              } else if (val == THEME_MODE_DARK) {
+                appStore.setDarkMode(true);
+              }
+
+              setValue(THEME_MODE_INDEX, val);
+            });
+
+            finish(context);
+          }
+        },
+        child: Column(
+          children: List.generate(themeModeList.length, (index) {
+            return RadioListTile<int>(
               value: index,
               dense: true,
-              fillColor: WidgetStatePropertyAll(appPrimaryColor),
-              groupValue: currentIndex,
               title: Text(themeModeList[index], style: primaryTextStyle()),
-              onChanged: (dynamic val) {
-                setState(() {
-                  currentIndex = val;
-
-                  if (val == THEME_MODE_SYSTEM) {
-                    appStore.setDarkMode(MediaQuery.of(context).platformBrightness == Brightness.dark);
-                  } else if (val == THEME_MODE_LIGHT) {
-                    appStore.setDarkMode(false);
-                  } else {
-                    if (val == THEME_MODE_DARK) {
-                      appStore.setDarkMode(true);
-                    }
-                  }
-
-                  setValue(THEME_MODE_INDEX, val);
-                });
-
-                finish(context);
-              },
-            ),
-          );
-        },
+              fillColor: WidgetStatePropertyAll(appPrimaryColor),
+            );
+          }),
+        ),
       ),
     );
   }

@@ -263,7 +263,7 @@ class _AddHolidayScreenState extends State<AddHolidayScreen> {
                     icon: SizedBox.shrink(),
                     borderRadius: radius(),
                     dropdownColor: context.cardColor,
-                    value: moduleCont,
+                    initialValue: moduleCont,
                     items: List.generate(
                       userRoles.length,
                       (index) => DropdownMenuItem<String>(

@@ -6,6 +6,7 @@ import 'package:kivicare_flutter/components/empty_error_state_component.dart';
 import 'package:kivicare_flutter/components/image_border_component.dart';
 import 'package:kivicare_flutter/components/loader_widget.dart';
 import 'package:kivicare_flutter/components/no_data_found_widget.dart';
+import 'package:kivicare_flutter/components/voice_search_suffix.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/model/user_model.dart';
 import 'package:kivicare_flutter/network/patient_list_repository.dart';
@@ -14,7 +15,6 @@ import 'package:kivicare_flutter/utils/app_common.dart';
 import 'package:kivicare_flutter/utils/common.dart';
 import 'package:kivicare_flutter/utils/constants.dart';
 import 'package:kivicare_flutter/utils/extensions/string_extensions.dart';
-import 'package:kivicare_flutter/utils/extensions/widget_extentions.dart';
 import 'package:kivicare_flutter/utils/images.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -49,24 +49,23 @@ class _PatientSearchScreenState extends State<PatientSearchScreen> {
   }
 
   Future<void> init({bool showLoader = true}) async {
-    if (showLoader) {
-      appStore.setLoading(true);
-    }
+    if (showLoader) appStore.setLoading(true);
+
+    page = 1;
+    isLastPage = false;
+    patientList.clear();
+
     future = getPatientListAPI(
       searchString: searchCont.text,
       patientList: patientList,
-      doctorId: isDoctor()?userStore.userId:appointmentAppStore.mDoctorSelected!.iD.validate(),
+      doctorId: isDoctor() ? userStore.userId : appointmentAppStore.mDoctorSelected!.iD.validate(),
       clinicId: isReceptionist() ? userStore.userClinicId.toInt() : appointmentAppStore.mClinicSelected?.id.toInt(),
-      page: 1,
+      page: page,
       lastPageCallback: (b) => isLastPage = b,
     ).then((value) {
-      if (searchCont.text.isNotEmpty) {
-        showClear = true;
-      } else {
-        showClear = false;
-      }
-      setState(() {});
+      showClear = searchCont.text.isNotEmpty;
       appStore.setLoading(false);
+      setState(() {});
       return value;
     }).catchError((e) {
       appStore.setLoading(false);
@@ -106,13 +105,26 @@ class _PatientSearchScreenState extends State<PatientSearchScreen> {
                 context: context,
                 hintText: locale.lblSearchPatient,
                 prefixIcon: ic_search.iconImage().paddingAll(16),
-                suffixIcon: !showClear
-                    ? Offstage()
-                    : ic_clear.iconImage().paddingAll(16).appOnTap(
-                        () {
-                          _onSearchClear();
-                        },
-                      ),
+                suffixIcon: VoiceSearchSuffix(
+                  controller: searchCont,
+                  lottieAnimationPath: lt_voice,
+                  onClear: () {
+                    _onSearchClear();
+                  },
+                  onSearchChanged: (value) {
+                    if (value.isEmpty) {
+                      _onSearchClear();
+                    } else {
+                      Timer(pageAnimationDuration, () {
+                        init(showLoader: true);
+                      });
+                    }
+                  },
+                  onSearchSubmitted: (value) {
+                    hideKeyboard(context);
+                    init(showLoader: true);
+                  },
+                ),
               ),
               onChanged: (newValue) {
                 if (newValue.isEmpty) {
@@ -166,8 +178,28 @@ class _PatientSearchScreenState extends State<PatientSearchScreen> {
                     return await 1.seconds.delay;
                   },
                   onNextPage: () async {
-                    if (!isLastPage) {
-                      await 1.seconds.delay;
+                    if (!isLastPage && !appStore.isLoading) {
+                      page++;
+                      appStore.setLoading(true);
+
+                      try {
+                        await getPatientListAPI(
+                          searchString: searchCont.text,
+                          patientList: patientList,
+                          doctorId: isDoctor() ? userStore.userId : appointmentAppStore.mDoctorSelected!.iD.validate(),
+                          clinicId: isReceptionist() ? userStore.userClinicId.toInt() : appointmentAppStore.mClinicSelected?.id.toInt(),
+                          page: page,
+                          lastPageCallback: (b) => isLastPage = b,
+                        ).then((value) {
+                          patientList.addAll(value);
+                        });
+
+                        setState(() {});
+                      } catch (e) {
+                        log(e.toString());
+                      } finally {
+                        appStore.setLoading(false);
+                      }
                     }
                   },
                   children: [
@@ -176,23 +208,31 @@ class _PatientSearchScreenState extends State<PatientSearchScreen> {
                         UserModel data = e;
                         return Container(
                           decoration: boxDecorationDefault(boxShadow: [], color: context.cardColor),
-                          child: RadioListTile<UserModel>(
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            tileColor: context.cardColor,
-                            secondary: ImageBorder(
-                              src: data.profileImage.validate(),
-                              height: 30,
-                              nameInitial: data.displayName.validate(value: 'P')[0],
-                            ),
-                            shape: RoundedRectangleBorder(borderRadius: radius()),
-                            value: data,
-                            title: Text(data.displayName.capitalizeEachWord().validate(), maxLines: 2, overflow: TextOverflow.ellipsis, style: primaryTextStyle()),
-                            onChanged: (v) {
-                              selectedData = v;
-                              setState(() {});
-                            },
-                            groupValue: selectedData,
-                          ),
+                          child: RadioGroup<UserModel>(
+                              groupValue: selectedData,
+                              onChanged: (value) {
+                                if (value != null) {
+                                  selectedData = value;
+                                  setState(() {});
+                                }
+                              },
+                              child: RadioListTile<UserModel>(
+                                value: data,
+                                tileColor: context.cardColor,
+                                controlAffinity: ListTileControlAffinity.trailing,
+                                shape: RoundedRectangleBorder(borderRadius: radius()),
+                                secondary: ImageBorder(
+                                  src: data.profileImage.validate(),
+                                  height: 30,
+                                  nameInitial: data.displayName.validate(value: 'P')[0],
+                                ),
+                                title: Text(
+                                  data.displayName.capitalizeEachWord().validate(),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: primaryTextStyle(),
+                                ),
+                              )),
                         ).paddingSymmetric(vertical: 8);
                       },
                     ).toList(),

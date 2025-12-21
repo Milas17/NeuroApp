@@ -1,1616 +1,2492 @@
 import 'package:kivicare_flutter/locale/base_language_key.dart';
 
 class LanguageFr extends BaseLanguage {
+  @override
+  String get appName => 'Kivicare';
 
-  String get appName => "NeuroCare Connect";
+  @override
+  String get lblDiscountValidationText => 'La remise ne peut pas être supérieure au total des frais de service';
 
-  String get lblDiscountValidationText => "Code promo invalide";
+  @override
+  String get lblRemoveCouponConfirmation => 'Voulez-vous supprimer le coupon ?';
 
-  String get lblRemoveCouponConfirmation => "Voulez-vous retirer ce coupon ?";
+  @override
+  String get lblNoCouponAvailable => 'Aucun coupon disponible';
 
-  String get lblNoCouponAvailable => "Aucun coupon disponible";
+  @override
+  String get lblVisitingDays => 'Journées de visite';
 
-  String get lblVisitingDays => "Jours de visite";
+  @override
+  String get lblCouponApplicable => "Le coupon est applicable ! 🚀 Vous êtes dans la zone d’épargne !";
 
-  String get lblCouponApplicable => "Coupon applicable";
+  @override
+  String get lblMinimumSpent => "Dépenses minimales";
 
-  String get lblMinimumSpent => "Dépense minimale";
+  @override
+  String get lblMaximumSpent => "Dépenses maximales";
 
-  String get lblMaximumSpent => "Dépense maximale";
-
+  @override
   String get lblExpiresOn => "Expire le";
 
-  String get lblMinimumSpentText => "Montant minimum requis";
+  @override
+  String get lblMinimumSpentText => 'Débloquez des économies avec une dépense minimale !';
 
-  String get lblMaximumSpentText => "Montant maximum autorisé";
+  @override
+  String get lblMaximumSpentText => "La valeur de votre panier dépasse la dépense maximale";
 
-  String get lblRemovedFromWishList => "Retiré de la liste de souhaits";
+  @override
+  String get lblRemovedFromWishList => "Supprimé de la liste de souhaits";
 
+  @override
   String get lblAddedToWishList => "Ajouté à la liste de souhaits";
 
+  @override
   String get lblWishList => "Liste de souhaits";
 
+  @override
   String get lblCart => "Panier";
 
-  String get lblEditAddressDetails => "Modifier l’adresse";
+  @override
+  String get lblEditAddressDetails => "Modifier les détails de l'adresse";
 
+  @override
   String get lblEmptyWishList => "Votre liste de souhaits est vide";
 
-  String get lblWishListSubTitle => "Ajoutez vos articles préférés ici";
+  @override
+  String get lblWishListSubTitle => "Découvrez vos incontournables";
 
-  String get lblWishListTitle => "Mes favoris";
+  @override
+  String get lblWishListTitle => "Vos trouvailles organisées";
 
-  String get lblSearchProducts => "Rechercher des produits";
+  @override
+  String get lblSearchProducts => "Recherche de produits";
 
+  @override
   String get lblContinue => "Continuer";
 
-  String get lblShippingCost => "Frais de livraison";
+  @override
+  String get lblShippingCost => "Frais de port";
 
-  String get lblNoPaymentMethods => "Aucun moyen de paiement disponible";
+  @override
+  String get lblNoPaymentMethods => "Aucune méthode de paiement";
 
-  String get lblAddOrderNotes => "Ajouter une note à la commande";
+  @override
+  String get lblAddOrderNotes => "Ajouter des notes de commande";
 
-  String get lblNotesAboutOrder => "Notes concernant votre commande";
+  @override
+  String get lblNotesAboutOrder => "Notes sur la commande";
 
-  String get lblOptional => "Optionnel";
+  @override
+  String get lblOptional => "facultatif";
 
-  String get lblCouponRemoved => "Coupon retiré";
+  @override
+  String get lblCouponRemoved => "Coupon supprimé";
 
-  String get lblBuyThisOnWordpressStore => "Acheter sur la boutique en ligne";
+  @override
+  String get lblBuyThisOnWordpressStore => "Achetez ceci sur WordPress Swag Store";
 
-  String get lblChooseFromCollection => "Choisir dans la collection";
+  @override
+  String get lblChooseFromCollection => "Choisissez parmi la collection";
 
+  @override
   String get lblViewCoupons => "Voir les coupons";
 
-  String get lblExperiencePractitioner => "Expérience du praticien";
+  @override
+  String get lblExperiencePractitioner => 'Praticien expérimenté de';
 
-  String get lblShopFromWordpress => "Boutique en ligne";
+  @override
+  String get lblShopFromWordpress => "Store Swag WordPress";
 
+  @override
   String get lblShop => "Boutique";
 
-  String get lblAddressSubTitle => "Détails de votre adresse";
+  @override
+  String get lblAddressSubTitle => "Destination de la livraison";
 
-  String get lblOrders => "Commandes";
+  @override
+  String get lblOrders => "Ordres";
 
-  String get lblOrdersSubtitle => "Historique de vos commandes";
+  @override
+  String get lblOrdersSubtitle => "Sous-titre de commande";
 
+  @override
   String get lblCoupons => "Coupons";
 
-  String get lblCouponsSubtitle => "Vos codes de réduction";
+  @override
+  String get lblCouponsSubtitle => "Vos remises exclusives";
 
-  String get lblAny => "Tous";
+  @override
+  String get lblAny => "N'importe lequel";
 
-  String get lblProcessing => "En cours de traitement";
+  @override
+  String get lblProcessing => "Traitement";
 
+  @override
   String get lblOnHold => "En attente";
 
+  @override
   String get lblRefunded => "Remboursé";
 
+  @override
   String get lblFailed => "Échoué";
 
-  String get lblTrash => "Corbeille";
+  @override
+  String get lblTrash => "Poubelle";
 
-  String get lblPermissionDenied => "Permission refusée";
+  @override
+  String get lblPermissionDenied => "Autorisation de localisation refusée";
 
-  String get lblSetAddress => "Définir une adresse";
+  @override
+  String get lblSetAddress => "Adresse définie";
 
-  String get lblPickAddress => "Choisir une adresse";
+  @override
+  String get lblPickAddress => "Choisir l'adresse";
 
-  String get lblSwipeRightNote => "Glissez vers la droite pour plus d’options";
+  @override
+  String get lblSwipeRightNote => "Remarque: glisser à droite pour supprimer";
 
+  @override
   String get lblCompany => "Entreprise";
 
-  String get lblSale => "Promotion";
+  @override
+  String get lblSale => "Vente";
 
-  String get lblEnterValidCouponCode => "Veuillez entrer un code valide";
+  @override
+  String get lblEnterValidCouponCode => "Entrez le code de coupon valide";
 
+  @override
   String get lblNoProductsFound => "Aucun produit trouvé";
 
-  String get lblCantFindProductYouSearchedFor => "Impossible de trouver le produit recherché";
+  @override
+  String get lblCantFindProductYouSearchedFor => 'Désolé! Impossible de trouver le produit que vous avez recherché';
 
+  @override
   String get lblAverageRating => "Note moyenne";
 
+  @override
   String get lblPopularity => "Popularité";
 
+  @override
   String get lblPrice => "Prix";
 
-  String get lblReasonForCancellation => "Motif d’annulation";
+  @override
+  String get lblReasonForCancellation => "Raison pour l'annulation";
 
-  String get lblCancelOrder => "Annuler la commande";
+  @override
+  String get lblCancelOrder => "annuler la commande";
 
-  String get lblCouponDiscount => "Réduction avec coupon";
+  @override
+  String get lblCouponDiscount => "Remise des coupons";
 
-  String get lblReviewHint => "Partagez votre avis ici";
+  @override
+  String get lblReviewHint => "Dites-nous vos pensées";
 
+  @override
   String get lblViewProducts => "Voir les produits";
 
-  String get lblPleaseSelectProduct => "Veuillez sélectionner un produit";
+  @override
+  String get lblPleaseSelectProduct => "Veuillez sélectionner le produit dans la liste de la collection";
 
-  String get lblPleaseAddQuantity => "Veuillez ajouter une quantité";
+  @override
+  String get lblPleaseAddQuantity => "Veuillez ajouter la quantité";
 
-  String get lblPleaseSelectCountry => "Veuillez choisir un pays";
+  @override
+  String get lblPleaseSelectCountry => "Veuillez d'abord sélectionner le pays";
 
+  @override
   String get lblCopiedToClipboard => "Copié dans le presse-papier";
 
-  String get lblCartUpdated => "Panier mis à jour";
+  @override
+  String get lblCartUpdated => "Panier mis à jour avec succès";
 
-  String get lblOrderDeleted => "Commande supprimée";
+  @override
+  String get lblOrderDeleted => "Commander avec succès";
 
-  String get lblEnterValidBllling => "Veuillez entrer une adresse de facturation valide";
+  @override
+  String get lblEnterValidBllling => "Veuillez saisir la facturation valide";
 
+  @override
   String get lblYourCarIsEmpty => "Votre panier est vide";
 
-  String get ago => "il y a";
+  @override
+  String get ago => 'depuis';
 
-  String get day => "jour";
+  @override
+  String get day => 'journée';
 
-  String get hour => "heure";
+  @override
+  String get hour => 'heure';
 
-  String get minute => "minute";
+  @override
+  String get minute => 'minute';
 
-  String get second => "seconde";
+  @override
+  String get second => 'deuxième';
 
-  String get justNow => "à l’instant";
+  @override
+  String get justNow => 'juste maintenant';
 
-  String get currentLocation => "Position actuelle";
+  @override
+  String get currentLocation => "Utiliser l'emplacement actuel";
 
-  String get chooseFromMap => "Choisir sur la carte";
+  @override
+  String get chooseFromMap => "Choisir par carte";
 
-  String get orderCancelledSuccessfully => "Commande annulée avec succès";
+  @override
+  String get orderCancelledSuccessfully => 'Commander annulé avec succès';
 
-  String get cancelOrderConfirmation => "Voulez-vous annuler cette commande ?";
+  @override
+  String get cancelOrderConfirmation => 'Êtes-vous sûr que vous souhaitez annuler cette commande?';
 
-  String get orderStatus => "Statut de la commande";
+  @override
+  String get orderStatus => 'Statut de la commande';
 
-  String get orderNumber => "Numéro de commande";
+  @override
+  String get orderNumber => 'Numéro de commande';
 
-  String get paymentMethod => "Mode de paiement";
+  @override
+  String get paymentMethod => 'Mode de paiement';
 
-  String get date => "Date";
+  @override
+  String get date => 'Date';
 
-  String get customerReview => "Avis client";
+  @override
+  String get customerReview => 'Avis client';
 
-  String get chooseAnOption => "Choisir une option";
+  @override
+  String get chooseAnOption => 'Choisis une option';
 
-  String get sku => "Référence (SKU)";
+  @override
+  String get sku => 'Sku';
 
-  String get category => "Catégorie";
+  @override
+  String get category => 'Catégorie';
 
-  String get reviewAddedSuccessfully => "Avis ajouté avec succès";
+  @override
+  String get reviewAddedSuccessfully => 'Revue ajouté avec succès';
 
-  String get pleaseAddReview => "Veuillez ajouter un avis";
+  @override
+  String get pleaseAddReview => 'Veuillez ajouter l\'examen';
 
-  String get pleaseAddRating => "Veuillez donner une note";
+  @override
+  String get pleaseAddRating => 'Veuillez ajouter la note';
 
-  String get reviews => "Avis";
+  @override
+  String get reviews => 'Commentaires';
 
-  String get editReview => "Modifier l’avis";
+  @override
+  String get editReview => 'Modifier l\'examen';
 
-  String get addAReview => "Ajouter un avis";
+  @override
+  String get addAReview => 'Ajouter un commentaire';
 
-  String get rating => "Note";
+  @override
+  String get rating => 'Votre note';
 
-  String get writeReview => "Écrire un avis";
+  @override
+  String get writeReview => 'Votre avis';
 
-  String get reviewUpdatedSuccessfully => "Avis mis à jour avec succès";
+  @override
+  String get reviewUpdatedSuccessfully => 'Examiner mis à jour avec succès';
 
-  String get reviewDeletedSuccessfully => "Avis supprimé avec succès";
+  @override
+  String get reviewDeletedSuccessfully => 'Revoir supprimé avec succès';
 
-  String get deleteReviewConfirmation => "Voulez-vous supprimer cet avis ?";
- 
-  String get yourCartIsCurrentlyEmpty => "Votre panier est vide";
+  @override
+  String get deleteReviewConfirmation => 'Êtes-vous sûr de vouloir supprimer cette critique?';
 
-  String get returnToShop => "Retourner à la boutique";
+  @override
+  String get yourCartIsCurrentlyEmpty => 'Votre carte est actuellement vide.';
 
-  String get cartUpdated => "Panier mis à jour";
+  @override
+  String get returnToShop => 'Retour à la boutique';
 
-  String get itemRemovedSuccessfully => "Article retiré avec succès";
+  @override
+  String get cartUpdated => 'Article de panier mis à jour avec succès';
 
-  String get removeFromCartConfirmation => "Voulez-vous retirer cet article du panier ?";
+  @override
+  String get itemRemovedSuccessfully => 'Article supprimé avec succès';
 
-  String get appliedCoupons => "Coupons appliqués";
+  @override
+  String get removeFromCartConfirmation => 'Êtes-vous sûr de vouloir supprimer cet article du panier?';
 
-  String get successfullyAddedToCart => "Ajouté au panier avec succès";
+  @override
+  String get appliedCoupons => 'Coupons appliqués';
 
-  String get addToCart => "Ajouter au panier";
+  @override
+  String get successfullyAddedToCart => 'Ajouté avec succès au panier';
 
+  @override
+  String get addToCart => 'Ajouter au panier';
+
+  @override
   String get clickToRefresh => "Cliquez pour actualiser";
 
-  String get state => "État";
+  @override
+  String get state => 'État';
 
-  String get pleaseEnterDescription => "Veuillez entrer une description";
+  @override
+  String get pleaseEnterDescription => 'Veuillez saisir la description';
 
-  String get replyTo => "Répondre à";
+  @override
+  String get replyTo => 'Répondre à';
 
-  String get enterValidCouponCode => "Veuillez entrer un code coupon valide";
+  String get removedFromWishlist => 'Supprimé de la liste de souhaits';
 
-  String get code => "Code";
+  @override
+  String get enterValidCouponCode => 'Entrez le code de coupon valide';
 
-  String get shippingAddress => "Adresse de livraison";
+  @override
+  String get code => 'Code';
 
-  String get billingAndShippingAddresses => "Adresse de facturation et de livraison";
+  @override
+  String get shippingAddress => 'Adresse de livraison';
 
-  String get copiedToClipboard => "Copié dans le presse-papier";
+  @override
+  String get billingAndShippingAddresses => 'Les adresses de facturation et d\'expédition sont les mêmes';
 
-  String get expiresOn => "Expire le";
+  @override
+  String get copiedToClipboard => 'Copié dans le presse-papier';
 
-  String get off => "Réduction";
+  @override
+  String get expiresOn => 'Expire le';
 
-  String get myWishlist => "Ma liste de souhaits";
+  @override
+  String get off => 'À L\'ARRÊT';
 
-  String get sortBy => "Trier par";
+  @override
+  String get myWishlist => 'Ma liste d\'envies';
 
-  String get selectCategory => "Choisir une catégorie";
+  @override
+  String get sortBy => 'Trier par';
 
-  String get shop => "Boutique";
+  @override
+  String get selectCategory => 'Choisir une catégorie';
 
-  String get outOfStock => "Rupture de stock";
+  @override
+  String get shop => 'Boutique';
 
-  String get goToCart => "Aller au panier";
+  @override
+  String get outOfStock => 'En rupture de stock';
 
-  String get relatedProducts => "Produits associés";
+  @override
+  String get goToCart => 'Aller au panier';
 
-  String get additionalInformation => "Informations supplémentaires";
+  @override
+  String get relatedProducts => 'Produits connexes';
 
-  String get discount => "Réduction";
+  @override
+  String get additionalInformation => 'Informations Complémentaires';
 
-  String get couponCode => "Code promo";
+  @override
+  String get discount => 'Remise';
 
-  String get applyCoupon => "Appliquer le coupon";
+  @override
+  String get couponCode => 'Code promo';
 
-  String get cartTotals => "Total du panier";
+  @override
+  String get applyCoupon => 'Appliquer Coupon';
 
-  String get proceedToCheckout => "Passer à la caisse";
+  @override
+  String get cartTotals => 'Totaux des chariots';
 
-  String get checkout => "Paiement";
+  @override
+  String get proceedToCheckout => 'Passer à la caisse';
 
-  String get products => "Produits";
+  @override
+  String get checkout => 'Vérifier';
 
-  String get qty => "Quantité";
+  @override
+  String get products => 'Des produits';
 
-  String get billingAddress => "Adresse de facturation";
+  @override
+  String get qty => 'Qté';
 
-  String get selectPaymentMethod => "Choisir un mode de paiement";
+  @override
+  String get billingAddress => 'Adresse de facturation';
 
-  String get paymentGatewaysNotFound => "Aucune passerelle de paiement trouvée";
+  @override
+  String get selectPaymentMethod => 'Sélectionnez le mode de paiement';
 
-  String get placeOrder => "Passer la commande";
+  @override
+  String get paymentGatewaysNotFound => 'Passerelles de paiement introuvables';
 
-  String get placeOrderText => "Confirmez votre commande";
+  @override
+  String get placeOrder => 'Passer la commande';
 
-  String get orderDetails => "Détails de la commande";
+  @override
+  String get placeOrderText => 'Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur tout ce site Web et à d\'autres fins décrites dans notre politique de confidentialité.';
 
-  String get lblOrderCancelledSuccessfully => "Commande annulée avec succès";
+  @override
+  String get orderDetails => 'détails de la commande';
 
-  String get lblCancelOrderMessageSix => "Votre commande a été annulée";
+  @override
+  String get lblOrderCancelledSuccessfully => 'Commander annulé avec succès';
 
-  String get lblCancelOrderMessageFive => "L’annulation a été effectuée";
+  @override
+  String get lblCancelOrderMessageSix => "Ordre passé par erreur";
 
-  String get lblCancelOrderMessageFour => "Cette commande ne sera pas livrée";
+  @override
+  String get lblCancelOrderMessageFive => "Mauvaise revue des amis / parents après avoir commandé le produit.";
 
-  String get lblCancelOrderMessageThree => "Commande annulée par le système";
+  @override
+  String get lblCancelOrderMessageFour => "Le prix du produit a chuté en raison des ventes / réductions et les clients souhaitent l'obtenir à un prix moindre";
 
-  String get lblCancelOrderMessageTwo => "La commande a été annulée";
+  @override
+  String get lblCancelOrderMessageThree => "Alternative moins chère disponible pour un prix moindre";
 
-  String get lblCancelOrderMessageOne => "Vous avez annulé cette commande";
+  @override
+  String get lblCancelOrderMessageTwo => "Le produit n'est plus nécessaire";
 
+  @override
+  String get lblCancelOrderMessageOne => "Le produit est livré à une mauvaise adresse";
+
+  @override
   String get lblBill => "Facture";
 
-  String get lblStripeTestCredential => "Identifiant Stripe (test)";
+  @override
+  String get lblStripeTestCredential => "Montant non valide";
 
-  String get lblTodayIsHoliday => "Aujourd’hui est un jour férié";
+  @override
+  String get lblTodayIsHoliday => "Aujourd'hui c'est tes vacances";
 
-  String get lblTotalTax => "Taxes totales";
+  @override
+  String get lblTotalTax => "Taxe total";
 
-  String get lblStart => "Démarrer";
+  @override
+  String get lblStart => "lancement";
 
+  @override
   String get lblJoin => "Rejoindre";
 
-  String get lblTotalDoctors => "Nombre total de médecins";
+  @override
+  String get lblTotalDoctors => "Total Médecins";
 
-  String get lblTax => "Taxe";
+  @override
+  String get lblTax => "Impôt";
 
-  String get lblTaxRate => "Taux de taxe";
+  @override
+  String get lblTaxRate => "Taux d'imposition";
 
-  String get lblSubTotal => "Sous-total";
+  @override
+  String get lblSubTotal => "Sous total";
 
-  String get lblThisServiceAlreadyExistInClinic => "Ce service existe déjà dans la clinique";
+  @override
+  String get lblThisServiceAlreadyExistInClinic => "Ce service est déjà disponible dans la clinique sélectionnée";
 
-  String get lblPleaseSelectPayment => "Veuillez choisir un mode de paiement";
+  @override
+  String get lblPleaseSelectPayment => "Veuillez sélectionner le mode de paiement";
 
-  String get lblChargesIsNegative => "Les frais ne peuvent pas être négatifs";
+  @override
+  String get lblChargesIsNegative => "Les charges doivent être supérieures ou égales à 0";
 
-  String get lblServiceCategoryIsRequired => "La catégorie du service est obligatoire";
+  @override
+  String get lblServiceCategoryIsRequired => "La catégorie de service est requise";
 
-  String get lblServiceNameIsRequired => "Le nom du service est obligatoire";
+  @override
+  String get lblServiceNameIsRequired => "Le nom du service est requis";
 
-  String get lblDurationIsRequired => "La durée est obligatoire";
+  @override
+  String get lblDurationIsRequired => "La durée est requise";
 
-  String get lblChargesIsRequired => "Les frais sont obligatoires";
+  @override
+  String get lblChargesIsRequired => "Les frais sont requis";
 
-  String get lblNoLatestAppointmentFound => "Aucun rendez-vous récent trouvé";
+  @override
+  String get lblNoLatestAppointmentFound => "Aucune dernière nomination trouvée";
 
-  String get lblNoPendingAppointmentFound => "Aucun rendez-vous en attente trouvé";
+  @override
+  String get lblNoPendingAppointmentFound => "Aucune nomination en attente trouvée";
 
-  String get lblNoCompletedAppointmentFound => "Aucun rendez-vous terminé trouvé";
+  @override
+  String get lblNoCompletedAppointmentFound => "Aucune nomination terminée trouvée";
 
-  String get lblNoCancelledAppointmentFound => "Aucun rendez-vous annulé trouvé";
+  @override
+  String get lblNoCancelledAppointmentFound => "Aucune nomination annulée trouvée";
 
-  String get clinicIdRequired => "L’ID de la clinique est requis";
+  @override
+  String get clinicIdRequired => "La clinique est requise";
 
+  @override
   String get roleIsRequired => "Le rôle est requis";
 
-  String get confirmPasswordIsRequired => "La confirmation du mot de passe est requise";
+  @override
+  String get confirmPasswordIsRequired => "Confirmer le mot de passe est requis";
 
-  String get passwordIsRequired => "Le mot de passe est requis";
+  @override
+  String get passwordIsRequired => "Mot de passe requis";
 
+  @override
   String get contactNumberIsRequired => "Le numéro de contact est requis";
 
-  String get lblSwipeLeftToEdit => "Glissez vers la gauche pour modifier";
+  @override
+  String get lblSwipeLeftToEdit => "Balayez vers la gauche pour modifier ou supprimer des détails";
 
-  String get lblNoEncounterFoundAtYourClinic => "Aucune consultation trouvée dans votre clinique";
+  @override
+  String get lblNoEncounterFoundAtYourClinic => "Aucune rencontre trouvée dans votre clinique";
 
-  String get lblAvailableAtClinics => "Disponible dans les cliniques";
+  @override
+  String get lblAvailableAtClinics => 'Disponible dans les cliniques';
 
+  @override
   String get lblClinicsSelected => "Cliniques sélectionnées";
 
+  @override
   String get lblClinicsAvailable => "Cliniques disponibles";
 
-  String get lblSelectRole => "Choisir un rôle";
+  @override
+  String get lblSelectRole => "Sélectionner un rôle";
 
-  String get lblPwdDoesNotMatch => "Les mots de passe ne correspondent pas";
+  @override
+  String get lblPwdDoesNotMatch => "Le mot de passe ne correspond pas";
 
-  String get lblSelectPaymentMethod => "Sélectionner un mode de paiement";
+  @override
+  String get lblSelectPaymentMethod => "Sélectionnez le mode de paiement";
 
+  @override
   String get lblAmount => "Montant";
 
-  String get lblPaymentId => "ID du paiement";
+  @override
+  String get lblPaymentId => "ID de paiement";
 
+  @override
   String get lblPaymentMethod => "Mode de paiement";
 
-  String get lblVPA => "VPA";
+  @override
+  String get lblVPA => "APV";
 
-  String get lblCardId => "ID de la carte";
+  @override
+  String get lblCardId => "Identifiant de carte";
 
-  String get lblTransactionId => "ID de la transaction";
+  @override
+  String get lblTransactionId => "Identifiant de transaction";
 
+  @override
   String get lblReportUpdatedSuccessfully => "Rapport mis à jour avec succès";
 
-  String get lblNoPrescriptionFound => "Aucune prescription trouvée";
+  @override
+  String get lblNoPrescriptionFound => "Aucune ordonnance ajoutée par le médecin";
 
-  String get lblBookAppointment => "Prendre rendez-vous";
+  @override
+  String get lblBookAppointment => "Rendez-vous";
 
-  String get lblNoNotesFound => "Aucune note trouvée";
+  @override
+  String get lblNoNotesFound => "Aucune note ajoutée par le médecin";
 
-  String get lblNoObservationsFound => "Aucune observation trouvée";
+  @override
+  String get lblNoObservationsFound => "Aucune observation ajoutée par le médecin";
 
-  String get lblNoProblemFound => "Aucun problème trouvé";
+  @override
+  String get lblNoProblemFound => "Aucun problème ajouté par le médecin";
 
-  String get lblDoYouWantToUpdateEncounter => "Voulez-vous mettre à jour cette consultation ?";
+  @override
+  String get lblDoYouWantToUpdateEncounter => "Voulez-vous mettre à jour la rencontre?";
 
-  String get lblDoYouWantToAddEncounter => "Voulez-vous ajouter une consultation ?";
+  @override
+  String get lblDoYouWantToAddEncounter => "Voulez-vous ajouter une rencontre?";
 
-  String get lblDoYouWantToUpdateYourDetails => "Voulez-vous mettre à jour vos informations ?";
+  @override
+  String get lblDoYouWantToUpdateYourDetails => "Voulez-vous mettre à jour vos coordonnées?";
 
+  @override
   String get lblNoBillsFound => "Aucune facture trouvée";
 
-  String get lblDoYouWantToDeleteProblem => "Voulez-vous supprimer ce problème ?";
+  @override
+  String get lblDoYouWantToDeleteProblem => "Voulez-vous supprimer le problème?";
 
-  String get lblDoYouWantToDeleteObservation => "Voulez-vous supprimer cette observation ?";
+  @override
+  String get lblDoYouWantToDeleteObservation => "Voulez-vous supprimer l'observation?";
 
-  String get lblDoYouWantToDeleteNote => "Voulez-vous supprimer cette note ?";
+  @override
+  String get lblDoYouWantToDeleteNote => "Voulez-vous supprimer la note?";
 
-  String get lblDoYouWantToDeleteDoctor => "Voulez-vous supprimer ce médecin ?";
+  @override
+  String get lblDoYouWantToDeleteDoctor => "Voulez-vous supprimer le médecin?";
 
-  String get lblLoginSuccessfullyAsAPatient => "Connexion réussie en tant que patient";
+  @override
+  String get lblLoginSuccessfullyAsAPatient => "Connecté avec succès en tant que patient";
 
-  String get lblLoginSuccessfullyAsAReceptionist => "Connexion réussie en tant que réceptionniste";
+  @override
+  String get lblLoginSuccessfullyAsAReceptionist => "Connecté avec succès en tant que réceptionniste";
 
-  String get lblLoginSuccessfullyAsADoctor => "Connexion réussie en tant que médecin";
+  @override
+  String get lblLoginSuccessfullyAsADoctor => "Connecté avec succès en tant que médecin";
 
-  String get lblSelectEncounterDate => "Sélectionnez la date de la consultation";
+  @override
+  String get lblSelectEncounterDate => "Sélectionner la date de rencontre";
 
+  @override
   String get lblSelectReportDate => "Sélectionnez la date du rapport";
 
+  @override
   String get lblSelectBirthDate => "Sélectionnez la date de naissance";
 
-  String get lblDoYouWantToLogout => "Voulez-vous vous déconnecter ?";
+  @override
+  String get lblDoYouWantToLogout => "Voulez-vous vous connecter?";
 
-  String get lblDoYouWantToDeleteAccountPermanently => "Voulez-vous supprimer définitivement votre compte ?";
+  @override
+  String get lblDoYouWantToDeleteAccountPermanently => "Voulez-vous supprimer le compte en permanence?";
 
-  String get lblDoYouWantToDeleteSession => "Voulez-vous supprimer cette session ?";
+  @override
+  String get lblDoYouWantToDeleteSession => "Voulez-vous supprimer la session?";
 
-  String get lblDoYouWantToAddSession => "Voulez-vous ajouter une session ?";
+  @override
+  String get lblDoYouWantToAddSession => "Voulez-vous ajouter la session?";
 
-  String get lblDoYouWantToUpdateSession => "Voulez-vous mettre à jour cette session ?";
+  @override
+  String get lblDoYouWantToUpdateSession => "Voulez-vous mettre à jour la session?";
 
-  String get lblDoYouWantToChangeThePassword => "Voulez-vous changer le mot de passe ?";
+  @override
+  String get lblDoYouWantToChangeThePassword => "Voulez-vous changer le mot de passe?";
 
-  String get lblDoYouWantToDeleteReview => "Voulez-vous supprimer cet avis ?";
+  @override
+  String get lblDoYouWantToDeleteReview => "Voulez-vous supprimer votre avis?";
 
-  String get lblDoYouWantToDeleteHolidayOf => "Voulez-vous supprimer ce jour de congé ?";
+  @override
+  String get lblDoYouWantToDeleteHolidayOf => "Voulez-vous supprimer des vacances?";
 
-  String get lblDoYouWantToDeleteService => "Voulez-vous supprimer ce service ?";
+  @override
+  String get lblDoYouWantToDeleteService => "Voulez-vous supprimer le service?";
 
-  String get lblDoYouWantToUpdateService => "Voulez-vous mettre à jour ce service ?";
+  @override
+  String get lblDoYouWantToUpdateService => "Voulez-vous mettre à jour le service?";
 
-  String get lblDoYouWantToAddNewService => "Voulez-vous ajouter un nouveau service ?";
+  @override
+  String get lblDoYouWantToAddNewService => "Voulez-vous ajouter un nouveau service?";
 
-  String get lblDoYouWantToUpdateAppointmentOf => "Voulez-vous mettre à jour le rendez-vous de… ?";
+  @override
+  String get lblDoYouWantToUpdateAppointmentOf => "Voulez-vous mettre à jour le rendez-vous?";
 
-  String get lblDoYouWantToAddNewAppointmentFor => "Voulez-vous ajouter un nouveau rendez-vous pour… ?";
+  @override
+  String get lblDoYouWantToAddNewAppointmentFor => "Voulez-vous ajouter un nouveau rendez-vous?";
 
-  String get lblDoYouWantToDeleteAppointmentOf => "Voulez-vous supprimer le rendez-vous de… ?";
+  @override
+  String get lblDoYouWantToDeleteAppointmentOf => "Voulez-vous supprimer le rendez-vous?";
 
-  String get lblDoYouWantToDeleteReport => "Voulez-vous supprimer ce rapport ?";
+  @override
+  String get lblDoYouWantToDeleteReport => "Voulez-vous supprimer le rapport?";
 
-  String get lblDoYouWantToUpdateReport => "Voulez-vous mettre à jour ce rapport ?";
+  @override
+  String get lblDoYouWantToUpdateReport => "Voulez-vous mettre à jour le rapport?";
 
-  String get lblDoYouWantToAddReport => "Voulez-vous ajouter un rapport ?";
+  @override
+  String get lblDoYouWantToAddReport => "Voulez-vous ajouter un nouveau rapport?";
 
-  String get lblDoYouWantToDeletePrescription => "Voulez-vous supprimer cette ordonnance ?";
+  @override
+  String get lblDoYouWantToDeletePrescription => "Voulez-vous supprimer la prescription ?";
 
-  String get lblDoYouWantToUpdatePrescription => "Voulez-vous mettre à jour cette ordonnance ?";
+  @override
+  String get lblDoYouWantToUpdatePrescription => "Voulez-vous mettre à jour la prescription ?";
 
-  String get lblDoYouWantToAddPrescription => "Voulez-vous ajouter une ordonnance ?";
+  @override
+  String get lblDoYouWantToAddPrescription => "Voulez-vous ajouter une nouvelle prescription ?";
 
-  String get lblDoYouWantToSwitchYourClinicTo => "Voulez-vous changer de clinique pour… ?";
+  @override
+  String get lblDoYouWantToSwitchYourClinicTo => "Voulez-vous changer votre clinique?";
 
-  String get lblDoYouWantToUpdatePatientDetails => "Voulez-vous mettre à jour les informations du patient ?";
+  @override
+  String get lblDoYouWantToUpdatePatientDetails => "Voulez-vous mettre à jour les détails du patient?";
 
-  String get lblDoYouWantToSaveNewPatientDetails => "Voulez-vous enregistrer les nouvelles informations du patient ?";
+  @override
+  String get lblDoYouWantToSaveNewPatientDetails => "Voulez-vous soumettre les détails de New Pateint?";
 
-  String get lblDoYouWantToUpdateDoctorDetails => "Voulez-vous mettre à jour les informations du médecin ?";
+  @override
+  String get lblDoYouWantToUpdateDoctorDetails => "Voulez-vous mettre à jour les détails du médecin?";
 
-  String get lblDoYouWantToSaveNewDoctorDetails => "Voulez-vous enregistrer les nouvelles informations du médecin ?";
+  @override
+  String get lblDoYouWantToSaveNewDoctorDetails => "Voulez-vous soumettre les détails du nouveau médecin?";
 
-  String get lblDoYouWantToDeleteEncounterDetailsOf => "Voulez-vous supprimer les détails de la consultation de… ?";
+  @override
+  String get lblDoYouWantToDeleteEncounterDetailsOf => "Voulez-vous supprimer les détails de la rencontre?";
 
-  String get lblDoYouWantToCheckoutAppointment => "Voulez-vous valider ce rendez-vous ?";
+  @override
+  String get lblDoYouWantToCheckoutAppointment => "Voulez-vous vérifier le rendez-vous?";
 
-  String get lblTermsConditionSubTitle => "Lisez attentivement nos conditions générales";
+  @override
+  String get lblMultipleSelectionIsNotAvailableForThisService => "L'option multi-sélection n'est pas disponible pour ce service";
 
+  @override
+  String get lblTermsConditionSubTitle => "Des informations importantes vous attendent: Jetez un œil à l'intérieur!";
+
+  @override
   String get lblYears => "Années";
 
-  String get lblDeleteAccountSubTitle => "Votre compte sera supprimé définitivement";
+  @override
+  String get lblDeleteAccountSubTitle => "Débrancher Healthline: Confirmer?";
 
-  String get lblThemeSubTitle => "Choisissez le thème qui vous convient";
+  @override
+  String get lblThemeSubTitle => "Colorez votre expérience.";
 
-  String get lblHelpAndSupportSubTitle => "Besoin d’aide ? Contactez-nous";
+  @override
+  String get lblHelpAndSupportSubTitle => "Ici pour vous, à chaque étape.";
 
-  String get lblRateUsSubTitle => "Donnez-nous une note et un avis";
+  @override
+  String get lblRateUsSubTitle => "Aimer? Faites le nous savoir!";
 
-  String get lblChangePasswordSubtitle => "Mettez à jour votre mot de passe";
+  @override
+  String get lblChangePasswordSubtitle => "Réorganiser votre accès. Restez en sécurité!";
 
+  @override
   String get lblNoArticlesFound => "Aucun article trouvé";
 
+  @override
   String get lblNoSessionAvailable => "Aucune session disponible";
 
-  String get lblTelemedServiceAvailable => "Service de téléconsultation disponible";
+  @override
+  String get lblTelemedServiceAvailable => "Service télévisé disponible";
 
-  String get lblAvailableDoctor => "Médecin disponible";
+  @override
+  String get lblAvailableDoctor => "Docteur disponible";
 
+  @override
   String get lblAvailableDoctors => "Médecins disponibles";
 
-  String get lblWeekDaysDataNotFound => "Aucune donnée de jours de la semaine trouvée";
+  @override
+  String get lblWeekDaysDataNotFound => "n'est pas disponible";
 
-  String get lblPleaseUploadReport => "Veuillez téléverser un rapport";
+  @override
+  String get lblPleaseUploadReport => "Veuillez télécharger le rapport";
 
-  String get lblIncorrectPwd => "Mot de passe incorrect";
+  @override
+  String get lblIncorrectPwd => "Le mot de passe que vous avez saisi est incorrect";
 
-  String get lblPleaseChoose => "Veuillez choisir";
+  @override
+  String get lblPleaseChoose => "Veuillez choisir le statut / le service de sélection multiple / télémétrie";
 
-  String get lblPatientList => "Liste des patients";
+  @override
+  String get lblPatientList => "Liste du patient";
 
-  String get lblBillSwipe => "Glissez pour voir la facture";
+  @override
+  String get lblBillSwipe => "Swipe à gauche pour modifier la quantité ou supprimer le sévice de la facture";
 
-  String get lblViewDoctorMsg => "Voir les informations du médecin";
+  @override
+  String get lblViewDoctorMsg => "Appuyez pour voir le profil du médecin";
 
+  @override
   String get lblMyAppointments => "Mes rendez-vous";
 
-  String get lblIsOnLeave => "Est en congé";
+  @override
+  String get lblIsOnLeave => "est en congé";
 
-  String get lblEditHolidayRestriction => "Modifier les congés";
+  @override
+  String get lblEditHolidayRestriction => "Vous ne pouvez pas le modifier maintenant";
 
-  String get lblNoAppointmentForThisDay => "Aucun rendez-vous pour ce jour";
+  @override
+  String get lblNoAppointmentForThisDay => "Il n'y a pas d'horaire de rendez-vous ce jour";
 
+  @override
   String get lblDoctorsSelected => "Médecins sélectionnés";
 
-  String get lblDoctorAvailable => "Médecin disponible";
+  @override
+  String get lblDoctorAvailable => "Docteur disponible";
 
+  @override
   String get lblPending => "En attente";
 
-  String get lblPleaseTryAgainAfterSometimes => "Veuillez réessayer plus tard";
+  @override
+  String get lblPleaseTryAgainAfterSometimes => "Veuillez réessayer après parf";
 
-  String get lblTapToSelect => "Appuyez pour sélectionner";
+  @override
+  String get lblTapToSelect => "Appuyez pour sélection";
 
-  String get lblDoctorTapMsg => "Appuyez pour voir les médecins";
+  @override
+  String get lblDoctorTapMsg => "Appuyez sur les noms ci-dessous Modifier le détail spécifique du service du médecin ";
 
-  String get lblCantFindClinicYouSearchedFor => "Impossible de trouver la clinique recherchée";
+  @override
+  String get lblCantFindClinicYouSearchedFor => "Impossible de trouver une clinique que vous avez recherchée";
 
-  String get lblCantFindDoctorYouSearchedFor => "Impossible de trouver le médecin recherché";
+  @override
+  String get lblCantFindDoctorYouSearchedFor => "Impossible de trouver le médecin que vous avez cherché";
 
-  String get lblCantFindPatientYouSearchedFor => "Impossible de trouver le patient recherché";
+  @override
+  String get lblCantFindPatientYouSearchedFor => "Impossible de trouver le patient que vous avez cherché";
 
-  String get lblCantFindServiceYouSearchedFor => "Impossible de trouver le service recherché";
+  @override
+  String get lblCantFindServiceYouSearchedFor => "Impossible de trouver le service que vous avez recherché";
 
-  String get lblNoActiveClinicAvailable => "Aucune clinique active disponible";
+  @override
+  String get lblNoActiveClinicAvailable => "Toutes les cliniques sont fermées";
 
-  String get lblRecheckPassword => "Veuillez revérifier le mot de passe";
+  @override
+  String get lblRecheckPassword => "Veuillez vérifier le nouveau mot de passe et confirmer";
 
+  @override
   String get lblDoctorsAvailable => "Médecins disponibles";
 
-  String get lblSessionTapMsg => "Appuyez pour voir les sessions";
+  @override
+  String get lblSessionTapMsg => "Appuyez sur la session pour modifier";
 
-  String get lblHolidayTapMsg => "Appuyez pour voir les congés";
+  @override
+  String get lblHolidayTapMsg => "Appuyez sur les vacances pour modifier";
 
+  @override
   String get lblYourRating => "Votre note";
 
-  String get lblSearchPatient => "Rechercher un patient";
+  @override
+  String get lblSearchPatient => 'Rechercher un patient';
 
-  String get lblStayNotified => "Restez informé";
+  @override
+  String get lblStayNotified => "Restez notifié";
 
-  String get lblNotificationSubTitle => "Recevez les notifications importantes";
+  @override
+  String get lblNotificationSubTitle => "Ne manquez jamais un battement, continuez les notifications!";
 
+  @override
   String get lblNotifications => "Notifications";
 
+  @override
   String get lblGoodAfternoon => "Bon après-midi";
 
-  String get lblGoodEvening => "Bonsoir";
+  @override
+  String get lblGoodEvening => "Bonne soirée";
 
+  @override
   String get lblGoodMorning => "Bonjour";
 
+  @override
   String get lblDr => "Dr";
 
+  @override
   String get lblNoActivePatientAvailable => "Aucun patient actif disponible";
 
+  @override
   String get lblNoActiveServicesAvailable => "Aucun service actif disponible";
 
+  @override
   String get lblNoActiveDoctorAvailable => "Aucun médecin actif disponible";
 
-  String get lblSearchServices => "Rechercher des services";
+  @override
+  String get lblSearchServices => "Services de recherche";
 
-  String get lblSearchDoctor => "Rechercher un médecin";
+  @override
+  String get lblSearchDoctor => "Médecin de recherche";
 
-  String get lblSearchClinic => "Rechercher une clinique";
+  @override
+  String get lblSearchClinic => "Clinique de recherche";
 
-  String get lblTapMsg => "Appuyez pour continuer";
+  @override
+  String get lblTapMsg => "Appuyez sur le service pour modifier";
 
-  String get lblWalkThroughTitle1 => "Bienvenue sur NeuroCare Connect";
+  @override
+  String get lblWalkThroughTitle1 => 'Accueillir';
 
-  String get lblWalkThroughTitle2 => "Prenez vos rendez-vous facilement";
+  @override
+  String get lblWalkThroughTitle2 => 'Trouver des médecins';
 
-  String get lblWalkThroughTitle3 => "Accédez à vos médecins en ligne";
+  @override
+  String get lblWalkThroughTitle3 => "Éviter le temps d'attente";
 
-  String get lblWalkThroughTitle4 => "Suivez vos consultations en toute simplicité";
+  @override
+  String get lblWalkThroughTitle4 => 'Parler avec les médecins';
 
-  String get lblWalkThroughSubTitle1 => "Une plateforme simple et rapide pour vos soins";
+  @override
+  String get lblWalkThroughSubTitle1 =>
+      "«L'application Kivicare est la solution de dossiers de santé électronique (DSE) prêts à l'emploi et ultimes pour les médecins, les professionnels de la santé, la gestion des cliniques et des patients. Quatre modèles uniques pour les médecins, les administrateurs de la clinique, la réceptionniste et les patients.";
 
-  String get lblWalkThroughSubTitle2 => "Trouvez un médecin et réservez en quelques clics";
+  @override
+  String get lblWalkThroughSubTitle2 =>
+      'Créez votre application mobile ingénieuse en répertoriant les médecins. Vous pouvez trouver un médecin le plus proche de vous avec ce modèle de médecins incroyable. Ajouter et gérer la liste des médecins avec Kivicare.';
 
-  String get lblWalkThroughSubTitle3 => "Profitez de la téléconsultation où que vous soyez";
+  @override
+  String get lblWalkThroughSubTitle3 => "Gérer les rendez-vous à la clinique ou à l'hôpital, planifiez les patients à l'avance avec l'interface intelligente de Kivicare. Évitez les retards ou l'attente plus longue dans les files d'attente";
 
-  String get lblWalkThroughSubTitle4 => "Vos rendez-vous et rapports au même endroit";
+  @override
+  String get lblWalkThroughSubTitle4 => 'Les patients peuvent avoir une consultation directe avec le médecin rendant le premier diagnostic précis et opportun. La notification SMS de Kivicare envoie des alertes sur le numéro enregistré du patient.';
 
-  String get lblWalkThroughSkipButton => "Ignorer";
+  @override
+  String get lblWalkThroughSkipButton => 'Sauter';
 
-  String get lblWalkThroughNextButton => "Suivant";
+  @override
+  String get lblWalkThroughNextButton => 'Suivant';
 
-  String get lblWalkThroughGetStartedButton => "Commencer";
- 
-  String get lblSignIn => "Se connecter";
+  @override
+  String get lblWalkThroughGetStartedButton => 'Commencer';
 
-  String get lblLogOut => "Se déconnecter";
+  @override
+  String get lblSignIn => "S'identifier";
 
-  String get lblEmail => "Adresse e-mail";
+  @override
+  String get lblLogOut => 'Se déconnecter';
 
-  String get lblPassword => "Mot de passe";
+  @override
+  String get lblEmail => 'E-mail';
 
-  String get lblOldPassword => "Ancien mot de passe";
+  @override
+  String get lblPassword => 'Mot de passe';
 
-  String get lblNewPassword => "Nouveau mot de passe";
+  @override
+  String get lblOldPassword => 'ancien mot de passe';
 
-  String get lblConfirmPassword => "Confirmer le mot de passe";
+  @override
+  String get lblNewPassword => 'nouveau mot de passe';
 
-  String get lblForgotPassword => "Mot de passe oublié ?";
+  @override
+  String get lblConfirmPassword => 'Confirmez le mot de passe';
 
-  String get lblSignUp => "Créer un compte";
+  @override
+  String get lblForgotPassword => 'Mot de passe oublié?';
 
-  String get lblBasicDetails => "Informations de base";
+  @override
+  String get lblSignUp => "S'inscrire";
 
-  String get lblOtherDetails => "Autres informations";
+  @override
+  String get lblBasicDetails => 'Détails de base';
 
-  String get lblSubmit => "Valider";
+  @override
+  String get lblOtherDetails => 'Autres détails';
 
-  String get lblFirstName => "Prénom";
+  @override
+  String get lblSubmit => 'Soumettre';
 
-  String get lblLastName => "Nom";
+  @override
+  String get lblFirstName => 'Prénom';
 
-  String get lblContactNumber => "Numéro de téléphone";
+  @override
+  String get lblLastName => 'Nom de famille';
 
-  String get lblDOB => "Date de naissance";
+  @override
+  String get lblContactNumber => 'Numéro de contact';
 
-  String get lblSelectBloodGroup => "Sélectionnez le groupe sanguin";
+  @override
+  String get lblDOB => 'Nœud';
 
-  String get lblAddress => "Adresse";
+  @override
+  String get lblSelectBloodGroup => 'Sélectionner le groupe sanguin';
 
-  String get lblCity => "Ville";
+  @override
+  String get lblAddress => 'Adresse';
 
-  String get lblCountry => "Pays";
+  @override
+  String get lblCity => 'Ville';
 
-  String get lblPostalCode => "Code postal";
+  @override
+  String get lblCountry => 'Pays';
 
-  String get lblSettings => "Paramètres";
+  @override
+  String get lblPostalCode => 'Code Postal';
 
-  String get lblChangePassword => "Changer le mot de passe";
+  @override
+  String get lblSettings => 'Paramètres';
 
-  String get lblTermsAndCondition => "Conditions générales";
+  @override
+  String get lblChangePassword => 'Changer le mot de passe';
 
-  String get lblLanguage => "Langue";
+  @override
+  String get lblTermsAndCondition => 'termes et conditions';
 
-  String get lblAboutUs => "À propos";
+  @override
+  String get lblLanguage => 'Langue';
 
-  String get lblRateUs => "Évaluez-nous";
+  @override
+  String get lblAboutUs => 'À propos de nous';
 
-  String get lblSave => "Enregistrer";
+  @override
+  String get lblRateUs => 'Évaluez nous';
 
-  String get lblDegree => "Diplôme";
+  @override
+  String get lblSave => 'Sauvegarder';
 
-  String get lblUniversity => "Université";
+  @override
+  String get lblDegree => 'Degré';
 
-  String get lblYear => "Année";
+  @override
+  String get lblUniversity => 'Université';
 
-  String get lblSearch => "Rechercher";
+  @override
+  String get lblYear => 'Année';
 
-  String get lblCancel => "Annuler";
+  @override
+  String get lblSearch => 'Recherche';
 
-  String get lblDoctor => "Médecin";
+  @override
+  String get lblCancel => 'Annuler';
 
-  String get lblDescription => "Description";
+  @override
+  String get lblDoctor => 'Médecin';
 
-  String get lblPrescription => "Ordonnance";
+  @override
+  String get lblDescription => 'Description';
 
-  String get lblFrequency => "Fréquence";
+  @override
+  String get lblPrescription => 'Ordonnance';
 
-  String get lblDuration => "Durée";
+  @override
+  String get lblFrequency => 'Fréquence';
 
-  String get lblInstruction => "Instruction";
+  @override
+  String get lblDuration => 'Durée';
 
-  String get lblSignInToContinue => "Connectez-vous pour continuer";
+  @override
+  String get lblInstruction => 'Instruction';
 
-  String get lblNewMember => "Nouveau membre ?";
+  @override
+  String get lblSignInToContinue => 'Bienvenue, connectez-vous à votre compte';
 
-  String get lblDone => "Terminé";
+  @override
+  String get lblNewMember => "Vous n'avez pas de compte?";
 
-  String get lblSignUpAsPatient => "Créer un compte patient";
+  @override
+  String get lblDone => 'Fait';
 
-  String get lblAlreadyAMember => "Déjà inscrit ?";
+  @override
+  String get lblSignUpAsPatient => 'Enregistrez votre compte KiviCare';
 
-  String get lblLogin => "Connexion";
+  @override
+  String get lblAlreadyAMember => 'Déjà membre?';
 
-  String get lblDashboard => "Tableau de bord";
+  @override
+  String get lblLogin => 'Connexion';
 
-  String get lblAppointments => "Rendez-vous";
+  @override
+  String get lblDashboard => 'Tableau de bord';
 
-  String get lblPatients => "Patients";
+  @override
+  String get lblAppointments => 'Nominations';
 
-  String get lblTotalPatient => "Nombre total de patients";
+  @override
+  String get lblPatients => 'Les patients';
 
-  String get lblTotalVisitedPatients => "Patients consultés";
+  @override
+  String get lblTotalPatient => 'Patient total';
 
-  String get lblTotalAppointment => "Nombre total de rendez-vous";
+  @override
+  String get lblTotalVisitedPatients => 'Patients visités totaux';
 
-  String get lblTotalVisitedAppointment => "Rendez-vous effectués";
+  @override
+  String get lblTotalAppointment => 'Nomination totale';
 
-  String get lblTodayAppointments => "Rendez-vous du jour";
+  @override
+  String get lblTotalVisitedAppointment => 'Rendez-vous total visité';
 
-  String get lblTotalTodayAppointments => "Total des rendez-vous d’aujourd’hui";
+  @override
+  String get lblTodayAppointments => "Aujourd'hui nommer.";
 
-  String get lblWeeklyAppointments => "Rendez-vous hebdomadaires";
+  @override
+  String get lblTotalTodayAppointments => "Total aujourd'hui rendez-vous";
 
-  String get lblTodaySAppointments => "Rendez-vous aujourd’hui";
+  @override
+  String get lblWeeklyAppointments => 'Rendez-vous hebdomadaires';
 
-  String get lblAppointmentDeleted => "Rendez-vous supprimé";
+  @override
+  String get lblTodaySAppointments => 'Vos rendez-vous';
 
-  String get lblDate => "Date";
+  @override
+  String get lblAppointmentDeleted => 'Rendez-vous supprimé';
 
-  String get lblConfirmAppointment => "Confirmer le rendez-vous";
+  @override
+  String get lblDate => 'Date';
 
-  String get lblSelectDateTime => "Sélectionnez la date et l’heure";
+  @override
+  String get lblConfirmAppointment => 'Confirmer le rendez-vous';
 
-  String get lblSelectServices => "Sélectionnez les services";
+  @override
+  String get lblSelectDateTime => "Sélectionnez la date et l'heure";
 
-  String get lblBook => "Réserver";
+  @override
+  String get lblSelectServices => 'Sélectionner des services';
 
-  String get lblNoAppointmentForToday => "Aucun rendez-vous pour aujourd’hui";
+  @override
+  String get lblBook => 'Livre';
 
-  String get lblCheckIn => "Enregistrer l’arrivée";
+  @override
+  String get lblNoAppointmentForToday => "Pas de nomination pour aujourd'hui";
 
-  String get lblCheckOut => "Enregistrer le départ";
+  @override
+  String get lblCheckIn => 'Enregistrement';
 
-  String get lblAreDeleteAppointment => "Voulez-vous supprimer ce rendez-vous ?";
+  @override
+  String get lblCheckOut => 'Vérifier';
 
-  String get lblYouCannotStart => "Vous ne pouvez pas commencer ce rendez-vous";
+  @override
+  String get lblAreDeleteAppointment => 'Êtes-vous sûr de vouloir supprimer le rendez-vous?';
 
-  String get lblPrescriptionAdded => "Ordonnance ajoutée";
+  @override
+  String get lblYouCannotStart => 'Vous ne pouvez pas commencer';
 
-  String get lblUpdatedSuccessfully => "Mise à jour réussie";
+  @override
+  String get lblPrescriptionAdded => 'Prescription ajoutée';
 
-  String get lblPrescriptionDeleted => "Ordonnance supprimée";
+  @override
+  String get lblUpdatedSuccessfully => 'Mis à jour avec succés';
 
-  String get lblAddPrescription => "Ajouter une ordonnance";
+  @override
+  String get lblPrescriptionDeleted => 'Prescription supprimée';
 
-  String get lblName => "Nom";
+  @override
+  String get lblAddPrescription => 'Ajouter la prescription';
 
-  String get lblPrescriptionDurationIsRequired => "La durée de l’ordonnance est obligatoire";
+  @override
+  String get lblName => 'Nom';
 
-  String get lblDurationInDays => "Durée (en jours)";
+  @override
+  String get lblPrescriptionDurationIsRequired => 'La durée de prescription est requise';
 
-  String get lblAddNewPrescription => "Ajouter une nouvelle ordonnance";
+  @override
+  String get lblDurationInDays => 'Durée (en jours)';
 
-  String get lblEditPrescriptionDetail => "Modifier les détails de l’ordonnance";
+  @override
+  String get lblAddNewPrescription => 'Ajouter une nouvelle prescription';
 
-  String get lblDays => "Jours";
+  @override
+  String get lblEditPrescriptionDetail => 'Modifier le détail de prescription';
 
-  String get lblAppointmentIsConfirmed => "Le rendez-vous est confirmé";
+  @override
+  String get lblDays => 'jours';
 
-  String get lblThanksForBooking => "Merci pour votre réservation";
+  @override
+  String get lblAppointmentIsConfirmed => 'Votre rendez-vous est confirmé';
 
-  String get lblAppointmentConfirmation => "Confirmation du rendez-vous";
+  @override
+  String get lblThanksForBooking => 'Merci pour la réservation';
 
-  String get lblNoPatientFound => "Aucun patient trouvé";
+  @override
+  String get lblAppointmentConfirmation => 'Nous vous avons confirmé pour votre rendez-vous';
 
-  String get lblDeleteRecordConfirmation => "Voulez-vous supprimer cet enregistrement ?";
+  @override
+  String get lblNoPatientFound => 'Aucun patient trouvé';
 
-  String get lblAllRecordsFor => "Tous les dossiers pour";
+  @override
+  String get lblDeleteRecordConfirmation => 'Êtes-vous sûr de vouloir supprimer tous les enregistrements de';
 
-  String get lblAreDeleted => "ont été supprimés";
+  @override
+  String get lblAllRecordsFor => 'Tous les enregistrements pour';
 
-  String get lblEncounters => "Consultations";
+  @override
+  String get lblAreDeleted => 'sont supprimés';
 
-  String get lblDelete => "Supprimer";
+  @override
+  String get lblEncounters => 'Rencontres';
 
-  String get lblMale => "Homme";
+  @override
+  String get lblDelete => 'Supprimer';
 
-  String get lblFemale => "Femme";
+  @override
+  String get lblMale => 'Homme';
 
-  String get lblOther => "Autre";
+  @override
+  String get lblFemale => 'Femme';
 
-  String get lblMinimumAgeRequired => "Âge minimum requis";
+  @override
+  String get lblOther => 'Autre';
 
-  String get lblCurrentAgeIs => "Âge actuel :";
+  @override
+  String get lblMinimumAgeRequired => "L'âge minimum requis est de 18.";
 
-  String get lblGender1 => "Sexe";
+  @override
+  String get lblCurrentAgeIs => 'Votre âge actuel est';
 
-  String get lblSpecialization => "Spécialisation";
+  @override
+  String get lblGender1 => 'Genre';
 
-  String get lblExperience => "Expérience";
+  @override
+  String get lblSpecialization => 'Spécialisation';
 
-  String get lblAPIKeyCannotBeEmpty => "La clé API ne peut pas être vide";
+  @override
+  String get lblExperience => 'Expérience';
 
-  String get lblAPIKey => "Clé API";
+  @override
+  String get lblAPIKeyCannotBeEmpty => "La clé de l'API ne peut pas être vide";
 
-  String get lblAPISecret => "Secret API";
+  @override
+  String get lblAPIKey => 'clé API';
 
-  String get lblAPISecretCannotBeEmpty => "Le secret API ne peut pas être vide";
+  @override
+  String get lblAPISecret => 'Secret API';
 
-  String get lblSignUpOrSignIn => "Inscrivez-vous ou connectez-vous";
+  @override
+  String get lblAPISecretCannotBeEmpty => 'API Secret ne peut pas être vide';
 
-  String get lbl1 => "1";
-  
-  String get lbl2 => "2";
+  @override
+  String get lblSignUpOrSignIn => 'Inscrivez-vous ou connectez-vous ici:';
 
-  String get lblClickOnDevelopButton => "Cliquez sur le bouton Développer";
+  @override
+  String get lbl1 => '1';
 
-  String get lblCreateApp => "Créer une application";
+  @override
+  String get lbl2 => '2';
 
-  String get lb13 => "3";
+  @override
+  String get lblClickOnDevelopButton => "Cliquez sur le bouton Développer sur la barre de navigation à droite dans la barre de navigation et cliquez sur l'application Build";
 
-  String get lblChooseAppTypeToJWT => "Choisissez le type d’application (JWT)";
+  @override
+  String get lblCreateApp => 'Créer une application';
 
-  String get lbl4 => "4";
+  @override
+  String get lb13 => '3';
 
-  String get lblMandatoryMessage => "Ce champ est obligatoire";
+  @override
+  String get lblChooseAppTypeToJWT => "Choisissez votre type d'application à JWT";
 
-  String get lbl5 => "5";
+  @override
+  String get lbl4 => '4';
 
-  String get lblCopyAndPasteAPIKey => "Copiez et collez la clé API";
+  @override
+  String get lblMandatoryMessage => "Remplissez les informations obligatoires et dans la balise des informations d'identification de l'application, vous pouvez voir la clé API et le secret de l'API.";
 
-  String get lblEncounterClosed => "Consultation clôturée";
+  @override
+  String get lbl5 => '5';
 
-  String get lblChangedTo => "Changé en";
+  @override
+  String get lblCopyAndPasteAPIKey => "Copiez et collez la clé API et le secret de l'API ici et cliquez sur le bouton Enregistrer et vous êtes prêt à partir.";
 
-  String get lblEncounterWillBeClosed => "La consultation sera clôturée";
+  @override
+  String get lblEncounterClosed => 'Rencontre fermée';
 
-  String get lblEncounterDate => "Date de la consultation";
+  @override
+  String get lblChangedTo => 'Changé en';
 
-  String get lblClinicName => "Nom de la clinique";
+  @override
+  String get lblEncounterWillBeClosed => 'La rencontre sera fermée';
 
-  String get lblDoctorName => "Nom du médecin";
+  @override
+  String get lblEncounterDate => 'Date de rencontre';
 
-  String get lblDesc => "Description";
+  @override
+  String get lblClinicName => 'Nom de la clinique';
 
-  String get lblAddNewQualification => "Ajouter une nouvelle qualification";
+  @override
+  String get lblDoctorName => 'Nom du médecin';
 
-  String get lblAddBillItem => "Ajouter un élément de facture";
+  @override
+  String get lblDesc => 'Dessiner';
 
-  String get lblServiceIsRequired => "Le service est obligatoire";
+  @override
+  String get lblAddNewQualification => 'Ajouter une nouvelle qualification';
 
-  String get lblOne => "1";
+  @override
+  String get lblAddBillItem => 'Ajouter un item';
 
-  String get lblQuantity => "Quantité";
+  @override
+  String get lblServiceIsRequired => 'Le service est requis';
 
-  String get lblTotal => "Total";
+  @override
+  String get lblOne => '1';
 
-  String get lblEncounterUpdated => "Consultation mise à jour";
+  @override
+  String get lblQuantity => 'Quantité';
 
-  String get lblAddNewEncounter => "Ajouter une nouvelle consultation";
+  @override
+  String get lblTotal => 'Total';
 
-  String get lblEditEncounterDetail => "Modifier les détails de la consultation";
+  @override
+  String get lblEncounterUpdated => 'Rencontre mise à jour';
 
-  String get lblHolidayOf => "Jour férié de";
+  @override
+  String get lblAddNewEncounter => 'Ajouter une nouvelle rencontre';
 
-  String get lblModuleIsRequired => "Le module est requis";
+  @override
+  String get lblEditEncounterDetail => 'Modifier les détails de la rencontre';
 
-  String get lblScheduleDate => "Date prévue";
+  @override
+  String get lblHolidayOf => 'Fêtes';
 
-  String get lblLeaveFor => "Congé pour";
+  @override
+  String get lblModuleIsRequired => 'Le module est requis';
 
-  String get lblAddHoliday => "Ajouter un jour férié";
+  @override
+  String get lblScheduleDate => 'Date de planification';
 
-  String get lblEditHolidays => "Modifier les jours fériés";
+  @override
+  String get lblLeaveFor => 'Partir pour';
 
-  String get lblNewPatientAddedSuccessfully => "Nouveau patient ajouté avec succès";
+  @override
+  String get lblAddHoliday => 'Ajouter les vacances';
 
-  String get lblPatientDetailUpdatedSuccessfully => "Détails du patient mis à jour avec succès";
+  @override
+  String get lblEditHolidays => 'Modifier les vacances';
 
-  String get lblBasicInformation => "Informations de base";
+  @override
+  String get lblNewPatientAddedSuccessfully => 'Un nouveau patient a ajouté avec succès';
 
-  String get lblFirstNameIsRequired => "Le prénom est requis";
+  @override
+  String get lblPatientDetailUpdatedSuccessfully => 'Détail du patient mis à jour avec succès';
 
-  String get lblLastNameIsRequired => "Le nom est requis";
+  @override
+  String get lblBasicInformation => 'Informations de base';
 
-  String get lblEmailIsRequired => "L’e-mail est requis";
+  @override
+  String get lblFirstNameIsRequired => 'Le prénom est requis';
 
-  String get lblAddNewPatient => "Ajouter un nouveau patient";
+  @override
+  String get lblLastNameIsRequired => 'Le nom de famille est requis';
 
-  String get lblEditPatientDetail => "Modifier les détails du patient";
+  @override
+  String get lblEmailIsRequired => 'Un e-mail est requis';
 
-  String get lblCategory => "Catégorie";
+  @override
+  String get lblAddNewPatient => 'Ajouter un nouveau patient';
 
-  String get lblCharges => "Honoraires";
+  @override
+  String get lblEditPatientDetail => 'Modifier les détails du patient';
 
-  String get lblSelectDoctor => "Sélectionnez un médecin";
+  @override
+  String get lblCategory => 'Catégorie';
 
-  String get lblAddService => "Ajouter un service";
+  @override
+  String get lblCharges => 'Charge';
 
-  String get lblEditService => "Modifier le service";
+  @override
+  String get lblSelectDoctor => 'Sélectionner le médecin';
 
-  String get lblSelectWeekdays => "Sélectionnez les jours de la semaine";
+  @override
+  String get lblAddService => 'Ajouter un nouveau service';
 
-  String get lblSessionAddedSuccessfully => "Session ajoutée avec succès";
+  @override
+  String get lblEditService => 'Modifier le service';
 
-  String get lblSessionUpdatedSuccessfully => "Session mise à jour avec succès";
+  @override
+  String get lblSelectWeekdays => 'Sélectionnez les jours de semaine';
 
-  String get lblSessionDeleted => "Session supprimée";
+  @override
+  String get lblSessionAddedSuccessfully => 'Session ajoutée avec succès';
 
-  String get lblPleaseSelectTime => "Veuillez sélectionner une heure";
+  @override
+  String get lblSessionUpdatedSuccessfully => 'Session mise à jour avec succès';
 
-  String get lblStartAndEndTimeNotSame => "L’heure de début et de fin ne peut pas être identique";
+  @override
+  String get lblSessionDeleted => 'Session supprimée';
 
-  String get lblTimeNotBeforeMorningStartTime => "L’heure ne peut pas précéder l’horaire du matin";
+  @override
+  String get lblPleaseSelectTime => "Veuillez sélectionner l'heure";
 
-  String get lblTimeNotBeforeEveningStartTime => "L’heure ne peut pas précéder l’horaire du soir";
+  @override
+  String get lblStartAndEndTimeNotSame => 'Le début et la fin ne peuvent pas être les mêmes';
 
-  String get lblTimeShouldBeInMultiplyOf5 => "L’horaire doit être un multiple de 5 minutes";
+  @override
+  String get lblTimeNotBeforeMorningStartTime => "Le temps ne peut pas être avant l'heure du matin";
 
-  String get lblTimeSlotInMinute => "Créneau (en minutes)";
+  @override
+  String get lblTimeNotBeforeEveningStartTime => "Le temps ne peut pas être avant l'heure de début du soir";
 
-  String get lblTimeSlotRequired => "Le créneau horaire est requis";
+  @override
+  String get lblTimeShouldBeInMultiplyOf5 => 'Le temps devrait être en multiplié de 5';
 
-  String get lblWeekDays => "Jours de la semaine";
+  @override
+  String get lblTimeSlotInMinute => 'Place horaire (en minute)';
 
-  String get lblMorningSession => "Session du matin";
+  @override
+  String get lblTimeSlotRequired => 'Place horaire requis';
 
-  String get lblStartTime => "Heure de début";
+  @override
+  String get lblWeekDays => 'Jours de la semaine';
 
-  String get lblEndTime => "Heure de fin";
+  @override
+  String get lblMorningSession => 'Session matinale';
 
-  String get lblSelectStartTimeFirst => "Sélectionnez d’abord l’heure de début";
+  @override
+  String get lblStartTime => 'Heure de début';
 
-  String get lblEveningSession => "Session du soir";
+  @override
+  String get lblEndTime => 'Heure de fin';
 
-  String get lblAddSession => "Ajouter une session";
+  @override
+  String get lblSelectStartTimeFirst => "Sélectionnez d'abord l'heure de début";
 
-  String get lblEditSession => "Modifier la session";
+  @override
+  String get lblEveningSession => 'Séance de soirée';
 
-  String get lblInvoiceDetail => "Détails de la facture";
+  @override
+  String get lblAddSession => 'Ajouter une session';
 
-  String get lblClinicDetails => "Détails de la clinique";
+  @override
+  String get lblEditSession => 'Modifier la session';
 
-  String get lblPatientDetails => "Détails du patient";
+  @override
+  String get lblInvoiceDetail => 'Détail de facture';
 
-  String get lblServices => "Services";
+  @override
+  String get lblClinicDetails => 'Détails de la clinique';
 
-  String get lblDiscount => "Réduction";
+  @override
+  String get lblPatientDetails => 'Détails du patient';
 
-  String get lblAmountDue => "Montant dû";
+  @override
+  String get lblServices => 'Prestations de service';
 
-  String get lblInvoiceId => "ID de la facture";
+  @override
+  String get lblDiscount => 'Rabais';
 
-  String get lblCreatedAt => "Créé le";
+  @override
+  String get lblAmountDue => 'Montant dû';
 
-  String get lblPaymentStatus => "Statut du paiement";
+  @override
+  String get lblInvoiceId => 'ID de facture';
 
-  String get lblPatientName => "Nom du patient";
+  @override
+  String get lblCreatedAt => 'Créé à';
 
-  String get lblGender2 => "Genre";
+  @override
+  String get lblPaymentStatus => 'Statut de paiement';
 
-  String get lblSRNo => "N°";
+  @override
+  String get lblPatientName => 'Nom du patient';
 
-  String get lblItemName => "Nom de l’élément";
+  @override
+  String get lblGender2 => 'Genre';
 
-  String get lblPRICE => "PRIX";
+  @override
+  String get lblSRNo => 'SR NON';
 
-  String get lblQUANTITY => "QUANTITÉ";
+  @override
+  String get lblItemName => "NOM DE L'ARTICLE";
 
-  String get lblTOTAL => "TOTAL";
+  @override
+  String get lblPRICE => 'PRIX';
 
-  String get lblServicesSelected => "Services sélectionnés";
+  @override
+  String get lblQUANTITY => 'QUANTITÉ';
 
-  String get lblPatientNameIsRequired => "Le nom du patient est requis";
+  @override
+  String get lblTOTAL => 'TOTAL';
 
-  String get lblDoctorSessions => "Sessions du médecin";
+  @override
+  String get lblServicesSelected => 'Services sélectionnés';
 
-  String get lblEditProfile => "Modifier le profil";
+  @override
+  String get lblPatientNameIsRequired => 'Le nom du patient est requis';
 
-  String get lblQualification => "Qualification";
+  @override
+  String get lblDoctorSessions => 'Toute session';
 
-  String get lblEncounterDashboard => "Tableau des consultations";
+  @override
+  String get lblEditProfile => 'Editer le profil';
 
-  String get lblEncounterDetails => "Détails de la consultation";
+  @override
+  String get lblQualification => 'Qualifications';
 
-  String get lblProblems => "Problèmes";
+  @override
+  String get lblEncounterDashboard => 'Tableau de bord de rencontre';
 
-  String get lblObservation => "Observation";
+  @override
+  String get lblEncounterDetails => 'Rencontrez les détails';
 
-  String get lblNotes => "Notes";
+  @override
+  String get lblProblems => 'Problème';
 
-  String get lblBillAddedSuccessfully => "Facture ajoutée avec succès";
+  @override
+  String get lblObservation => 'Observation';
 
-  String get lblAtLeastSelectOneBillItem => "Veuillez sélectionner au moins un élément de facture";
+  @override
+  String get lblNotes => 'Remarques';
 
-  String get lblGenerateInvoice => "Générer une facture";
+  @override
+  String get lblBillAddedSuccessfully => 'Bill a ajouté avec succès';
 
-  String get lblSERVICES => "SERVICES";
+  @override
+  String get lblAtLeastSelectOneBillItem => 'Pour économiser au moins, sélectionnez un élément de facture';
 
-  String get lblPayableAmount => "Montant à payer";
+  @override
+  String get lblGenerateInvoice => 'Générer une facture';
 
-  String get lblSaveAndCloseEncounter => "Enregistrer et clôturer la consultation";
+  @override
+  String get lblSERVICES => 'PRESTATIONS DE SERVICE';
 
-  String get lblHolidays => "Jours fériés";
+  @override
+  String get lblPayableAmount => 'Montant payable';
 
-  String get lblClinic => "Clinique";
+  @override
+  String get lblSaveAndCloseEncounter => 'Enregistrer et fermer la rencontre';
 
-  String get lblAfter => "Après";
+  @override
+  String get lblHolidays => 'Vacances';
 
-  String get lblWasOffFor => "Était en congé pour";
+  @override
+  String get lblClinic => 'Clinique';
 
-  String get lblYourHolidays => "Vos jours de congé";
+  @override
+  String get lblAfter => 'Après';
 
-  String get lblNoServicesFound => "Aucun service trouvé";
+  @override
+  String get lblWasOffFor => 'Était parti pour';
 
-  String get lblNoDataFound => "Aucune donnée trouvée";
+  @override
+  String get lblYourHolidays => 'Vos vacances';
 
-  String get lblOn => "Activé";
+  @override
+  String get lblNoServicesFound => 'Aucun service trouvé';
 
-  String get lblOff => "Désactivé";
+  @override
+  String get lblNoDataFound => 'Aucune donnée disponible';
 
-  String get lblNoAppointments => "Aucun rendez-vous";
+  @override
+  String get lblOn => 'Sur';
 
-  String get lblSelectClinic => "Sélectionnez une clinique";
+  @override
+  String get lblOff => 'Désactivé';
 
-  String get lblEnter => "Entrer";
+  @override
+  String get lblNoAppointments => 'Pas de rendez-vous';
 
-  String get lblFieldIsRequired => "Ce champ est obligatoire";
+  @override
+  String get lblSelectClinic => 'Sélectionner la clinique';
 
-  String get lblHoliday => "Jour férié";
+  @override
+  String get lblEnter => 'Entrer';
 
-  String get lblClinicHoliday => "Jour férié de la clinique";
+  @override
+  String get lblFieldIsRequired => 'Champ requis';
 
-  String get lblSessions => "Sessions";
+  @override
+  String get lblHoliday => 'Vacances';
 
-  String get lblClinicSessions => "Sessions de la clinique";
+  @override
+  String get lblClinicHoliday => 'Vacances à la clinique';
 
-  String get lblClinicServices => "Services de la clinique";
+  @override
+  String get lblSessions => 'Séances';
 
-  String get lblVideoConsulting => "Téléconsultation vidéo";
+  @override
+  String get lblClinicSessions => 'Séances de clinique';
 
-  String get lblYourEncounters => "Vos consultations";
+  @override
+  String get lblClinicServices => 'Prestations de service';
 
-  String get lblSelectTheme => "Sélectionnez un thème";
+  @override
+  String get lblVideoConsulting => 'Consultation vidéo';
 
-  String get lblChooseYourAppTheme => "Choisissez le thème de votre application";
+  @override
+  String get lblYourEncounters => 'Vos rencontres';
 
-  String get lblClinicTAndC => "Conditions générales de la clinique";
+  @override
+  String get lblSelectTheme => 'Sélectionne un thème';
 
-  String get lblAboutKiviCare => "À propos de KiviCare";
+  @override
+  String get lblChooseYourAppTheme => 'Choisissez le thème de votre application';
 
-  String get lblYourReviewCounts => "Nombre de vos avis";
+  @override
+  String get lblClinicTAndC => 'Clinique T&C';
 
-  String get lblAppVersion => "Version de l’application";
+  @override
+  String get lblAboutKiviCare => 'À propos de Kivicare';
 
-  String get lblHelpAndSupport => "Aide et support";
+  @override
+  String get lblYourReviewCounts => 'Votre avis compte';
 
-  String get lblSubmitYourQueriesHere => "Soumettez vos questions ici";
+  @override
+  String get lblAppVersion => "Version de l'application";
 
-  String get lblLogout => "Se déconnecter";
+  @override
+  String get lblHelpAndSupport => "Support d'aide";
 
-  String get lblThanksForVisiting => "Merci de votre visite";
+  @override
+  String get lblSubmitYourQueriesHere => 'Soumettez vos requêtes ici';
 
-  String get lblGeneralSetting => "Paramètres généraux";
+  @override
+  String get lblLogout => 'Se déconnecter';
 
-  String get lblAppSettings => "Paramètres de l’application";
+  @override
+  String get lblThanksForVisiting => 'Merci de votre visite';
 
-  String get lblVersion => "Version";
+  @override
+  String get lblGeneralSetting => 'réglages généraux';
 
-  String get lblContactUs => "Contactez-nous";
+  @override
+  String get lblAppSettings => "Paramètres de l'application";
 
-  String get lblAboutUsDes => "Description à propos de nous";
+  @override
+  String get lblVersion => 'Version';
 
-  String get lblPurchase => "Acheter";
+  @override
+  String get lblContactUs => 'Contactez-nous';
 
-  String get lblDemoUserPasswordNotChanged => "Mot de passe de l’utilisateur démo non modifié";
+  @override
+  String get lblAboutUsDes =>
+      "Kivicare est un rendez-vous en clinique / hôpital complet et une gestion des dossiers pour les médecins et les patients. Les informations, les rapports médicaux, les médicaments, les antécédents de visite, les notes cliniques, les antécédents du patient et d'autres notes. Jongler à travers les articles pour voir les antécédents précédents de vos patients, tout est facilement disponible pour votre diagnostic.";
 
-  String get lblPasswordLengthMessage => "Le mot de passe doit respecter la longueur minimale";
+  @override
+  String get lblPurchase => 'Achat';
 
-  String get lblBothPasswordMatched => "Les deux mots de passe correspondent";
+  @override
+  String get lblDemoUserPasswordNotChanged => 'Le mot de passe des utilisateurs de démonstration ne peut pas être modifié';
 
-  String get lblVisited => "Visité";
+  @override
+  String get lblPasswordLengthMessage => 'La longueur du mot de passe devrait être plus que';
 
-  String get lblBooked => "Réservé";
+  @override
+  String get lblBothPasswordMatched => 'Le nouveau mot de passe et la confirmation du mot de passe doivent correspondre';
 
-  String get lblCompleted => "Terminé";
+  @override
+  String get lblVisited => 'A visité';
 
-  String get lblCancelled => "Annulé";
+  @override
+  String get lblBooked => 'Réservé';
 
-  String get lblYes => "Oui";
+  @override
+  String get lblCompleted => 'Complété';
 
-  String get lblPayment => "Paiement";
+  @override
+  String get lblCancelled => 'Annulé';
 
-  String get lblError => "Erreur";
+  @override
+  String get lblYes => 'Oui';
 
-  String get lblRegisteredSuccessfully => "Inscription réussie";
+  @override
+  String get lblPayment => 'Paiement WooCommerce';
 
-  String get lblBirthDateIsRequired => "La date de naissance est requise";
+  @override
+  String get lblError => 'Erreur';
 
-  String get lblBloodGroupIsRequired => "Le groupe sanguin est requis";
+  @override
+  String get lblRegisteredSuccessfully => 'enregistré avec succès';
 
-  String get lblAppointmentBookedSuccessfully => "Rendez-vous réservé avec succès";
+  @override
+  String get lblBirthDateIsRequired => 'La date de naissance est requise';
 
-  String get lblSelectedSlots => "Créneaux sélectionnés";
+  @override
+  String get lblBloodGroupIsRequired => 'Le groupe sanguin est requis';
 
-  String get lblSession => "Session";
+  @override
+  String get lblAppointmentBookedSuccessfully => 'Rendez-vous réservé avec succès, veuillez consulter votre e-mail.';
 
-  String get lblTimeSlotIsBooked => "Le créneau horaire est déjà réservé";
+  @override
+  String get lblSelectedSlots => 'Machines à sous sélectionnées';
 
-  String get lblAppointmentDate => "Date du rendez-vous";
+  @override
+  String get lblSession => 'Session';
 
-  String get lblViewDetails => "Voir les détails";
+  @override
+  String get lblTimeSlotIsBooked => 'Le créneau horaire est réservé';
 
-  String get lblDoctorDetails => "Détails du médecin";
+  @override
+  String get lblAppointmentDate => 'Date de rendez-vous';
 
-  String get lblAreYouWantToDeleteDoctor => "Voulez-vous supprimer ce médecin ?";
+  @override
+  String get lblViewDetails => 'Voir';
 
-  String get lblDoctorDeleted => "Médecin supprimé";
+  @override
+  String get lblDoctorDetails => 'Détails du médecin';
 
-  String get lblYearsExperience => "Années d’expérience";
+  @override
+  String get lblAreYouWantToDeleteDoctor => 'Êtes-vous sûr de vouloir supprimer le médecin?';
 
-  String get lblYearsOfExperience => "Années d’expérience";
+  @override
+  String get lblDoctorDeleted => 'Docteur supprimé';
 
-  String get lblAvailableOn => "Disponible le";
+  @override
+  String get lblYearsExperience => 'année';
 
-  String get lblHealth => "Santé";
+  @override
+  String get lblYearsOfExperience => "des années d'expérience";
 
-  String get lblReadMore => "Lire plus";
+  @override
+  String get lblAvailableOn => 'Disponible pour ces jours de semaine:';
 
-  String get lblReadLess => "Lire moins";
+  @override
+  String get lblHealth => 'Santé';
 
-  String get lblBy => "Par";
+  @override
+  String get lblReadMore => '  En savoir plus';
 
-  String get lblNews => "Actualités";
+  @override
+  String get lblReadLess => '  Lire moins';
 
-  String get lblUpcomingAppointments => "Rendez-vous à venir";
+  @override
+  String get lblBy => 'par';
 
-  String get lblViewAll => "Voir tout";
+  @override
+  String get lblNews => 'Nouvelles';
 
-  String get lblTopDoctors => "Meilleurs médecins";
+  @override
+  String get lblUpcomingAppointments => 'Rendez-vous à venir';
 
-  String get lblExpertsHealthTipsAndAdvice => "Conseils et astuces santé d’experts";
+  @override
+  String get lblViewAll => 'Voir tout';
 
-  String get lblArticlesByHighlyQualifiedDoctors => "Articles de médecins hautement qualifiés";
+  @override
+  String get lblTopDoctors => 'Meilleurs médecins';
 
-  String get lblChooseYourDoctor => "Choisissez votre médecin";
+  @override
+  String get lblExpertsHealthTipsAndAdvice => 'Conseils et conseils de santé des experts';
 
-  String get lblAddNewAppointment => "Ajouter un nouveau rendez-vous";
+  @override
+  String get lblArticlesByHighlyQualifiedDoctors => 'Articles de médecins hautement qualifiés sur la santé quotidienne.';
 
-  String get lblSelectOneDoctor => "Sélectionnez un médecin";
+  @override
+  String get lblChooseYourDoctor => 'Choisissez votre médecin';
 
-  String get lblClinicDoctor => "Médecin de la clinique";
+  @override
+  String get lblAddNewAppointment => 'Ajouter un nouveau rendez-vous';
 
-  String get lblPatientDashboard => "Tableau de bord patient";
+  @override
+  String get lblSelectOneDoctor => 'Sélectionnez un médecin';
 
-  String get lblFeedsAndArticles => "Flux et articles";
+  @override
+  String get lblClinicDoctor => 'Clinique';
 
-  String get lblPatientsEncounter => "Consultations des patients";
+  @override
+  String get lblPatientDashboard => 'Tableau de bord';
 
-  String get lblNoEncounterFound => "Aucune consultation trouvée";
+  @override
+  String get lblFeedsAndArticles => 'Flux et articles';
 
-  String get lblSelectSpecialization => "Sélectionnez une spécialité";
+  @override
+  String get lblPatientsEncounter => 'Les patients rencontrent';
 
-  String get lblAddDoctorProfile => "Ajouter un profil médecin";
+  @override
+  String get lblNoEncounterFound => 'Aucune rencontre trouvée';
 
-  String get lblMedicalReport => "Rapport médical";
+  @override
+  String get lblSelectSpecialization => 'Sélectionnez une spécialisation';
 
-  String get lblNewMedicalReport => "Nouveau rapport médical";
+  @override
+  String get lblAddDoctorProfile => 'Ajouter le profil médecin';
 
-  String get lblRememberMe => "Se souvenir de moi";
+  @override
+  String get lblMedicalReport => 'Rapport médical';
 
-  String get lblChooseYourClinic => "Choisissez votre clinique";
+  @override
+  String get lblNewMedicalReport => 'Nouveau rapport médical';
 
-  String get lblAll => "Tout";
+  @override
+  String get lblRememberMe => 'Souviens-toi de moi';
 
-  String get lblLatest => "Dernier";
+  @override
+  String get lblChooseYourClinic => 'Choisissez votre clinique';
 
-  String get lblMon => "Lun";
+  @override
+  String get lblAll => 'Tous';
 
-  String get lblTue => "Mar";
+  @override
+  String get lblLatest => 'Dernier';
 
-  String get lblWed => "Mer";
+  @override
+  String get lblMon => 'Lun';
 
-  String get lblThu => "Jeu";
+  @override
+  String get lblTue => 'Mar';
 
-  String get lblFri => "Ven";
+  @override
+  String get lblWed => 'Épouser';
 
-  String get lblSat => "Sam";
+  @override
+  String get lblThu => 'Jeu';
 
-  String get lblSun => "Dim";
+  @override
+  String get lblFri => 'Ven';
 
-  String get lblNoReportWasSelected => "Aucun rapport sélectionné";
+  @override
+  String get lblSat => 'Assis';
 
-  String get lblAddReportScreen => "Ajouter un écran de rapport";
+  @override
+  String get lblSun => 'Soleil';
 
-  String get lblDateCantBeNull => "La date ne peut pas être vide";
+  @override
+  String get lblNoReportWasSelected => "Aucun rapport n'a été sélectionné";
 
-  String get lblUploadReport => "Téléverser un rapport";
+  @override
+  String get lblAddReportScreen => 'Ajouter un rapport';
 
-  String get lblLight => "Clair";
+  @override
+  String get lblDateCantBeNull => 'La date ne peut pas être vide';
 
-  String get lblDark => "Sombre";
+  @override
+  String get lblUploadReport => 'Rapport de téléchargement';
 
-  String get lblSystemDefault => "Par défaut du système";
+  @override
+  String get lblLight => 'Lumière';
 
-  String get lblNA => "N/A";
+  @override
+  String get lblDark => 'Sombre';
 
-  String get lblAddedNewEncounter => "Nouvelle consultation ajoutée";
+  @override
+  String get lblSystemDefault => 'Défaillance du système';
 
-  String get lblCantEditDate => "Impossible de modifier la date";
+  @override
+  String get lblNA => 'N / A';
 
-  String get lblNoTitle => "Pas de titre";
+  @override
+  String get lblAddedNewEncounter => "Ajout d'une nouvelle rencontre";
 
-    String get lblSelectOneClinic => "Sélectionnez une clinique";
+  @override
+  String get lblCantEditDate => 'Vous ne pouvez pas modifier la date qui est déjà adoptée';
 
-  String get lblPast => "Passé";
+  @override
+  String get lblNoTitle => 'Pas de titre';
 
-  String get lblAddMedicalReport => "Ajouter un rapport médical";
+  @override
+  String get lblSelectOneClinic => 'Sélectionnez une clinique';
 
-  String get lblSendPrescriptionOnMail => "Envoyer l’ordonnance par email";
+  @override
+  String get lblPast => 'Passé';
 
-  String get lblFilesSelected => "Fichiers sélectionnés";
+  @override
+  String get lblAddMedicalReport => 'Ajouter un rapport médical';
 
-  String get lblService => "Service";
+  @override
+  String get lblSendPrescriptionOnMail => 'Envoyer une ordonnance par courrier';
 
-  String get lblTime => "Heure";
+  @override
+  String get lblFilesSelected => 'Fichiers sélectionnés';
 
-  String get lblAppointmentSummary => "Résumé du rendez-vous";
+  @override
+  String get lblService => 'Service';
 
-  String get lblEncounter => "Consultation";
+  @override
+  String get lblTime => 'Temps';
 
-  String get lblMedicalReports => "Rapports médicaux";
+  @override
+  String get lblAppointmentSummary => 'Résumé de la nomination';
 
-  String get lblConnectedWith => "Connecté avec";
+  @override
+  String get lblEncounter => 'Rencontre';
 
-  String get lblContact => "Contact";
+  @override
+  String get lblMedicalReports => 'Rapport médical';
 
-  String get lblQrScanner => "Scanner QR";
+  @override
+  String get lblConnectedWith => 'Connecté avec';
 
-  String get lblLoginSuccessfully => "Connexion réussie";
+  @override
+  String get lblContact => 'Contact';
 
-  String get lblWrongUser => "Utilisateur incorrect";
+  @override
+  String get lblQrScanner => 'Scanner QR';
 
-  String get lblMorning => "Matin";
+  @override
+  String get lblLoginSuccessfully => 'Connectez-vous avec succès';
 
-  String get lblEvening => "Soir";
+  @override
+  String get lblWrongUser => 'Mauvais utilisateur';
 
-  String get lblShare => "Partager";
+  @override
+  String get lblMorning => 'Matin';
 
-  String get lblNoMatch => "Aucune correspondance";
+  @override
+  String get lblEvening => 'Soir';
 
-  String get lblNoDataSubTitle => "Aucune donnée disponible";
+  @override
+  String get lblShare => 'Partager';
 
-  String get lblEdit => "Modifier";
+  @override
+  String get lblNoMatch => 'Aucune vue correspondante';
 
-  String get lblSwipeMassage => "Balayez pour action";
+  @override
+  String get lblNoDataSubTitle => "Nous n'avons rien trouvé lié à votre recherche";
 
-  String get lblReachUsMore => "Contactez-nous";
+  @override
+  String get lblEdit => 'Modifier';
 
-  String get lblAddressDetail => "Détails de l’adresse";
+  @override
+  String get lblSwipeMassage => 'Swipe à gauche pour modifier ou supprimer';
 
-  String get lblChangeYourClinic => "Changer de clinique";
+  @override
+  String get lblReachUsMore => 'Nous atteindre plus';
 
-  String get lblYourBills => "Vos factures";
+  @override
+  String get lblAddressDetail => "Détails de l'adresse";
 
-  String get lblYourReports => "Vos rapports";
+  @override
+  String get lblChangeYourClinic => 'Changez votre clinique';
 
-  String get lblBillRecords => "Historique des factures";
+  @override
+  String get lblYourBills => 'Obtenez vos détails tous les factures';
 
-  String get lblMyBills => "Mes factures";
+  @override
+  String get lblYourReports => 'Trouvez vos rapports téléchargés';
 
-  String get lblRevenue => "Revenus";
+  @override
+  String get lblBillRecords => 'Records de facture';
 
-  String get lblBuyIt => "Acheter";
+  @override
+  String get lblMyBills => 'Mes factures';
 
-  String get lblTryIt => "Essayer";
+  @override
+  String get lblRevenue => 'Revenu';
 
-  String get lblYouAreJustOneStepAwayFromHavingAHandsOnBackendDemo => "Vous êtes à un pas d’un essai du système";
+  @override
+  String get lblBuyIt => 'Achète-le';
 
-  String get lblChooseYourRole => "Choisissez votre rôle";
+  @override
+  String get lblTryIt => 'Essayez-le';
 
-  String get lblEnterYourEmailAddressAsWellAsTheTemporaryLink => "Entrez votre adresse email ainsi que le lien temporaire";
+  @override
+  String get lblYouAreJustOneStepAwayFromHavingAHandsOnBackendDemo => "Vous n'êtes qu'à un pas d'avoir une démo backend pratique.";
 
-  String get lblClickOnThatAndScanItFromTheApp => "Cliquez dessus et scannez-le depuis l’application";
+  @override
+  String get lblChooseYourRole => 'Choisissez votre rôle';
 
-  String get lblYouWillSeeAQRForAppOptionOnTheRightHandCorner => "Un QR code apparaîtra dans le coin supérieur droit";
+  @override
+  String get lblEnterYourEmailAddressAsWellAsTheTemporaryLink => 'Entrez votre adresse e-mail ainsi que le lien temporaire';
 
-  String get lblEnjoyTheFlawlessKivicareSystemWithEase => "Profitez du système KiviCare en toute simplicité";
+  @override
+  String get lblClickOnThatAndScanItFromTheApp => "Cliquez dessus et le scannez à partir de l'application";
 
-  String get lblCamera => "Caméra";
+  @override
+  String get lblYouWillSeeAQRForAppOptionOnTheRightHandCorner => "Vous verrez une option QR pour l'application dans le coin droit,";
 
-  String get lblGallery => "Galerie";
+  @override
+  String get lblEnjoyTheFlawlessKivicareSystemWithEase => 'Apprécier! Le système Kivicare impeccable avec facilité.';
 
-  String get lblRemoveImage => "Supprimer l’image";
+  @override
+  String get lblCamera => 'Caméra';
 
-  String get lblCanNotBeEmpty => "Ne peut pas être vide";
+  @override
+  String get lblGallery => 'Galerie';
 
-  String get lblNoConnection => "Pas de connexion";
+  @override
+  String get lblRemoveImage => "Supprimer l'image";
 
-  String get lblYourInternetConnectionWasInterrupted => "Votre connexion Internet a été interrompue";
+  @override
+  String get lblCanNotBeEmpty => 'Ne peux pas être vide';
 
-  String get lblPlease => "S’il vous plaît";
+  @override
+  String get lblNoConnection => 'Pas de connection';
 
-  String get lblRetry => "Réessayer";
+  @override
+  String get lblYourInternetConnectionWasInterrupted => 'Votre connexion Internet a été interrompue';
 
-  String get lblAfternoon => "Après-midi";
+  @override
+  String get lblPlease => "S'il te plaît";
 
-  String get lblGood => "Bon";
+  @override
+  String get lblRetry => 'recommencez';
 
-  String get lblNight => "Nuit";
+  @override
+  String get lblAfternoon => 'Bon après-midi';
 
-  String get lblNoSlotAvailable => "Aucun créneau disponible";
+  @override
+  String get lblGood => 'Bien';
 
-  String get lblPleaseChooseAnotherDay => "Veuillez choisir un autre jour";
+  @override
+  String get lblNight => 'Bonne nuit';
 
-  String get lblPleaseCloseTheEncounterToCheckoutPatient => "Veuillez clôturer la consultation pour terminer avec le patient";
+  @override
+  String get lblNoSlotAvailable => 'Pas de créneau disponible';
 
-  String get lblRemove => "Supprimer";
+  @override
+  String get lblPleaseChooseAnotherDay => 'Veuillez choisir un autre jour';
 
-  String get lblAResetPasswordLinkWillBeSentToTheAboveEnteredEmailAddress => "Un lien de réinitialisation sera envoyé à l’adresse email saisie";
+  @override
+  String get lblPleaseCloseTheEncounterToCheckoutPatient => 'Veuillez fermer la rencontre pour vérifier le patient';
 
-  String get lblEnterYourEmailAddress => "Entrez votre adresse email";
+  @override
+  String get lblRemove => 'retirer';
 
-  String get lblHowToGenerateQRCode => "Comment générer un QR code";
+  @override
+  String get lblAResetPasswordLinkWillBeSentToTheAboveEnteredEmailAddress => "Un lien de mot de passe de réinitialisation sera envoyé à l'adresse e-mail saisie ci-dessus";
 
-  String get lblStepsToGenerateQRCode => "Étapes pour générer un QR code";
+  @override
+  String get lblEnterYourEmailAddress => 'Entrez votre adresse email';
 
-  String get lblOpenTheDemoUrlInWeb => "Ouvrez l’URL de démo dans le navigateur";
+  @override
+  String get lblHowToGenerateQRCode => 'Comment générer du code QR?';
 
-  String get lblMore => "Plus";
+  @override
+  String get lblStepsToGenerateQRCode => 'Étapes pour générer le code QR';
 
-  String get lblRatingsAndReviews => "Notes et avis";
+  @override
+  String get lblOpenTheDemoUrlInWeb => "Ouvrez l'URL de démo dans le Web";
 
-  String get lblViewFile => "Voir le fichier";
+  @override
+  String get lblMore => 'Plus';
 
-  String get lblLoading => "Chargement…";
+  @override
+  String get lblRatingsAndReviews => 'Notes et avis';
 
-  String get lblAnErrorOccurredWhileCheckingInternetConnectivity => "Une erreur est survenue lors de la vérification de la connexion Internet";
+  @override
+  String get lblViewFile => 'Voir la fiche';
 
-  String get lblBloodGroup => "Groupe sanguin";
+  @override
+  String get lblLoading => 'Chargement';
 
-  String get lblChooseAction => "Choisir une action";
+  @override
+  String get lblAnErrorOccurredWhileCheckingInternetConnectivity => "Une erreur s'est produite lors de la vérification de la connectivité Internet";
 
-  String get lblConnecting => "Connexion…";
+  @override
+  String get lblBloodGroup => 'Groupe sanguin';
 
-  String get lblMyClinic => "Ma clinique";
+  @override
+  String get lblChooseAction => 'Choisir une action';
 
-  String get lblMyReports => "Mes rapports";
+  @override
+  String get lblConnecting => 'De liaison';
 
-  String get lblNoReviewsFound => "Aucun avis trouvé";
+  @override
+  String get lblMyClinic => 'Ma clinique';
 
-  String get lblPleaseCheckYourNumber => "Veuillez vérifier votre numéro";
+  @override
+  String get lblMyReports => 'Mes rapports';
 
-  String get lblYourReviews => "Vos avis";
+  @override
+  String get lblNoReviewsFound => 'Aucune critique trouvée';
 
-  String get lblConnected => "Connecté";
+  @override
+  String get lblPleaseCheckYourNumber => 'Veuillez vérifier votre numéro';
 
-  String get lblNetworkStatus => "État du réseau";
+  @override
+  String get lblYourReviews => 'Vos avis';
 
-  String get lblOffline => "Hors ligne";
+  @override
+  String get lblConnected => 'Connecté';
 
-  String get lblUnknown => "Inconnu";
+  @override
+  String get lblNetworkStatus => "L'état du réseau";
 
-  String get lblSelectAppointmentDate => "Sélectionner la date du rendez-vous";
+  @override
+  String get lblOffline => 'Hors ligne';
 
-  String get lblScanToTest => "Scanner pour tester";
+  @override
+  String get lblUnknown => 'Inconnu';
 
-  String get lblPleaseSelectPaymentStatus => "Veuillez sélectionner le statut du paiement";
+  @override
+  String get lblSelectAppointmentDate => 'Sélectionnez la date de rendez-vous';
 
-  String get lblWhatYourCustomersSaysAboutYou => "Ce que vos clients disent de vous";
+  @override
+  String get lblScanToTest => 'Scanner pour tester';
 
-  String get lblFriday => "Vendredi";
+  @override
+  String get lblPleaseSelectPaymentStatus => "Veuillez d'abord sélectionner l'état de paiement";
 
-  String get lblMonday => "Lundi";
+  @override
+  String get lblWhatYourCustomersSaysAboutYou => 'Ce que vos clients dit de vous';
 
-  String get lblSaturday => "Samedi";
+  @override
+  String get lblFriday => 'Vendredi';
 
-  String get lblSunday => "Dimanche";
+  @override
+  String get lblMonday => 'Lundi';
 
-  String get lblThursday => "Jeudi";
+  @override
+  String get lblSaturday => 'Samedi';
 
-  String get lblTuesday => "Mardi";
+  @override
+  String get lblSunday => 'Dimanche';
 
-  String get lblWednesday => "Mercredi";
+  @override
+  String get lblThursday => 'Jeudi';
 
-  String get lblChange => "Changer";
+  @override
+  String get lblTuesday => 'Mardi';
 
-  String get lblChangingStatusFrom => "Changement de statut de";
+  @override
+  String get lblWednesday => 'Mercredi';
 
-  String get lblPleaseSelectDoctor => "Veuillez sélectionner un médecin";
+  @override
+  String get lblChange => 'Changement';
 
-  String get lblClose => "Fermer";
+  @override
+  String get lblChangingStatusFrom => 'Changer le statut de';
 
-  String get lblAllTheAppointmentOnSelectedDateWillBeCancelled => "Tous les rendez-vous à la date sélectionnée seront annulés";
+  @override
+  String get lblPleaseSelectDoctor => 'Veuillez sélectionner le médecin';
 
-  String get lblApr => "Avr";
+  @override
+  String get lblClose => 'Fermer';
 
-  String get lblArabic => "Arabe";
+  @override
+  String get lblAllTheAppointmentOnSelectedDateWillBeCancelled => 'Toute le rendez-vous à la date sélectionnée sera annulée.';
 
-  String get lblAug => "Août";
+  @override
+  String get lblApr => 'Avr';
 
-  String get lblDec => "Déc";
+  @override
+  String get lblArabic => 'arabe';
 
-  String get lblEnglish => "Anglais";
+  @override
+  String get lblAug => 'Août';
 
-  String get lblFeb => "Fév";
+  @override
+  String get lblDec => 'Déc';
 
-  String get lblFrench => "Français";
+  @override
+  String get lblEnglish => 'Anglais';
 
-  String get lblGerman => "Allemand";
+  @override
+  String get lblFeb => 'Fév';
 
-  String get lblHindi => "Hindi";
+  @override
+  String get lblFrench => 'Français';
 
-    String get lblJan => "Jan";
+  @override
+  String get lblGerman => 'Allemand';
 
-  String get lblJul => "Juil";
+  @override
+  String get lblHindi => 'hindi';
 
-  String get lblJun => "Juin";
+  @override
+  String get lblJan => 'Jan';
 
-  String get lblMar => "Mar";
+  @override
+  String get lblJul => 'Juil';
 
-  String get lblMay => "Mai";
+  @override
+  String get lblJun => 'Juin';
 
-  String get lblNov => "Nov";
+  @override
+  String get lblMar => 'Mar';
 
-  String get lblOct => "Oct";
+  @override
+  String get lblMay => 'Peut';
 
-  String get lblSep => "Sept";
+  @override
+  String get lblNov => 'Nov';
 
-  String get lblToday => "Aujourd’hui";
+  @override
+  String get lblOct => 'Oct';
 
-  String get lblTomorrow => "Demain";
+  @override
+  String get lblSep => 'Sep';
 
-  String get lblYesterday => "Hier";
+  @override
+  String get lblToday => "Aujourd'hui";
 
-  String get lblNoQualificationsFound => "Aucune qualification trouvée";
+  @override
+  String get lblTomorrow => 'Demain';
 
-  String get lblActive => "Actif";
+  @override
+  String get lblYesterday => 'Hier';
 
-  String get lblInActive => "Inactif";
+  @override
+  String get lblNoQualificationsFound => 'Aucune qualification trouvée';
 
-  String get lblOpen => "Ouvert";
+  @override
+  String get lblActive => 'Actif';
 
-  String get lblPaid => "Payé";
+  @override
+  String get lblInActive => 'Inactif';
 
-  String get lblUnPaid => "Impayé";
+  @override
+  String get lblOpen => 'Ouvrir';
 
-  String get lblComplete => "Complété";
+  @override
+  String get lblPaid => 'Payé';
 
-  String get lblClosed => "Fermé";
+  @override
+  String get lblUnPaid => 'Non payé';
 
-  String get lblChooseYourFavouriteClinic => "Choisissez votre clinique préférée";
+  @override
+  String get lblComplete => 'Complet';
 
-  String get lblAvailableSession => "Session disponible";
+  @override
+  String get lblClosed => 'Fermé';
 
-  String get lblGetYourAllBillsHere => "Consultez toutes vos factures ici";
+  @override
+  String get lblChooseYourFavouriteClinic => 'Choisissez votre clinique préférée';
 
-  String get lblServicesYouProvide => "Services que vous proposez";
+  @override
+  String get lblAvailableSession => 'Détails de session disponibles';
 
-  String get lblYourAllEncounters => "Toutes vos consultations";
+  @override
+  String get lblGetYourAllBillsHere => 'HISTOIRE DE TOUS LES RECORDS DE BILL';
 
-  String get lblScheduledHolidays => "Vacances programmées";
+  @override
+  String get lblServicesYouProvide => 'Services que vous fournissez';
 
-  String get lblNotSelected => "Non sélectionné";
+  @override
+  String get lblYourAllEncounters => 'Histoire de toutes les rencontres';
 
-  String get lblStatus => "Statut";
+  @override
+  String get lblScheduledHolidays => 'Vacances planifiées';
 
-  String get lblMultipleSelection => "Sélection multiple";
+  @override
+  String get lblNotSelected => 'Non séléctionné';
 
-  String get lblAdded => "Ajouté";
+  @override
+  String get lblStatus => 'Statut';
 
-  String get lblAddedSuccessfully => "Ajouté avec succès";
+  @override
+  String get lblMultipleSelection => 'Sélection multiple';
 
-  String get lblInvalidURL => "URL invalide";
+  @override
+  String get lblAdded => 'Ajoutée';
 
-  String get lblMedicalHistoryHasBeen => "Antécédents médicaux mis à jour";
+  @override
+  String get lblAddedSuccessfully => 'Ajout de réussite';
 
-  String get lblReport => "Rapport";
+  @override
+  String get lblInvalidURL => 'URL invalide:';
 
-  String get lblSuccessfully => "Avec succès";
+  @override
+  String get lblMedicalHistoryHasBeen => 'Les antécédents médicaux ont été';
 
-  String get lblInvalidDayOfMonth => "Jour du mois invalide";
+  @override
+  String get lblReport => 'Rapport';
 
-  String get lblConnectionReEstablished => "Connexion rétablie";
+  @override
+  String get lblSuccessfully => 'Avec succès';
 
-  String get lblToMobileData => "aux données mobiles";
+  @override
+  String get lblInvalidDayOfMonth => 'Jour de mois non valide';
 
-  String get lblToWifi => "au Wi-Fi";
+  @override
+  String get lblConnectionReEstablished => 'Connexion rétablie';
 
-  String get lblMultipleSelectionIsNotAvailableForThisService => "La sélection multiple n’est pas disponible pour ce service";
+  @override
+  String get lblToMobileData => 'aux données mobiles';
 
-  String get lblMultipleSelectionIsAvailableForThisService => "La sélection multiple est disponible pour ce service";
+  @override
+  String get lblToWifi => 'au wifi';
 
-  String get lblNote => "Note";
+  @override
+  String get lblMultipleSelectionIsAvailableForThisService => "L'option multi-sélection est disponible pour ce service";
 
-  String get lblToCloseTheEncounterInvoicePaymentIsMandatory => "Pour clôturer la consultation, le paiement de la facture est obligatoire";
+  @override
+  String get lblNote => 'Note';
 
-  String get lblUpdate => "Mettre à jour";
+  @override
+  String get lblToCloseTheEncounterInvoicePaymentIsMandatory => 'Pour fermer la rencontre, le paiement de la facture est obligatoire';
 
-  String get lblBillDetails => "Détails de la facture";
+  @override
+  String get lblUpdate => 'Mise à jour';
 
-  String get lblChooseImage => "Choisir une image";
+  @override
+  String get lblBillDetails => 'Détails de la facture';
 
-  String get lblApril => "Avril";
+  @override
+  String get lblChooseImage => "Choisir l'image";
 
-  String get lblAugust => "Août";
+  @override
+  String get lblApril => 'Avril';
 
-  String get lblDecember => "Décembre";
+  @override
+  String get lblAugust => 'Août';
 
-  String get lblFebruary => "Février";
+  @override
+  String get lblDecember => 'Décembre';
 
-  String get lblJanuary => "Janvier";
+  @override
+  String get lblFebruary => 'Février';
 
-  String get lblJuly => "Juillet";
+  @override
+  String get lblJanuary => 'Janvier';
 
-  String get lblJune => "Juin";
+  @override
+  String get lblJuly => 'Juillet';
 
-  String get lblMarch => "Mars";
+  @override
+  String get lblJune => 'Juin';
 
-  String get lblMonthly => "Mensuel";
+  @override
+  String get lblMarch => 'Mars';
 
-  String get lblNovember => "Novembre";
+  @override
+  String get lblMonthly => 'Mensuel';
 
-  String get lblOctober => "Octobre";
+  @override
+  String get lblNovember => 'Novembre';
 
-  String get lblSeptember => "Septembre";
+  @override
+  String get lblOctober => 'Octobre';
 
-  String get lblWeekly => "Hebdomadaire";
+  @override
+  String get lblSeptember => 'Septembre';
 
-  String get lblYearly => "Annuel";
+  @override
+  String get lblWeekly => 'Hebdomadaire';
 
-  String get lblChangeSignature => "Modifier la signature";
+  @override
+  String get lblYearly => 'Annuel';
 
-  String get lblClear => "Effacer";
+  @override
+  String get lblChangeSignature => 'Changer la signature';
 
-  String get lblUndo => "Annuler";
+  @override
+  String get lblClear => 'Clair';
 
-  String get lblSignature => "Signature";
+  @override
+  String get lblUndo => 'annuler';
 
-  String get lblAdd => "Ajouter";
+  @override
+  String get lblSignature => 'Signature';
 
-  String get lblSelectYearOfGraduation => "Sélectionnez l’année de diplôme";
+  @override
+  String get lblAdd => 'Ajouter';
 
-  String get lblSelect => "Sélectionner";
+  @override
+  String get lblSelectYearOfGraduation => 'Sélectionner une année de remise des diplômes';
 
-  String get lblPayBill => "Payer la facture";
+  @override
+  String get lblSelect => 'Sélectionner';
 
-  String get lblPleaseCheckYourEmailInboxToSetNewPassword => "Veuillez vérifier votre boîte mail pour définir un nouveau mot de passe";
+  @override
+  String get lblPayBill => 'Masse salariale';
 
-  String get lblReview => "Avis";
+  @override
+  String get lblPleaseCheckYourEmailInboxToSetNewPassword => 'Veuillez vérifier votre boîte de réception par e-mail pour définir un nouveau mot de passe';
 
-  String get lblBillingRecords => "Historique de facturation";
+  @override
+  String get lblReview => 'Examen';
 
-  String get lblAppointmentCount => "Nombre de rendez-vous";
+  @override
+  String get lblBillingRecords => 'Records de facturation';
 
-  String get lblNoRecordsFound => "Aucun enregistrement trouvé";
+  @override
+  String get lblAppointmentCount => 'Compte de rendez-vous';
 
-  String get lblNoAppointmentsFound => "Aucun rendez-vous trouvé";
+  @override
+  String get lblNoRecordsFound => 'Aucun enregistrement trouvé';
 
-  String get lblSelectPatient => "Sélectionner un patient";
+  @override
+  String get lblNoAppointmentsFound => 'Aucun rendez-vous trouvé';
 
-  String get lblNoReportsFound => "Aucun rapport trouvé";
+  @override
+  String get lblSelectPatient => 'Sélectionner le patient';
 
-  String get lblSpecialities => "Spécialités";
+  @override
+  String get lblNoReportsFound => 'Aucun rapport trouvé';
 
-  String get lblKnowWhatYourPatientsSaysAboutYou => "Découvrez ce que vos patients disent de vous";
+  @override
+  String get lblSpecialities => 'Spécialités';
 
-  String get lblSchedule => "Planifier";
+  @override
+  String get lblKnowWhatYourPatientsSaysAboutYou => 'Sachez ce que vos patients dit de vous';
 
-  String get lblAllowMultiSelectionWhileBooking => "Autoriser la sélection multiple lors de la réservation";
+  @override
+  String get lblSchedule => 'Calendrier';
 
-  String get lblNo => "Non";
+  @override
+  String get lblAllowMultiSelectionWhileBooking => 'Autoriser la sélection multiples lors de la réservation?';
 
-  String get lblSetStatus => "Définir le statut";
+  @override
+  String get lblNo => 'Non';
 
-  String get lblFound => "Trouvé";
+  @override
+  String get lblSetStatus => 'Statut de définition';
 
-  String get lblDUpdatedSuccessfully => "Mis à jour avec succès";
+  @override
+  String get lblFound => 'trouvé';
 
-  String get lblDeletedSuccessfully => "Supprimé avec succès";
+  @override
+  String get lblDUpdatedSuccessfully => 'Mis à jour avec succés';
 
-  String get lblPleaseGiveYourRating => "Veuillez donner votre note";
+  @override
+  String get lblDeletedSuccessfully => 'Supprimé avec succès';
 
-  String get lblEnterYourReviews => "Saisissez vos avis";
+  @override
+  String get lblPleaseGiveYourRating => 'Veuillez donner votre note';
 
-  String get lblUnAuthorized => "Non autorisé";
+  @override
+  String get lblEnterYourReviews => 'Entrez votre avis (facultatif)';
 
-  String get lblIsThisATelemedService => "Est-ce un service de téléconsultation ?";
+  @override
+  String get lblUnAuthorized => "L'utilisateur de démonstration ne peut être accordé pour cette action";
 
-  String get lblTelemedService => "Service de téléconsultation";
+  @override
+  String get lblIsThisATelemedService => 'Est-ce un service Telemed ?';
 
+  @override
+  String get lblTelemedService => 'Choisir le service Telemed est autorisé ou non ?';
+
+  @override
   String get lblDeleteAccount => "Supprimer le compte";
 
-  String get lblStayConnected => "Restez connecté";
+  @override
+  String get lblStayConnected => "Rester connecté";
 
-  String get lblConnectedToInternet => "Connecté à Internet";
+  @override
+  String get lblConnectedToInternet => 'Vous êtes maintenant connecté à Internet';
 
-  String get lblNoInternetMsg => "Pas de connexion Internet";
+  @override
+  String get lblNoInternetMsg => "Vous n'êtes pas connecté à Internet";
 
-  String get lblDeleteAccountNote => "Attention : la suppression du compte est définitive";
+  @override
+  String get lblDeleteAccountNote => "Votre santé est précieuse - accrochez-vous à votre compte";
 
-  String get lblSomethingWentWrong => "Un problème est survenu";
+  @override
+  String get lblSomethingWentWrong => "Quelque chose s'est mal passé";
 
-  String get lblInValidURL => "URL invalide";
+  @override
+  String get lblInValidURL => "Désolé, l'URL de démonstration n'est pas valide";
 
-  String get lblServiceName => "Nom du service";
+  @override
+  String get lblSelectGender => 'Veuillez sélectionner le sexe';
 
-  String get lblUpcoming => "À venir";
+  @override
+  String get lblUpcoming => 'Prochain';
 
-  String get lblSwipeToView => "Balayez pour voir";
+  @override
+  String get lblServiceName => "NOM DU SERVICE";
 
-  String get lblSelectGender => "Sélectionner le sexe";
+  @override
+  String get lblSwipeToView => 'Faites glisser pour afficher les détails';
 
-  String get lblSwipeLeftForInvoice => "Balayez vers la gauche pour la facture";
+  @override
+  String get lblSwipeLeftForInvoice => "Faites glisser votre doigt vers la gauche pour afficher les détails de la facture et de la rencontre";
 
+  @override
   String get lblSwipeLeftToDelete => "Balayez vers la gauche pour supprimer";
 
-  String get lblTotalService => "Nombre total de services";
+  @override
+  String get lblTotalService => 'Service total';
 
-  String get lblEnterValidDetails => "Entrez des informations valides";
+  @override
+  String get lblEnterValidDetails => 'Entrez des informations valides';
 
-  String get lblCouldNotLaunch => "Impossible de lancer";
+  @override
+  String get lblCouldNotLaunch => "Impossible de lancer l'application";
 
-  String get lblIsRequired => "Est requis";
+  @override
+  String get lblIsRequired => 'est requis';
 
-  String get lblOldAndNewPassword => "Ancien et nouveau mot de passe";
+  @override
+  String get lblOldAndNewPassword => 'Ancien et nouveau mot de passe identiques';
 
-  String get lblPasswordMustBeStrong => "Le mot de passe doit être sécurisé";
+  @override
+  String get lblPasswordMustBeStrong => 'Le mot de passe doit comporter au moins 8 caractères, y compris des majuscules, des chiffres et des caractères spéciaux';
+
+  @override
+  String get lblFilterBy => 'Filtrer par';
+
+  @override
+  String get lblApplyFilter => 'Appliquer le filtre';
+
+  @override
+  String get lblServiceWithCategory => 'Service avec catégorie';
+
+  @override
+  String get lblDiagnosisDetails => 'Détails du diagnostic';
+
+  @override
+  String get lblPriceLowHigh => 'Prix ​bas-élevé';
+
+  @override
+  String get lblPriceHighLow => 'Prix ​​élevé-bas';
+
+  @override
+  String get lblOnwer => 'Propriétaire';
+
+  @override
+  String get lblSessionSummary => 'Résumé de la session';
+
+  @override
+  String get lblDateandTime => 'Date et heure';
+
+  @override
+  String get lblAppointmentStatus => 'Statut du rendez-vous';
+
+  @override
+  String get lblMedicalHistory => 'antécédents médicaux';
+
+  @override
+  String get lblClinicInfo => 'Informations sur la clinique';
+
+  @override
+  String get lblDoctorInfo => 'Informations sur le médecin';
+
+  @override
+  String get lblPatientInfo => 'Informations pour les patients';
+
+  @override
+  String get lblAboutService => 'À propos du service';
+
+  @override
+  String get lblServiceIsDeletedCurrentlyUnavailable => 'Le service est supprimé, actuellement indisponible';
+
+  @override
+  String get lblPaymentDetails => 'Détails de paiement';
+
+  @override
+  String get lblServiceTotal => 'Service total';
+
+  @override
+  String get lblExclusiveTax => 'Taxe exclusive';
+
+  @override
+  String get lblPaymentDetailsNotAvailable => 'Détails de paiement non disponibles (Service supprimé)';
+
+  @override
+  String get lblSomeFilesExceedLimit => 'Certains fichiers dépassent la limite de 5 Mo';
+
+  @override
+  String get lblInvalidFileType => 'Type de fichier non valide sélectionné. Autorisés : PDF, DOC, DOCX, JPG, JPEG, PNG, XLS, XLSX';
 }

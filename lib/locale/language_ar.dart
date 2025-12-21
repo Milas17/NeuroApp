@@ -1046,7 +1046,7 @@ class LanguageAr extends BaseLanguage {
   String get lblTotalVisitedPatients => 'إجمالي زيارة المرضى';
 
   @override
-  String get lblTotalAppointment => 'إجمالي التعيين.';
+  String get lblTotalAppointment => 'الموعد الإجمالي';
 
   @override
   String get lblTotalVisitedAppointment => 'إجمالي موعد زار';
@@ -2419,4 +2419,70 @@ class LanguageAr extends BaseLanguage {
 
   @override
   String get lblPasswordMustBeStrong => 'يجب أن تتكون كلمة المرور من 8 أحرف على الأقل، بما في ذلك الأحرف الكبيرة والأرقام والأحرف الخاصة';
+
+  @override
+  String get lblFilterBy => 'التصفية حسب';
+
+  @override
+  String get lblApplyFilter => 'تطبيق الفلتر';
+
+  @override
+  String get lblServiceWithCategory => 'الخدمة مع الفئة';
+
+  @override
+  String get lblDiagnosisDetails => 'تفاصيل التشخيص';
+
+  @override
+  String get lblPriceLowHigh => 'السعر منخفض مرتفع';
+
+  @override
+  String get lblPriceHighLow => 'السعر المرتفع والمنخفض';
+
+  @override
+  String get lblOnwer => 'مالك';
+
+  @override
+  String get lblSessionSummary => 'ملخص الجلسة';
+
+  @override
+  String get lblDateandTime => 'التاريخ والوقت';
+
+  @override
+  String get lblAppointmentStatus => 'حالة الموعد';
+
+  @override
+  String get lblMedicalHistory => 'التاريخ الطبي';
+
+  @override
+  String get lblClinicInfo => 'معلومات العيادة';
+
+  @override
+  String get lblDoctorInfo => 'معلومات الطبيب';
+
+  @override
+  String get lblPatientInfo => 'معلومات المريض';
+
+  @override
+  String get lblAboutService => 'حول الخدمة';
+
+  @override
+  String get lblServiceIsDeletedCurrentlyUnavailable => 'تم حذف الخدمة، غير متوفرة حاليًا';
+
+  @override
+  String get lblPaymentDetails => 'تفاصيل الدفع';
+
+  @override
+  String get lblServiceTotal => 'إجمالي الخدمة';
+
+  @override
+  String get lblExclusiveTax => 'الضريبة الحصرية';
+
+  @override
+  String get lblPaymentDetailsNotAvailable => 'تفاصيل الدفع غير متوفرة (تم حذف الخدمة)';
+
+  @override
+  String get lblSomeFilesExceedLimit => 'بعض الملفات تتجاوز الحد الأقصى 5 ميجا بايت';
+
+  @override
+  String get lblInvalidFileType => 'تم اختيار نوع ملف غير صالح. الملفات المسموح بها: PDF، DOC، DOCX، JPG، JPEG، PNG، XLS، XLSX';
 }
