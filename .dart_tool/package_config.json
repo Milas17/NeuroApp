@@ -1403,7 +1403,7 @@
       "name": "kivicare_flutter",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.9"
     }
   ],
   "generator": "pub",
