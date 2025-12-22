@@ -1,17 +1,17 @@
-const APP_NAME = 'KiviCare';
-const APP_FIRST_NAME = 'Kivi';
-const APP_SECOND_NAME = 'Care';
-const APP_NAME_TAG_LINE = 'Clinic and Patient Management App';
+const APP_NAME = 'NeuroCare Connect';
+const APP_FIRST_NAME = 'NeuroCare';
+const APP_SECOND_NAME = 'Connect';
+const APP_NAME_TAG_LINE = 'Plateforme de télémedecine neurologique et psychiatrique';
 
 // LIVE
-const DOMAIN_URL = 'add your domain URL';
+const DOMAIN_URL = 'https://neurocareconnect.tech';
 
 const BASE_URL = '$DOMAIN_URL/wp-json/';
 
 const IQONIC_PACKAGE_NAME =
     "com.iqonic.kivicare"; // Do not change this Package Name.
-const DEFAULT_LANGUAGE = 'en';
-var COPY_RIGHT_TEXT = '© ${DateTime.now().year}. Made with ♡ by Iqonic Design';
+const DEFAULT_LANGUAGE = 'fr';
+var COPY_RIGHT_TEXT = '© ${DateTime.now().year}. Propulsé par NeuroCare Connect';
 
 const TERMS_AND_CONDITION_URL = 'https://iqonic.design/terms-of-use/';
 const PRIVACY_POLICY_URL =
