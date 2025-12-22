@@ -8,7 +8,7 @@ const appSecondaryColor = Color(0xFF4CAF50);
 const primaryDarkColor = Color(0xff0a0909);
 
 const telemedColor = Color(0xFF181474);
-const zoomColor=Color(0xFF0b5cff);
+const zoomColor = Color(0xFF0b5cff);
 
 const borderColor = Color(0xFFEBEBEB);
 const cardColor = Color(0xFFFFFFFF);
