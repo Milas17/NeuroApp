@@ -1,4 +1,4 @@
-name: kivicare_flutter
+name: neurocare_telemed
 description: A new Flutter application.
 
 publish_to: 'none'
@@ -97,6 +97,13 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "images/appIcon.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#FFFFFF" # Ajoute un fond blanc pour Android
+  remove_alpha_ios: true # Remplit la transparence par du blanc pour iOS
+  web:
+    generate: true
+    image_path: "images/appIcon.png"
+    background_color: "#FFFFFF"
 
 flutter:
 

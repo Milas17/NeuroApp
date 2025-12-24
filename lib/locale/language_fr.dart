@@ -2,7 +2,7 @@ import 'package:kivicare_flutter/locale/base_language_key.dart';
 
 class LanguageFr extends BaseLanguage {
   @override
-  String get appName => 'Kivicare';
+  String get appName => 'NeuroCare Telemed';
 
   @override
   String get lblDiscountValidationText =>

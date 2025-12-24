@@ -1400,7 +1400,7 @@
       "languageVersion": "3.4"
     },
     {
-      "name": "kivicare_flutter",
+      "name": "neurocare_telemed",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "3.0"
