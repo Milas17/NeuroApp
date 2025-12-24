@@ -1,10 +1,10 @@
 {
   "roots": [
-    "neurocare_telemed"
+    "kivicare_flutter"
   ],
   "packages": [
     {
-      "name": "neurocare_telemed",
+      "name": "kivicare_flutter",
       "version": "9.6.8",
       "dependencies": [
         "cached_network_image",
