@@ -63,7 +63,7 @@ class LanguageFr extends BaseLanguage {
   String get lblWishListTitle => "Vos trouvailles organisées";
 
   @override
-  String get lblSearchProducts => "Recherche de produits";
+  String get lblSearchProducts => "Rechercher des produits";
 
   @override
   String get lblContinue => "Continuer";
@@ -109,10 +109,10 @@ class LanguageFr extends BaseLanguage {
   String get lblAddressSubTitle => "Destination de la livraison";
 
   @override
-  String get lblOrders => "Ordres";
+  String get lblOrders => "Commandes";
 
   @override
-  String get lblOrdersSubtitle => "Sous-titre de commande";
+  String get lblOrdersSubtitle => "Vos commandes récentes";
 
   @override
   String get lblCoupons => "Coupons";
@@ -136,7 +136,7 @@ class LanguageFr extends BaseLanguage {
   String get lblFailed => "Échoué";
 
   @override
-  String get lblTrash => "Poubelle";
+  String get lblTrash => "Corbeille";
 
   @override
   String get lblPermissionDenied => "Autorisation de localisation refusée";
@@ -148,7 +148,8 @@ class LanguageFr extends BaseLanguage {
   String get lblPickAddress => "Choisir l'adresse";
 
   @override
-  String get lblSwipeRightNote => "Remarque: glisser à droite pour supprimer";
+  String get lblSwipeRightNote =>
+      "Remarque : glisser vers la droite pour supprimer";
 
   @override
   String get lblCompany => "Entreprise";
@@ -179,7 +180,7 @@ class LanguageFr extends BaseLanguage {
   String get lblReasonForCancellation => "Raison pour l'annulation";
 
   @override
-  String get lblCancelOrder => "annuler la commande";
+  String get lblCancelOrder => "Annuler la commande";
 
   @override
   String get lblCouponDiscount => "Remise des coupons";
@@ -204,7 +205,7 @@ class LanguageFr extends BaseLanguage {
   String get lblCopiedToClipboard => "Copié dans le presse-papier";
 
   @override
-  String get lblCartUpdated => "Panier mis à jour avec succès";
+  String get lblCartUpdated => "Panier mis à jour";
 
   @override
   String get lblOrderDeleted => "Commander avec succès";
@@ -240,7 +241,7 @@ class LanguageFr extends BaseLanguage {
   String get chooseFromMap => "Choisir par carte";
 
   @override
-  String get orderCancelledSuccessfully => 'Commander annulé avec succès';
+  String get orderCancelledSuccessfully => 'Commande annulée avec succès';
 
   @override
   String get cancelOrderConfirmation =>
@@ -271,10 +272,10 @@ class LanguageFr extends BaseLanguage {
   String get category => 'Catégorie';
 
   @override
-  String get reviewAddedSuccessfully => 'Revue ajouté avec succès';
+  String get reviewAddedSuccessfully => 'Avis ajouté avec succès';
 
   @override
-  String get pleaseAddReview => 'Veuillez ajouter l\'examen';
+  String get pleaseAddReview => 'Veuillez ajouter un avis';
 
   @override
   String get pleaseAddRating => 'Veuillez ajouter la note';
@@ -283,7 +284,7 @@ class LanguageFr extends BaseLanguage {
   String get reviews => 'Commentaires';
 
   @override
-  String get editReview => 'Modifier l\'examen';
+  String get editReview => 'Modifier l\'avis';
 
   @override
   String get addAReview => 'Ajouter un commentaire';
@@ -295,17 +296,17 @@ class LanguageFr extends BaseLanguage {
   String get writeReview => 'Votre avis';
 
   @override
-  String get reviewUpdatedSuccessfully => 'Examiner mis à jour avec succès';
+  String get reviewUpdatedSuccessfully => 'Avis mis à jour avec succès';
 
   @override
-  String get reviewDeletedSuccessfully => 'Revoir supprimé avec succès';
+  String get reviewDeletedSuccessfully => 'Avis supprimé avec succès';
 
   @override
   String get deleteReviewConfirmation =>
-      'Êtes-vous sûr de vouloir supprimer cette critique?';
+      'Êtes-vous sûr de vouloir supprimer cet avis ?';
 
   @override
-  String get yourCartIsCurrentlyEmpty => 'Votre carte est actuellement vide.';
+  String get yourCartIsCurrentlyEmpty => 'Votre panier est actuellement vide.';
 
   @override
   String get returnToShop => 'Retour à la boutique';
@@ -363,7 +364,7 @@ class LanguageFr extends BaseLanguage {
   String get expiresOn => 'Expire le';
 
   @override
-  String get off => 'À L\'ARRÊT';
+  String get off => 'Désactivé';
 
   @override
   String get myWishlist => 'Ma liste d\'envies';
@@ -427,13 +428,13 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get placeOrderText =>
-      'Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur tout ce site Web et à d\'autres fins décrites dans notre politique de confidentialité.';
+      'Vos données personnelles seront utilisées pour traiter votre commande, soutenir votre expérience sur ce site Web et à d\'autres fins décrites dans notre politique de confidentialité.';
 
   @override
   String get orderDetails => 'détails de la commande';
 
   @override
-  String get lblOrderCancelledSuccessfully => 'Commander annulé avec succès';
+  String get lblOrderCancelledSuccessfully => 'Commande annulée avec succès';
 
   @override
   String get lblCancelOrderMessageSix => "Ordre passé par erreur";
@@ -464,7 +465,7 @@ class LanguageFr extends BaseLanguage {
   String get lblStripeTestCredential => "Montant non valide";
 
   @override
-  String get lblTodayIsHoliday => "Aujourd'hui c'est tes vacances";
+  String get lblTodayIsHoliday => "Aujourd'hui est un jour férié";
 
   @override
   String get lblTotalTax => "Taxe total";
@@ -476,7 +477,7 @@ class LanguageFr extends BaseLanguage {
   String get lblJoin => "Rejoindre";
 
   @override
-  String get lblTotalDoctors => "Total Médecins";
+  String get lblTotalDoctors => "Total des médecins";
 
   @override
   String get lblTax => "Impôt";
@@ -497,7 +498,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblChargesIsNegative =>
-      "Les charges doivent être supérieures ou égales à 0";
+      "Les frais doivent être supérieurs ou égaux à 0";
 
   @override
   String get lblServiceCategoryIsRequired =>
@@ -513,20 +514,19 @@ class LanguageFr extends BaseLanguage {
   String get lblChargesIsRequired => "Les frais sont requis";
 
   @override
-  String get lblNoLatestAppointmentFound =>
-      "Aucune dernière nomination trouvée";
+  String get lblNoLatestAppointmentFound => "Aucun dernier rendez-vous trouvé";
 
   @override
   String get lblNoPendingAppointmentFound =>
-      "Aucune nomination en attente trouvée";
+      "Aucun rendez-vous en attente trouvé";
 
   @override
   String get lblNoCompletedAppointmentFound =>
-      "Aucune nomination terminée trouvée";
+      "Aucun rendez-vous terminé trouvé";
 
   @override
   String get lblNoCancelledAppointmentFound =>
-      "Aucune nomination annulée trouvée";
+      "Aucun rendez-vous annulé trouvé";
 
   @override
   String get clinicIdRequired => "La clinique est requise";
@@ -659,7 +659,7 @@ class LanguageFr extends BaseLanguage {
   String get lblSelectBirthDate => "Sélectionnez la date de naissance";
 
   @override
-  String get lblDoYouWantToLogout => "Voulez-vous vous connecter?";
+  String get lblDoYouWantToLogout => "Voulez-vous vous déconnecter ?";
 
   @override
   String get lblDoYouWantToDeleteAccountPermanently =>
@@ -684,7 +684,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblDoYouWantToDeleteHolidayOf =>
-      "Voulez-vous supprimer des vacances?";
+      "Voulez-vous supprimer le jour férié de ?";
 
   @override
   String get lblDoYouWantToDeleteService => "Voulez-vous supprimer le service?";
@@ -758,7 +758,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblDoYouWantToCheckoutAppointment =>
-      "Voulez-vous vérifier le rendez-vous?";
+      "Voulez-vous terminer le rendez-vous ?";
 
   @override
   String get lblMultipleSelectionIsNotAvailableForThisService =>
@@ -772,7 +772,8 @@ class LanguageFr extends BaseLanguage {
   String get lblYears => "Années";
 
   @override
-  String get lblDeleteAccountSubTitle => "Débrancher Healthline: Confirmer?";
+  String get lblDeleteAccountSubTitle =>
+      "Se déconnecter de NeuroCare : Confirmer ?";
 
   @override
   String get lblThemeSubTitle => "Colorez votre expérience.";
@@ -781,7 +782,7 @@ class LanguageFr extends BaseLanguage {
   String get lblHelpAndSupportSubTitle => "Ici pour vous, à chaque étape.";
 
   @override
-  String get lblRateUsSubTitle => "Aimer? Faites le nous savoir!";
+  String get lblRateUsSubTitle => "Vous aimez ? Faites-le nous savoir !";
 
   @override
   String get lblChangePasswordSubtitle =>
@@ -821,7 +822,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblBillSwipe =>
-      "Swipe à gauche pour modifier la quantité ou supprimer le sévice de la facture";
+      "Glisser vers la gauche pour modifier la quantité ou supprimer le service de la facture";
 
   @override
   String get lblViewDoctorMsg => "Appuyez pour voir le profil du médecin";
@@ -850,7 +851,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPending => "En attente";
 
   @override
-  String get lblPleaseTryAgainAfterSometimes => "Veuillez réessayer après parf";
+  String get lblPleaseTryAgainAfterSometimes => "Veuillez réessayer plus tard";
 
   @override
   String get lblTapToSelect => "Appuyez pour sélection";
@@ -1023,7 +1024,7 @@ class LanguageFr extends BaseLanguage {
   String get lblContactNumber => 'Numéro de contact';
 
   @override
-  String get lblDOB => 'Nœud';
+  String get lblDOB => 'Date de naissance';
 
   @override
   String get lblSelectBloodGroup => 'Sélectionner le groupe sanguin';
@@ -1119,22 +1120,22 @@ class LanguageFr extends BaseLanguage {
   String get lblAppointments => 'Nominations';
 
   @override
-  String get lblPatients => 'Les patients';
+  String get lblPatients => 'Patients';
 
   @override
-  String get lblTotalPatient => 'Patient total';
+  String get lblTotalPatient => 'Total des patients';
 
   @override
-  String get lblTotalVisitedPatients => 'Patients visités totaux';
+  String get lblTotalVisitedPatients => 'Total des patients vus';
 
   @override
-  String get lblTotalAppointment => 'Nomination totale';
+  String get lblTotalAppointment => 'Total des rendez-vous';
 
   @override
-  String get lblTotalVisitedAppointment => 'Rendez-vous total visité';
+  String get lblTotalVisitedAppointment => 'Total des rendez-vous honorés';
 
   @override
-  String get lblTodayAppointments => "Aujourd'hui nommer.";
+  String get lblTodayAppointments => "Rendez-vous d'aujourd'hui";
 
   @override
   String get lblTotalTodayAppointments => "Total des rendez-vous aujourd'hui";
@@ -1161,13 +1162,13 @@ class LanguageFr extends BaseLanguage {
   String get lblSelectServices => 'Sélectionner des services';
 
   @override
-  String get lblBook => 'Livre';
+  String get lblBook => 'Réserver';
 
   @override
-  String get lblNoAppointmentForToday => "Pas de nomination pour aujourd'hui";
+  String get lblNoAppointmentForToday => "Pas de rendez-vous pour aujourd'hui";
 
   @override
-  String get lblCheckIn => 'Enregistrement';
+  String get lblCheckIn => 'Arrivée';
 
   @override
   String get lblCheckOut => 'Vérifier';
@@ -1183,7 +1184,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPrescriptionAdded => 'Prescription ajoutée';
 
   @override
-  String get lblUpdatedSuccessfully => 'Mis à jour avec succés';
+  String get lblUpdatedSuccessfully => 'Mis à jour avec succès';
 
   @override
   String get lblPrescriptionDeleted => 'Prescription supprimée';
@@ -1255,7 +1256,7 @@ class LanguageFr extends BaseLanguage {
   String get lblCurrentAgeIs => 'Votre âge actuel est';
 
   @override
-  String get lblGender1 => 'Genre';
+  String get lblGender1 => 'Sexe';
 
   @override
   String get lblSpecialization => 'Spécialisation';
@@ -1303,7 +1304,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblMandatoryMessage =>
-      "Remplissez les informations obligatoires et dans la balise des informations d'identification de l'application, vous pouvez voir la clé API et le secret de l'API.";
+      "Remplissez les informations obligatoires. Vous trouverez la clé et le secret API dans l'onglet Identifiants.";
 
   @override
   String get lbl5 => '5';
@@ -1331,7 +1332,7 @@ class LanguageFr extends BaseLanguage {
   String get lblDoctorName => 'Nom du médecin';
 
   @override
-  String get lblDesc => 'Dessiner';
+  String get lblDesc => 'Description';
 
   @override
   String get lblAddNewQualification => 'Ajouter une nouvelle qualification';
@@ -1362,7 +1363,7 @@ class LanguageFr extends BaseLanguage {
       'Modifier les détails de la consultation';
 
   @override
-  String get lblHolidayOf => 'Fêtes';
+  String get lblHolidayOf => 'Vacances de';
 
   @override
   String get lblModuleIsRequired => 'Le module est requis';
@@ -1371,13 +1372,13 @@ class LanguageFr extends BaseLanguage {
   String get lblScheduleDate => 'Date de planification';
 
   @override
-  String get lblLeaveFor => 'Partir pour';
+  String get lblLeaveFor => 'Congé pour';
 
   @override
-  String get lblAddHoliday => 'Ajouter les vacances';
+  String get lblAddHoliday => 'Ajouter un congé';
 
   @override
-  String get lblEditHolidays => 'Modifier les vacances';
+  String get lblEditHolidays => 'Modifier les congés';
 
   @override
   String get lblNewPatientAddedSuccessfully =>
@@ -1409,7 +1410,7 @@ class LanguageFr extends BaseLanguage {
   String get lblCategory => 'Catégorie';
 
   @override
-  String get lblCharges => 'Charge';
+  String get lblCharges => 'Frais';
 
   @override
   String get lblSelectDoctor => 'Sélectionner le médecin';
@@ -1455,7 +1456,7 @@ class LanguageFr extends BaseLanguage {
   String get lblTimeSlotInMinute => 'Place horaire (en minute)';
 
   @override
-  String get lblTimeSlotRequired => 'Place horaire requis';
+  String get lblTimeSlotRequired => 'Créneau horaire requis';
 
   @override
   String get lblWeekDays => 'Jours de la semaine';
@@ -1491,7 +1492,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPatientDetails => 'Détails du patient';
 
   @override
-  String get lblServices => 'Prestations de service';
+  String get lblServices => 'Services';
 
   @override
   String get lblDiscount => 'Rabais';
@@ -1512,7 +1513,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPatientName => 'Nom du patient';
 
   @override
-  String get lblGender2 => 'Genre';
+  String get lblGender2 => 'Sexe';
 
   @override
   String get lblSRNo => 'SR NON';
@@ -1560,7 +1561,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNotes => 'Remarques';
 
   @override
-  String get lblBillAddedSuccessfully => 'Bill a ajouté avec succès';
+  String get lblBillAddedSuccessfully => 'Facture ajoutée avec succès';
 
   @override
   String get lblAtLeastSelectOneBillItem =>
@@ -1570,10 +1571,10 @@ class LanguageFr extends BaseLanguage {
   String get lblGenerateInvoice => 'Générer une facture';
 
   @override
-  String get lblSERVICES => 'PRESTATIONS DE SERVICE';
+  String get lblSERVICES => 'SERVICES';
 
   @override
-  String get lblPayableAmount => 'Montant payable';
+  String get lblPayableAmount => 'Montant à payer';
 
   @override
   String get lblSaveAndCloseEncounter =>
@@ -1589,10 +1590,10 @@ class LanguageFr extends BaseLanguage {
   String get lblAfter => 'Après';
 
   @override
-  String get lblWasOffFor => 'Était parti pour';
+  String get lblWasOffFor => 'Était absent pour';
 
   @override
-  String get lblYourHolidays => 'Vos vacances';
+  String get lblYourHolidays => 'Vos congés';
 
   @override
   String get lblNoServicesFound => 'Aucun service trouvé';
@@ -1601,7 +1602,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNoDataFound => 'Aucune donnée disponible';
 
   @override
-  String get lblOn => 'Sur';
+  String get lblOn => 'Activé';
 
   @override
   String get lblOff => 'Désactivé';
@@ -1613,7 +1614,7 @@ class LanguageFr extends BaseLanguage {
   String get lblSelectClinic => 'Sélectionner la clinique';
 
   @override
-  String get lblEnter => 'Entrer';
+  String get lblEnter => 'Valider';
 
   @override
   String get lblFieldIsRequired => 'Champ requis';
@@ -1628,10 +1629,10 @@ class LanguageFr extends BaseLanguage {
   String get lblSessions => 'Séances';
 
   @override
-  String get lblClinicSessions => 'Séances de clinique';
+  String get lblClinicSessions => 'Sessions de clinique';
 
   @override
-  String get lblClinicServices => 'Prestations de service';
+  String get lblClinicServices => 'Services de la clinique';
 
   @override
   String get lblVideoConsulting => 'Consultation vidéo';
@@ -1702,13 +1703,13 @@ class LanguageFr extends BaseLanguage {
       'Le nouveau mot de passe et la confirmation du mot de passe doivent correspondre';
 
   @override
-  String get lblVisited => 'A visité';
+  String get lblVisited => 'Visité';
 
   @override
   String get lblBooked => 'Réservé';
 
   @override
-  String get lblCompleted => 'Complété';
+  String get lblCompleted => 'Terminé';
 
   @override
   String get lblCancelled => 'Annulé';
@@ -1736,7 +1737,7 @@ class LanguageFr extends BaseLanguage {
       'Rendez-vous réservé avec succès, veuillez consulter votre e-mail.';
 
   @override
-  String get lblSelectedSlots => 'Machines à sous sélectionnées';
+  String get lblSelectedSlots => 'Créneaux sélectionnés';
 
   @override
   String get lblSession => 'Session';
@@ -1761,10 +1762,10 @@ class LanguageFr extends BaseLanguage {
   String get lblDoctorDeleted => 'Docteur supprimé';
 
   @override
-  String get lblYearsExperience => 'année';
+  String get lblYearsExperience => 'années';
 
   @override
-  String get lblYearsOfExperience => "des années d'expérience";
+  String get lblYearsOfExperience => "années d'expérience";
 
   @override
   String get lblAvailableOn => 'Disponible pour ces jours de semaine:';
@@ -1782,7 +1783,7 @@ class LanguageFr extends BaseLanguage {
   String get lblBy => 'par';
 
   @override
-  String get lblNews => 'Nouvelles';
+  String get lblNews => 'Actualités';
 
   @override
   String get lblUpcomingAppointments => 'Rendez-vous à venir';
@@ -1847,7 +1848,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAll => 'Tous';
 
   @override
-  String get lblLatest => 'Dernier';
+  String get lblLatest => 'Récent';
 
   @override
   String get lblMon => 'Lun';
@@ -1877,7 +1878,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAddReportScreen => 'Ajouter un rapport';
 
   @override
-  String get lblDateCantBeNull => 'La date ne peut pas être vide';
+  String get lblDateCantBeNull => 'La date est requise';
 
   @override
   String get lblUploadReport => 'Rapport de téléchargement';
@@ -1889,7 +1890,7 @@ class LanguageFr extends BaseLanguage {
   String get lblDark => 'Sombre';
 
   @override
-  String get lblSystemDefault => 'Défaillance du système';
+  String get lblSystemDefault => 'Défaut système';
 
   @override
   String get lblNA => 'N / A';
@@ -1923,7 +1924,7 @@ class LanguageFr extends BaseLanguage {
   String get lblService => 'Service';
 
   @override
-  String get lblTime => 'Temps';
+  String get lblTime => 'Heure';
 
   @override
   String get lblAppointmentSummary => 'Résumé de la nomination';
@@ -1944,10 +1945,10 @@ class LanguageFr extends BaseLanguage {
   String get lblQrScanner => 'Scanner QR';
 
   @override
-  String get lblLoginSuccessfully => 'Connectez-vous avec succès';
+  String get lblLoginSuccessfully => 'Connexion réussie';
 
   @override
-  String get lblWrongUser => 'Mauvais utilisateur';
+  String get lblWrongUser => 'Utilisateur incorrect';
 
   @override
   String get lblMorning => 'Matin';
@@ -1959,7 +1960,7 @@ class LanguageFr extends BaseLanguage {
   String get lblShare => 'Partager';
 
   @override
-  String get lblNoMatch => 'Aucune vue correspondante';
+  String get lblNoMatch => 'Aucune correspondance';
 
   @override
   String get lblNoDataSubTitle =>
@@ -1969,7 +1970,8 @@ class LanguageFr extends BaseLanguage {
   String get lblEdit => 'Modifier';
 
   @override
-  String get lblSwipeMassage => 'Swipe à gauche pour modifier ou supprimer';
+  String get lblSwipeMassage =>
+      'Glisser vers la gauche pour modifier ou supprimer';
 
   @override
   String get lblReachUsMore => 'Nous atteindre plus';
@@ -1984,10 +1986,10 @@ class LanguageFr extends BaseLanguage {
   String get lblYourBills => 'Obtenez vos détails tous les factures';
 
   @override
-  String get lblYourReports => 'Trouvez vos rapports téléchargés';
+  String get lblYourReports => 'Retrouvez vos rapports';
 
   @override
-  String get lblBillRecords => 'Records de facture';
+  String get lblBillRecords => 'Historique des factures';
 
   @override
   String get lblMyBills => 'Mes factures';
@@ -1999,7 +2001,7 @@ class LanguageFr extends BaseLanguage {
   String get lblBuyIt => 'Achète-le';
 
   @override
-  String get lblTryIt => 'Essayez-le';
+  String get lblTryIt => 'Essayer';
 
   @override
   String get lblYouAreJustOneStepAwayFromHavingAHandsOnBackendDemo =>
@@ -2028,7 +2030,7 @@ class LanguageFr extends BaseLanguage {
   String get lblCamera => 'Caméra';
 
   @override
-  String get lblGallery => 'Galerie';
+  String get lblGallery => 'Galerie photo';
 
   @override
   String get lblRemoveImage => "Supprimer l'image";
@@ -2047,7 +2049,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPlease => "S'il te plaît";
 
   @override
-  String get lblRetry => 'recommencez';
+  String get lblRetry => 'Réessayer';
 
   @override
   String get lblAfternoon => 'Après-midi';
@@ -2069,7 +2071,7 @@ class LanguageFr extends BaseLanguage {
       'Veuillez fermer la consultation pour vérifier le patient';
 
   @override
-  String get lblRemove => 'retirer';
+  String get lblRemove => 'Retirer';
 
   @override
   String get lblAResetPasswordLinkWillBeSentToTheAboveEnteredEmailAddress =>
@@ -2094,7 +2096,7 @@ class LanguageFr extends BaseLanguage {
   String get lblRatingsAndReviews => 'Notes et avis';
 
   @override
-  String get lblViewFile => 'Voir la fiche';
+  String get lblViewFile => 'Voir le fichier';
 
   @override
   String get lblLoading => 'Chargement';
@@ -2110,7 +2112,7 @@ class LanguageFr extends BaseLanguage {
   String get lblChooseAction => 'Choisir une action';
 
   @override
-  String get lblConnecting => 'De liaison';
+  String get lblConnecting => 'Connexion en cours';
 
   @override
   String get lblMyClinic => 'Ma clinique';
@@ -2175,7 +2177,7 @@ class LanguageFr extends BaseLanguage {
   String get lblWednesday => 'Mercredi';
 
   @override
-  String get lblChange => 'Changement';
+  String get lblChange => 'Modifier';
 
   @override
   String get lblChangingStatusFrom => 'Changer le statut de';
@@ -2260,16 +2262,16 @@ class LanguageFr extends BaseLanguage {
   String get lblInActive => 'Inactif';
 
   @override
-  String get lblOpen => 'Ouvrir';
+  String get lblOpen => 'Ouvert';
 
   @override
   String get lblPaid => 'Payé';
 
   @override
-  String get lblUnPaid => 'Non payé';
+  String get lblUnPaid => 'Impayé';
 
   @override
-  String get lblComplete => 'Complet';
+  String get lblComplete => 'Terminé';
 
   @override
   String get lblClosed => 'Fermé';
@@ -2282,16 +2284,16 @@ class LanguageFr extends BaseLanguage {
   String get lblAvailableSession => 'Détails de session disponibles';
 
   @override
-  String get lblGetYourAllBillsHere => 'HISTOIRE DE TOUS LES RECORDS DE BILL';
+  String get lblGetYourAllBillsHere => 'HISTORIQUE DE TOUTES LES FACTURES';
 
   @override
   String get lblServicesYouProvide => 'Services que vous fournissez';
 
   @override
-  String get lblYourAllEncounters => 'Histoire de toutes les rencontres';
+  String get lblYourAllEncounters => 'Historique de toutes les consultations';
 
   @override
-  String get lblScheduledHolidays => 'Vacances planifiées';
+  String get lblScheduledHolidays => 'Congés planifiés';
 
   @override
   String get lblNotSelected => 'Non séléctionné';
@@ -2303,10 +2305,10 @@ class LanguageFr extends BaseLanguage {
   String get lblMultipleSelection => 'Sélection multiple';
 
   @override
-  String get lblAdded => 'Ajoutée';
+  String get lblAdded => 'Ajouté';
 
   @override
-  String get lblAddedSuccessfully => 'Ajout de réussite';
+  String get lblAddedSuccessfully => 'Ajouté avec succès';
 
   @override
   String get lblInvalidURL => 'URL invalide:';
@@ -2398,10 +2400,10 @@ class LanguageFr extends BaseLanguage {
   String get lblChangeSignature => 'Changer la signature';
 
   @override
-  String get lblClear => 'Clair';
+  String get lblClear => 'Effacer';
 
   @override
-  String get lblUndo => 'annuler';
+  String get lblUndo => 'Annuler';
 
   @override
   String get lblSignature => 'Signature';
@@ -2417,7 +2419,7 @@ class LanguageFr extends BaseLanguage {
   String get lblSelect => 'Sélectionner';
 
   @override
-  String get lblPayBill => 'Masse salariale';
+  String get lblPayBill => 'Payer la facture';
 
   @override
   String get lblPleaseCheckYourEmailInboxToSetNewPassword =>
@@ -2427,10 +2429,10 @@ class LanguageFr extends BaseLanguage {
   String get lblReview => 'Examen';
 
   @override
-  String get lblBillingRecords => 'Records de facturation';
+  String get lblBillingRecords => 'Historique de facturation';
 
   @override
-  String get lblAppointmentCount => 'Compte de rendez-vous';
+  String get lblAppointmentCount => 'Nombre de rendez-vous';
 
   @override
   String get lblNoRecordsFound => 'Aucun enregistrement trouvé';
@@ -2452,7 +2454,7 @@ class LanguageFr extends BaseLanguage {
       'Sachez ce que vos patients dit de vous';
 
   @override
-  String get lblSchedule => 'Calendrier';
+  String get lblSchedule => 'Emploi du temps';
 
   @override
   String get lblAllowMultiSelectionWhileBooking =>
@@ -2527,13 +2529,13 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblSwipeLeftForInvoice =>
-      "Faites glisser votre doigt vers la gauche pour afficher les détails de la facture et de la rencontre";
+      "Faites glisser votre doigt vers la gauche pour afficher les détails de la facture et de la consultation";
 
   @override
   String get lblSwipeLeftToDelete => "Balayez vers la gauche pour supprimer";
 
   @override
-  String get lblTotalService => 'Service total';
+  String get lblTotalService => 'Total des services';
 
   @override
   String get lblEnterValidDetails => 'Entrez des informations valides';
@@ -2565,10 +2567,10 @@ class LanguageFr extends BaseLanguage {
   String get lblDiagnosisDetails => 'Détails du diagnostic';
 
   @override
-  String get lblPriceLowHigh => 'Prix ​bas-élevé';
+  String get lblPriceLowHigh => 'Prix croissant';
 
   @override
-  String get lblPriceHighLow => 'Prix ​​élevé-bas';
+  String get lblPriceHighLow => 'Prix décroissant';
 
   @override
   String get lblOnwer => 'Propriétaire';
@@ -2583,7 +2585,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAppointmentStatus => 'Statut du rendez-vous';
 
   @override
-  String get lblMedicalHistory => 'antécédents médicaux';
+  String get lblMedicalHistory => 'Antécédents médicaux';
 
   @override
   String get lblClinicInfo => 'Informations sur la clinique';
@@ -2592,7 +2594,7 @@ class LanguageFr extends BaseLanguage {
   String get lblDoctorInfo => 'Informations sur le médecin';
 
   @override
-  String get lblPatientInfo => 'Informations pour les patients';
+  String get lblPatientInfo => 'Informations du patient';
 
   @override
   String get lblAboutService => 'À propos du service';
@@ -2605,10 +2607,10 @@ class LanguageFr extends BaseLanguage {
   String get lblPaymentDetails => 'Détails de paiement';
 
   @override
-  String get lblServiceTotal => 'Service total';
+  String get lblServiceTotal => 'Total du service';
 
   @override
-  String get lblExclusiveTax => 'Taxe exclusive';
+  String get lblExclusiveTax => 'Hors taxe';
 
   @override
   String get lblPaymentDetailsNotAvailable =>

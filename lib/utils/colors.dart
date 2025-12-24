@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-const primaryColor = Color(0xFF1976D2);
+const primaryColor = Color(0xFF7093E5);
 Color appPrimaryColor = primaryColor;
 
-const appSecondaryColor = Color(0xFF4CAF50);
+const appSecondaryColor = Color(0xFFF68685);
 const primaryDarkColor = Color(0xff0a0909);
 
 const telemedColor = Color(0xFF181474);
-const zoomColor = Color(0xFF0b5cff);
+const zoomColor=Color(0xFF0b5cff);
 
 const borderColor = Color(0xFFEBEBEB);
 const cardColor = Color(0xFFFFFFFF);
