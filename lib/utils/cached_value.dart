@@ -33,18 +33,3 @@ class CachedData {
     return getStringAsync(cachedKey).isNotEmpty ? jsonDecode(getStringAsync(cachedKey)) : null;
   }
 }
-
-void clearCache() {
-  cachedPatientDashboardModel = null;
-  cachedDoctorDashboardModel = null;
-  cachedReceptionistDashboardModel = null;
-  cachedNewsFeed = null;
-  cachedDoctorAppointment = [];
-  cachedReceptionistAppointment = null;
-  cachedPatientAppointment = null;
-  cachedPatientList = null;
-  cachedDoctorList = null;
-  cachedUserData = null;
-  cachedStaticData = null;
-  cachedClinicList = null;
-}

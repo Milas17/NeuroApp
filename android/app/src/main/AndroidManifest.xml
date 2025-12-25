@@ -51,7 +51,7 @@
         <!--Todo removed Key before making code zip;      DO NOT REMOVE THIS TODO />-->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="please add your key" />
+            android:value="please add your api key" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
