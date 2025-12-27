@@ -4,7 +4,7 @@ const APP_SECOND_NAME = 'Telemed';
 const APP_NAME_TAG_LINE = 'Plateforme de telemedecine neurologique et psychiatrique';
 
 // LIVE
-const DOMAIN_URL = 'https://neurocareconnect.com/';
+const DOMAIN_URL = 'https://neurocareconnect.tech/';
 
 const BASE_URL = '$DOMAIN_URL/wp-json/';
 
