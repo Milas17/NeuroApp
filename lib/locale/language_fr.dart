@@ -2,7 +2,7 @@ import 'package:kivicare_flutter/locale/base_language_key.dart';
 
 class LanguageFr extends BaseLanguage {
   @override
-  String get appName => 'Kivicare';
+  String get appName => 'NeuroCare Telemed';
 
   @override
   String get lblDiscountValidationText => 'La remise ne peut pas être supérieure au total des frais de service';
@@ -881,17 +881,16 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblWalkThroughSubTitle1 =>
-      "«L'application Kivicare est la solution de dossiers de santé électronique (DSE) prêts à l'emploi et ultimes pour les médecins, les professionnels de la santé, la gestion des cliniques et des patients. Quatre modèles uniques pour les médecins, les administrateurs de la clinique, la réceptionniste et les patients.";
+      "«L'application NeuroCare Telemed est la solution de dossiers de santé électronique (DSE) prêts à l'emploi et ultimes pour les médecins, les professionnels de la santé, la gestion des cliniques et des patients. Quatre modèles uniques pour les médecins, les administrateurs de la clinique, la réceptionniste et les patients.";
 
   @override
   String get lblWalkThroughSubTitle2 =>
-      'Créez votre application mobile ingénieuse en répertoriant les médecins. Vous pouvez trouver un médecin le plus proche de vous avec ce modèle de médecins incroyable. Ajouter et gérer la liste des médecins avec Kivicare.';
+      'Vous pouvez trouver  un médecin le plus proche de vous avec ce modèle de médecins incroyable. Ajouter et gérer la liste des médecins avec NeuroCare Telemed.';
+  @override
+  String get lblWalkThroughSubTitle3 => "Gérer les rendez-vous à la clinique ou à l'hôpital, planifiez les patients à l'avance avec l'interface intelligente de NeuroCare Telemed. Évitez les retards ou l'attente plus longue dans les files d'attente";
 
   @override
-  String get lblWalkThroughSubTitle3 => "Gérer les rendez-vous à la clinique ou à l'hôpital, planifiez les patients à l'avance avec l'interface intelligente de Kivicare. Évitez les retards ou l'attente plus longue dans les files d'attente";
-
-  @override
-  String get lblWalkThroughSubTitle4 => 'Les patients peuvent avoir une consultation directe avec le médecin rendant le premier diagnostic précis et opportun. La notification SMS de Kivicare envoie des alertes sur le numéro enregistré du patient.';
+  String get lblWalkThroughSubTitle4 => 'Les patients peuvent avoir une consultation directe avec le médecin rendant le premier diagnostic précis et opportun. La notification SMS de NeuroCare Telemed envoie des alertes sur le numéro enregistré du patient.';
 
   @override
   String get lblWalkThroughSkipButton => 'Sauter';
@@ -900,7 +899,7 @@ class LanguageFr extends BaseLanguage {
   String get lblWalkThroughNextButton => 'Suivant';
 
   @override
-  String get lblWalkThroughGetStartedButton => 'Commencer';
+  String get lblWalkThroughGetStartedButton => 'Acceuil';
 
   @override
   String get lblSignIn => "S'identifier";
@@ -1029,7 +1028,7 @@ class LanguageFr extends BaseLanguage {
   String get lblDone => 'Fait';
 
   @override
-  String get lblSignUpAsPatient => 'Enregistrez votre compte KiviCare';
+  String get lblSignUpAsPatient => 'Enregistrez votre compte NeuroCare Telemed';
 
   @override
   String get lblAlreadyAMember => 'Déjà membre?';
@@ -1053,7 +1052,7 @@ class LanguageFr extends BaseLanguage {
   String get lblTotalVisitedPatients => 'Patients visités totaux';
 
   @override
-  String get lblTotalAppointment => 'Total des rendez-vous';
+  String get lblTotalAppointment => 'Total des RDV';
 
   @override
   String get lblTotalVisitedAppointment => 'Rendez-vous total visité';
@@ -1089,7 +1088,7 @@ class LanguageFr extends BaseLanguage {
   String get lblBook => 'Livre';
 
   @override
-  String get lblNoAppointmentForToday => "Pas de nomination pour aujourd'hui";
+  String get lblNoAppointmentForToday => "Pas de rendez-vous pour aujourd'hui";
 
   @override
   String get lblCheckIn => 'Enregistrement';
@@ -1470,7 +1469,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNotes => 'Remarques';
 
   @override
-  String get lblBillAddedSuccessfully => 'Bill a ajouté avec succès';
+  String get lblBillAddedSuccessfully => 'Facture ajoutée avec succès';
 
   @override
   String get lblAtLeastSelectOneBillItem => 'Pour économiser au moins, sélectionnez un élément de facture';
@@ -1533,10 +1532,10 @@ class LanguageFr extends BaseLanguage {
   String get lblClinicHoliday => 'Vacances à la clinique';
 
   @override
-  String get lblSessions => 'Séances';
+  String get lblSessions => 'Disponibilités';
 
   @override
-  String get lblClinicSessions => 'Séances de clinique';
+  String get lblClinicSessions => 'Disponibilités en clinique';
 
   @override
   String get lblClinicServices => 'Prestations de service';
@@ -1557,7 +1556,7 @@ class LanguageFr extends BaseLanguage {
   String get lblClinicTAndC => 'Clinique T&C';
 
   @override
-  String get lblAboutKiviCare => 'À propos de Kivicare';
+  String get lblAboutKiviCare => 'À propos de NeuroCare Telemed';
 
   @override
   String get lblYourReviewCounts => 'Votre avis compte';
@@ -1591,7 +1590,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblAboutUsDes =>
-      "Kivicare est un rendez-vous en clinique / hôpital complet et une gestion des dossiers pour les médecins et les patients. Les informations, les rapports médicaux, les médicaments, les antécédents de visite, les notes cliniques, les antécédents du patient et d'autres notes. Jongler à travers les articles pour voir les antécédents précédents de vos patients, tout est facilement disponible pour votre diagnostic.";
+      "NeuroCare Telemed est une plateforme de télémedecine neurologique et psychiatrique qui vous permet de gérer les dossiers médicaux électroniques avec les informations, les rapports médicaux, les médicaments, les antécédents de visite, les notes cliniques, les antécédents du patient et d'autres notes. Jongler à travers les articles pour voir les antécédents précédents de vos patients, tout est facilement disponible pour votre diagnostic.";
 
   @override
   String get lblPurchase => 'Achat';
@@ -1756,7 +1755,7 @@ class LanguageFr extends BaseLanguage {
   String get lblTue => 'Mar';
 
   @override
-  String get lblWed => 'Épouser';
+  String get lblWed => 'Mer';
 
   @override
   String get lblThu => 'Jeu';
@@ -1765,10 +1764,10 @@ class LanguageFr extends BaseLanguage {
   String get lblFri => 'Ven';
 
   @override
-  String get lblSat => 'Assis';
+  String get lblSat => 'Sam';
 
   @override
-  String get lblSun => 'Soleil';
+  String get lblSun => 'Dim';
 
   @override
   String get lblNoReportWasSelected => "Aucun rapport n'a été sélectionné";
@@ -1885,7 +1884,7 @@ class LanguageFr extends BaseLanguage {
   String get lblYourReports => 'Trouvez vos rapports téléchargés';
 
   @override
-  String get lblBillRecords => 'Records de facture';
+  String get lblBillRecords => 'Liste des factures';
 
   @override
   String get lblMyBills => 'Mes factures';
@@ -1915,7 +1914,7 @@ class LanguageFr extends BaseLanguage {
   String get lblYouWillSeeAQRForAppOptionOnTheRightHandCorner => "Vous verrez une option QR pour l'application dans le coin droit,";
 
   @override
-  String get lblEnjoyTheFlawlessKivicareSystemWithEase => 'Apprécier! Le système Kivicare impeccable avec facilité.';
+  String get lblEnjoyTheFlawlessKivicareSystemWithEase => 'Apprécier! Le système  impeccable avec facilité.';
 
   @override
   String get lblCamera => 'Caméra';
@@ -2167,7 +2166,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAvailableSession => 'Détails de session disponibles';
 
   @override
-  String get lblGetYourAllBillsHere => 'HISTOIRE DE TOUS LES RECORDS DE BILL';
+  String get lblGetYourAllBillsHere => 'Historique des facturations';
 
   @override
   String get lblServicesYouProvide => 'Services que vous fournissez';
@@ -2308,7 +2307,7 @@ class LanguageFr extends BaseLanguage {
   String get lblReview => 'Examen';
 
   @override
-  String get lblBillingRecords => 'Records de facturation';
+  String get lblBillingRecords => 'Liste des factures';
 
   @override
   String get lblAppointmentCount => 'Nombre de rendez-vous';
