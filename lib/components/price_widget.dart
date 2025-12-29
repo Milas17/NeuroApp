@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kivicare_flutter/main.dart';
 import 'package:kivicare_flutter/utils/colors.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -43,7 +44,7 @@ class PriceWidget extends StatelessWidget {
         children: [
           if (regularPrice.validate().toDouble() > salePrice.toDouble())
             Text(
-              '${prefix ?? appStore.currencyPrefix.validate(value: appStore.currency.validate())}${regularPrice.toDouble().toStringAsFixed(2)}${postFix ?? appStore.currencyPostfix.validate(value: '')}',
+              '${NumberFormat.decimalPattern('fr').format(regularPrice.validate().toDouble().toInt())}${postFix ?? appStore.currencyPostfix.validate(value: ' FCFA')}',
               textAlign: textAlign,
               style: textStyle ??
                   secondaryTextStyle(
@@ -56,7 +57,7 @@ class PriceWidget extends StatelessWidget {
                   ),
             ),
           Text(
-            '${prefix ?? appStore.currencyPrefix.validate(value: appStore.currency.validate())}${salePrice.toDouble().toStringAsFixed(2)}${postFix ?? appStore.currencyPostfix.validate(value: '')}',
+            '${NumberFormat.decimalPattern('fr').format(salePrice.validate().toDouble().toInt())}${postFix ?? appStore.currencyPostfix.validate(value: ' FCFA')}',
             textAlign: textAlign,
             style: textStyle ?? boldTextStyle(size: textSize ?? textBoldSizeGlobal.toInt(), color: textColor ?? ratingBarLightGreenColor),
           ),
@@ -64,7 +65,7 @@ class PriceWidget extends StatelessWidget {
       );
 
     return Text(
-      '${prefix ?? appStore.currencyPrefix.validate(value: appStore.currency.validate())}${price.toDouble().toStringAsFixed(2)}${postFix ?? appStore.currencyPostfix.validate(value: '')}',
+      '${NumberFormat.decimalPattern('fr').format(price.validate().toDouble().toInt())}${postFix ?? appStore.currencyPostfix.validate(value: ' FCFA')}',
       textAlign: textAlign,
       style: textStyle ?? boldTextStyle(size: textSize ?? textBoldSizeGlobal.toInt(), color: textColor ?? textPrimaryColorGlobal),
     );
