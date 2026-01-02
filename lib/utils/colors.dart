@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-const primaryColor = Color(0xFF7093E5);
+const primaryColor = Color.fromARGB(255, 4, 121, 39);
 Color appPrimaryColor = primaryColor;
 
-const appSecondaryColor = Color(0xFFF68685);
+const appSecondaryColor = Color.fromARGB(255, 240, 88, 85);
 const primaryDarkColor = Color(0xff0a0909);
 
 const telemedColor = Color(0xFF181474);

@@ -2,7 +2,7 @@ import 'package:kivicare_flutter/locale/base_language_key.dart';
 
 class LanguageFr extends BaseLanguage {
   @override
-  String get appName => 'Kivicare';
+  String get appName => 'NeuroCare Telemed';
 
   @override
   String get lblDiscountValidationText => 'La remise ne peut pas être supérieure au total des frais de service';
@@ -460,7 +460,7 @@ class LanguageFr extends BaseLanguage {
   String get lblJoin => "Rejoindre";
 
   @override
-  String get lblTotalDoctors => "Total Médecins";
+  String get lblTotalDoctors => "Nombre total de médecins";
 
   @override
   String get lblTax => "Impôt";
@@ -493,16 +493,16 @@ class LanguageFr extends BaseLanguage {
   String get lblChargesIsRequired => "Les frais sont requis";
 
   @override
-  String get lblNoLatestAppointmentFound => "Aucune dernière nomination trouvée";
+  String get lblNoLatestAppointmentFound => "Aucun rendez-vous récent trouvé";
 
   @override
-  String get lblNoPendingAppointmentFound => "Aucune nomination en attente trouvée";
+  String get lblNoPendingAppointmentFound => "Aucun rendez-vous en attente trouvé";
 
   @override
-  String get lblNoCompletedAppointmentFound => "Aucune nomination terminée trouvée";
+  String get lblNoCompletedAppointmentFound => "Aucun rendez-vous terminé trouvé";
 
   @override
-  String get lblNoCancelledAppointmentFound => "Aucune nomination annulée trouvée";
+  String get lblNoCancelledAppointmentFound => "Aucun rendez-vous annulé trouvé";
 
   @override
   String get clinicIdRequired => "La clinique est requise";
@@ -523,7 +523,7 @@ class LanguageFr extends BaseLanguage {
   String get lblSwipeLeftToEdit => "Balayez vers la gauche pour modifier ou supprimer des détails";
 
   @override
-  String get lblNoEncounterFoundAtYourClinic => "Aucune rencontre trouvée dans votre clinique";
+  String get lblNoEncounterFoundAtYourClinic => "Aucune consultation trouvée dans votre clinique";
 
   @override
   String get lblAvailableAtClinics => 'Disponible dans les cliniques';
@@ -568,7 +568,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNoPrescriptionFound => "Aucune ordonnance ajoutée par le médecin";
 
   @override
-  String get lblBookAppointment => "Rendez-vous";
+  String get lblBookAppointment => "Prendre rendez-vous";
 
   @override
   String get lblNoNotesFound => "Aucune note ajoutée par le médecin";
@@ -580,10 +580,10 @@ class LanguageFr extends BaseLanguage {
   String get lblNoProblemFound => "Aucun problème ajouté par le médecin";
 
   @override
-  String get lblDoYouWantToUpdateEncounter => "Voulez-vous mettre à jour la rencontre?";
+  String get lblDoYouWantToUpdateEncounter => "Voulez-vous mettre à jour la consultation ?";
 
   @override
-  String get lblDoYouWantToAddEncounter => "Voulez-vous ajouter une rencontre?";
+  String get lblDoYouWantToAddEncounter => "Voulez-vous ajouter une consultation ?";
 
   @override
   String get lblDoYouWantToUpdateYourDetails => "Voulez-vous mettre à jour vos coordonnées?";
@@ -601,7 +601,7 @@ class LanguageFr extends BaseLanguage {
   String get lblDoYouWantToDeleteNote => "Voulez-vous supprimer la note?";
 
   @override
-  String get lblDoYouWantToDeleteDoctor => "Voulez-vous supprimer le médecin?";
+  String get lblDoYouWantToDeleteDoctor => "Voulez-vous supprimer ce médecin ?";
 
   @override
   String get lblLoginSuccessfullyAsAPatient => "Connecté avec succès en tant que patient";
@@ -613,7 +613,7 @@ class LanguageFr extends BaseLanguage {
   String get lblLoginSuccessfullyAsADoctor => "Connecté avec succès en tant que médecin";
 
   @override
-  String get lblSelectEncounterDate => "Sélectionner la date de rencontre";
+  String get lblSelectEncounterDate => "Sélectionner la date de la consultation";
 
   @override
   String get lblSelectReportDate => "Sélectionnez la date du rapport";
@@ -655,13 +655,13 @@ class LanguageFr extends BaseLanguage {
   String get lblDoYouWantToAddNewService => "Voulez-vous ajouter un nouveau service?";
 
   @override
-  String get lblDoYouWantToUpdateAppointmentOf => "Voulez-vous mettre à jour le rendez-vous?";
+  String get lblDoYouWantToUpdateAppointmentOf => "Voulez-vous mettre à jour ce rendez-vous ?";
 
   @override
   String get lblDoYouWantToAddNewAppointmentFor => "Voulez-vous ajouter un nouveau rendez-vous?";
 
   @override
-  String get lblDoYouWantToDeleteAppointmentOf => "Voulez-vous supprimer le rendez-vous?";
+  String get lblDoYouWantToDeleteAppointmentOf => "Voulez-vous supprimer ce rendez-vous ?";
 
   @override
   String get lblDoYouWantToDeleteReport => "Voulez-vous supprimer le rapport?";
@@ -697,10 +697,10 @@ class LanguageFr extends BaseLanguage {
   String get lblDoYouWantToSaveNewDoctorDetails => "Voulez-vous soumettre les détails du nouveau médecin?";
 
   @override
-  String get lblDoYouWantToDeleteEncounterDetailsOf => "Voulez-vous supprimer les détails de la rencontre?";
+  String get lblDoYouWantToDeleteEncounterDetailsOf => "Voulez-vous supprimer les détails de la consultation ?";
 
   @override
-  String get lblDoYouWantToCheckoutAppointment => "Voulez-vous vérifier le rendez-vous?";
+  String get lblDoYouWantToCheckoutAppointment => "Voulez-vous finaliser ce rendez-vous ?";
 
   @override
   String get lblMultipleSelectionIsNotAvailableForThisService => "L'option multi-sélection n'est pas disponible pour ce service";
@@ -736,7 +736,7 @@ class LanguageFr extends BaseLanguage {
   String get lblTelemedServiceAvailable => "Service télévisé disponible";
 
   @override
-  String get lblAvailableDoctor => "Docteur disponible";
+  String get lblAvailableDoctor => "Médecin disponible";
 
   @override
   String get lblAvailableDoctors => "Médecins disponibles";
@@ -754,7 +754,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPleaseChoose => "Veuillez choisir le statut / le service de sélection multiple / télémétrie";
 
   @override
-  String get lblPatientList => "Liste du patient";
+  String get lblPatientList => "Liste des patients";
 
   @override
   String get lblBillSwipe => "Swipe à gauche pour modifier la quantité ou supprimer le sévice de la facture";
@@ -772,7 +772,7 @@ class LanguageFr extends BaseLanguage {
   String get lblEditHolidayRestriction => "Vous ne pouvez pas le modifier maintenant";
 
   @override
-  String get lblNoAppointmentForThisDay => "Il n'y a pas d'horaire de rendez-vous ce jour";
+  String get lblNoAppointmentForThisDay => "Il n'y a pas de rendez-vous prévu ce jour-là";
 
   @override
   String get lblDoctorsSelected => "Médecins sélectionnés";
@@ -881,17 +881,16 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblWalkThroughSubTitle1 =>
-      "«L'application Kivicare est la solution de dossiers de santé électronique (DSE) prêts à l'emploi et ultimes pour les médecins, les professionnels de la santé, la gestion des cliniques et des patients. Quatre modèles uniques pour les médecins, les administrateurs de la clinique, la réceptionniste et les patients.";
+      "«L'application NeuroCare Telemed est la solution de dossiers de santé électronique (DSE) prêts à l'emploi et ultimes pour les médecins, les professionnels de la santé, la gestion des cliniques et des patients. Quatre modèles uniques pour les médecins, les administrateurs de la clinique, la réceptionniste et les patients.";
 
   @override
   String get lblWalkThroughSubTitle2 =>
-      'Créez votre application mobile ingénieuse en répertoriant les médecins. Vous pouvez trouver un médecin le plus proche de vous avec ce modèle de médecins incroyable. Ajouter et gérer la liste des médecins avec Kivicare.';
+      'Vous pouvez trouver  un médecin le plus proche de vous avec ce modèle de médecins incroyable. Ajouter et gérer la liste des médecins avec NeuroCare Telemed.';
+  @override
+  String get lblWalkThroughSubTitle3 => "Gérer les rendez-vous à la clinique ou à l'hôpital, planifiez les patients à l'avance avec l'interface intelligente de NeuroCare Telemed. Évitez les retards ou l'attente plus longue dans les files d'attente";
 
   @override
-  String get lblWalkThroughSubTitle3 => "Gérer les rendez-vous à la clinique ou à l'hôpital, planifiez les patients à l'avance avec l'interface intelligente de Kivicare. Évitez les retards ou l'attente plus longue dans les files d'attente";
-
-  @override
-  String get lblWalkThroughSubTitle4 => 'Les patients peuvent avoir une consultation directe avec le médecin rendant le premier diagnostic précis et opportun. La notification SMS de Kivicare envoie des alertes sur le numéro enregistré du patient.';
+  String get lblWalkThroughSubTitle4 => 'Les patients peuvent avoir une consultation directe avec le médecin rendant le premier diagnostic précis et opportun. La notification SMS de NeuroCare Telemed envoie des alertes sur le numéro enregistré du patient.';
 
   @override
   String get lblWalkThroughSkipButton => 'Sauter';
@@ -900,7 +899,7 @@ class LanguageFr extends BaseLanguage {
   String get lblWalkThroughNextButton => 'Suivant';
 
   @override
-  String get lblWalkThroughGetStartedButton => 'Commencer';
+  String get lblWalkThroughGetStartedButton => 'Acceuil';
 
   @override
   String get lblSignIn => "S'identifier";
@@ -1029,7 +1028,7 @@ class LanguageFr extends BaseLanguage {
   String get lblDone => 'Fait';
 
   @override
-  String get lblSignUpAsPatient => 'Enregistrez votre compte KiviCare';
+  String get lblSignUpAsPatient => 'Enregistrez votre compte NeuroCare Telemed';
 
   @override
   String get lblAlreadyAMember => 'Déjà membre?';
@@ -1041,28 +1040,28 @@ class LanguageFr extends BaseLanguage {
   String get lblDashboard => 'Tableau de bord';
 
   @override
-  String get lblAppointments => 'Nominations';
+  String get lblAppointments => 'Rendez-vous';
 
   @override
-  String get lblPatients => 'Les patients';
+  String get lblPatients => 'Patients';
 
   @override
-  String get lblTotalPatient => 'Patient total';
+  String get lblTotalPatient => 'Total des patients';
 
   @override
   String get lblTotalVisitedPatients => 'Patients visités totaux';
 
   @override
-  String get lblTotalAppointment => 'Nomination totale';
+  String get lblTotalAppointment => 'Total des RDV';
 
   @override
   String get lblTotalVisitedAppointment => 'Rendez-vous total visité';
 
   @override
-  String get lblTodayAppointments => "Aujourd'hui nommer.";
+  String get lblTodayAppointments => "Rendez-vous d'aujourd'hui.";
 
   @override
-  String get lblTotalTodayAppointments => "Total aujourd'hui rendez-vous";
+  String get lblTotalTodayAppointments => "Total des rendez-vous d'aujourd'hui";
 
   @override
   String get lblWeeklyAppointments => 'Rendez-vous hebdomadaires';
@@ -1089,7 +1088,7 @@ class LanguageFr extends BaseLanguage {
   String get lblBook => 'Livre';
 
   @override
-  String get lblNoAppointmentForToday => "Pas de nomination pour aujourd'hui";
+  String get lblNoAppointmentForToday => "Pas de rendez-vous pour aujourd'hui";
 
   @override
   String get lblCheckIn => 'Enregistrement';
@@ -1098,7 +1097,7 @@ class LanguageFr extends BaseLanguage {
   String get lblCheckOut => 'Vérifier';
 
   @override
-  String get lblAreDeleteAppointment => 'Êtes-vous sûr de vouloir supprimer le rendez-vous?';
+  String get lblAreDeleteAppointment => 'Êtes-vous sûr de vouloir supprimer ce rendez-vous ?';
 
   @override
   String get lblYouCannotStart => 'Vous ne pouvez pas commencer';
@@ -1155,7 +1154,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAreDeleted => 'sont supprimés';
 
   @override
-  String get lblEncounters => 'Rencontres';
+  String get lblEncounters => 'Consultations';
 
   @override
   String get lblDelete => 'Supprimer';
@@ -1230,16 +1229,16 @@ class LanguageFr extends BaseLanguage {
   String get lblCopyAndPasteAPIKey => "Copiez et collez la clé API et le secret de l'API ici et cliquez sur le bouton Enregistrer et vous êtes prêt à partir.";
 
   @override
-  String get lblEncounterClosed => 'Rencontre fermée';
+  String get lblEncounterClosed => 'Consultation terminée';
 
   @override
   String get lblChangedTo => 'Changé en';
 
   @override
-  String get lblEncounterWillBeClosed => 'La rencontre sera fermée';
+  String get lblEncounterWillBeClosed => 'La consultation va être terminée.';
 
   @override
-  String get lblEncounterDate => 'Date de rencontre';
+  String get lblEncounterDate => 'Date de consultation';
 
   @override
   String get lblClinicName => 'Nom de la clinique';
@@ -1269,13 +1268,13 @@ class LanguageFr extends BaseLanguage {
   String get lblTotal => 'Total';
 
   @override
-  String get lblEncounterUpdated => 'Rencontre mise à jour';
+  String get lblEncounterUpdated => 'Consultation mise à jour';
 
   @override
-  String get lblAddNewEncounter => 'Ajouter une nouvelle rencontre';
+  String get lblAddNewEncounter => 'Ajouter une nouvelle consultation';
 
   @override
-  String get lblEditEncounterDetail => 'Modifier les détails de la rencontre';
+  String get lblEditEncounterDetail => 'Modifier les détails de la consultation';
 
   @override
   String get lblHolidayOf => 'Fêtes';
@@ -1446,7 +1445,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPatientNameIsRequired => 'Le nom du patient est requis';
 
   @override
-  String get lblDoctorSessions => 'Toute session';
+  String get lblDoctorSessions => 'Toutes les sessions';
 
   @override
   String get lblEditProfile => 'Editer le profil';
@@ -1455,10 +1454,10 @@ class LanguageFr extends BaseLanguage {
   String get lblQualification => 'Qualifications';
 
   @override
-  String get lblEncounterDashboard => 'Tableau de bord de rencontre';
+  String get lblEncounterDashboard => 'Tableau de bord de consultation';
 
   @override
-  String get lblEncounterDetails => 'Rencontrez les détails';
+  String get lblEncounterDetails => 'Détails de la consultation';
 
   @override
   String get lblProblems => 'Problème';
@@ -1470,7 +1469,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNotes => 'Remarques';
 
   @override
-  String get lblBillAddedSuccessfully => 'Bill a ajouté avec succès';
+  String get lblBillAddedSuccessfully => 'Facture ajoutée avec succès';
 
   @override
   String get lblAtLeastSelectOneBillItem => 'Pour économiser au moins, sélectionnez un élément de facture';
@@ -1485,7 +1484,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPayableAmount => 'Montant payable';
 
   @override
-  String get lblSaveAndCloseEncounter => 'Enregistrer et fermer la rencontre';
+  String get lblSaveAndCloseEncounter => 'Enregistrer et clôturer la consultation';
 
   @override
   String get lblHolidays => 'Vacances';
@@ -1515,7 +1514,7 @@ class LanguageFr extends BaseLanguage {
   String get lblOff => 'Désactivé';
 
   @override
-  String get lblNoAppointments => 'Pas de rendez-vous';
+  String get lblNoAppointments => 'Aucun rendez-vous';
 
   @override
   String get lblSelectClinic => 'Sélectionner la clinique';
@@ -1533,10 +1532,10 @@ class LanguageFr extends BaseLanguage {
   String get lblClinicHoliday => 'Vacances à la clinique';
 
   @override
-  String get lblSessions => 'Séances';
+  String get lblSessions => 'Disponibilités';
 
   @override
-  String get lblClinicSessions => 'Séances de clinique';
+  String get lblClinicSessions => 'Disponibilités en clinique';
 
   @override
   String get lblClinicServices => 'Prestations de service';
@@ -1545,7 +1544,7 @@ class LanguageFr extends BaseLanguage {
   String get lblVideoConsulting => 'Consultation vidéo';
 
   @override
-  String get lblYourEncounters => 'Vos rencontres';
+  String get lblYourEncounters => 'Vos consultations';
 
   @override
   String get lblSelectTheme => 'Sélectionne un thème';
@@ -1557,7 +1556,7 @@ class LanguageFr extends BaseLanguage {
   String get lblClinicTAndC => 'Clinique T&C';
 
   @override
-  String get lblAboutKiviCare => 'À propos de Kivicare';
+  String get lblAboutKiviCare => 'À propos de NeuroCare Telemed';
 
   @override
   String get lblYourReviewCounts => 'Votre avis compte';
@@ -1591,7 +1590,7 @@ class LanguageFr extends BaseLanguage {
 
   @override
   String get lblAboutUsDes =>
-      "Kivicare est un rendez-vous en clinique / hôpital complet et une gestion des dossiers pour les médecins et les patients. Les informations, les rapports médicaux, les médicaments, les antécédents de visite, les notes cliniques, les antécédents du patient et d'autres notes. Jongler à travers les articles pour voir les antécédents précédents de vos patients, tout est facilement disponible pour votre diagnostic.";
+      "NeuroCare Telemed est une plateforme de télémedecine neurologique et psychiatrique qui vous permet de gérer les dossiers médicaux électroniques avec les informations, les rapports médicaux, les médicaments, les antécédents de visite, les notes cliniques, les antécédents du patient et d'autres notes. Jongler à travers les articles pour voir les antécédents précédents de vos patients, tout est facilement disponible pour votre diagnostic.";
 
   @override
   String get lblPurchase => 'Achat';
@@ -1660,7 +1659,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAreYouWantToDeleteDoctor => 'Êtes-vous sûr de vouloir supprimer le médecin?';
 
   @override
-  String get lblDoctorDeleted => 'Docteur supprimé';
+  String get lblDoctorDeleted => 'Médecin supprimé';
 
   @override
   String get lblYearsExperience => 'année';
@@ -1693,7 +1692,7 @@ class LanguageFr extends BaseLanguage {
   String get lblViewAll => 'Voir tout';
 
   @override
-  String get lblTopDoctors => 'Meilleurs médecins';
+  String get lblTopDoctors => 'Nos meilleurs médecins';
 
   @override
   String get lblExpertsHealthTipsAndAdvice => 'Conseils et conseils de santé des experts';
@@ -1720,10 +1719,10 @@ class LanguageFr extends BaseLanguage {
   String get lblFeedsAndArticles => 'Flux et articles';
 
   @override
-  String get lblPatientsEncounter => 'Les patients rencontrent';
+  String get lblPatientsEncounter => 'Consultations des patients';
 
   @override
-  String get lblNoEncounterFound => 'Aucune rencontre trouvée';
+  String get lblNoEncounterFound => 'Aucune consultation trouvée.';
 
   @override
   String get lblSelectSpecialization => 'Sélectionnez une spécialisation';
@@ -1756,7 +1755,7 @@ class LanguageFr extends BaseLanguage {
   String get lblTue => 'Mar';
 
   @override
-  String get lblWed => 'Épouser';
+  String get lblWed => 'Mer';
 
   @override
   String get lblThu => 'Jeu';
@@ -1765,10 +1764,10 @@ class LanguageFr extends BaseLanguage {
   String get lblFri => 'Ven';
 
   @override
-  String get lblSat => 'Assis';
+  String get lblSat => 'Sam';
 
   @override
-  String get lblSun => 'Soleil';
+  String get lblSun => 'Dim';
 
   @override
   String get lblNoReportWasSelected => "Aucun rapport n'a été sélectionné";
@@ -1795,7 +1794,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNA => 'N / A';
 
   @override
-  String get lblAddedNewEncounter => "Ajout d'une nouvelle rencontre";
+  String get lblAddedNewEncounter => "Nouvelle consultation ajoutée";
 
   @override
   String get lblCantEditDate => 'Vous ne pouvez pas modifier la date qui est déjà adoptée';
@@ -1825,7 +1824,7 @@ class LanguageFr extends BaseLanguage {
   String get lblTime => 'Temps';
 
   @override
-  String get lblAppointmentSummary => 'Résumé de la nomination';
+  String get lblAppointmentSummary => 'Résumé du rendez-vous';
 
   @override
   String get lblEncounter => 'Rencontre';
@@ -1885,7 +1884,7 @@ class LanguageFr extends BaseLanguage {
   String get lblYourReports => 'Trouvez vos rapports téléchargés';
 
   @override
-  String get lblBillRecords => 'Records de facture';
+  String get lblBillRecords => 'Liste des factures';
 
   @override
   String get lblMyBills => 'Mes factures';
@@ -1915,7 +1914,7 @@ class LanguageFr extends BaseLanguage {
   String get lblYouWillSeeAQRForAppOptionOnTheRightHandCorner => "Vous verrez une option QR pour l'application dans le coin droit,";
 
   @override
-  String get lblEnjoyTheFlawlessKivicareSystemWithEase => 'Apprécier! Le système Kivicare impeccable avec facilité.';
+  String get lblEnjoyTheFlawlessKivicareSystemWithEase => 'Apprécier! Le système  impeccable avec facilité.';
 
   @override
   String get lblCamera => 'Caméra';
@@ -1957,7 +1956,7 @@ class LanguageFr extends BaseLanguage {
   String get lblPleaseChooseAnotherDay => 'Veuillez choisir un autre jour';
 
   @override
-  String get lblPleaseCloseTheEncounterToCheckoutPatient => 'Veuillez fermer la rencontre pour vérifier le patient';
+  String get lblPleaseCloseTheEncounterToCheckoutPatient => 'Veuillez clôturer la consultation pour facturer le patient';
 
   @override
   String get lblRemove => 'retirer';
@@ -2167,7 +2166,7 @@ class LanguageFr extends BaseLanguage {
   String get lblAvailableSession => 'Détails de session disponibles';
 
   @override
-  String get lblGetYourAllBillsHere => 'HISTOIRE DE TOUS LES RECORDS DE BILL';
+  String get lblGetYourAllBillsHere => 'Historique des facturations';
 
   @override
   String get lblServicesYouProvide => 'Services que vous fournissez';
@@ -2224,7 +2223,7 @@ class LanguageFr extends BaseLanguage {
   String get lblNote => 'Note';
 
   @override
-  String get lblToCloseTheEncounterInvoicePaymentIsMandatory => 'Pour fermer la rencontre, le paiement de la facture est obligatoire';
+  String get lblToCloseTheEncounterInvoicePaymentIsMandatory => 'Pour clôturer la consultation, le paiement de la facture est obligatoire';
 
   @override
   String get lblUpdate => 'Mise à jour';
@@ -2308,16 +2307,16 @@ class LanguageFr extends BaseLanguage {
   String get lblReview => 'Examen';
 
   @override
-  String get lblBillingRecords => 'Records de facturation';
+  String get lblBillingRecords => 'Liste des factures';
 
   @override
-  String get lblAppointmentCount => 'Compte de rendez-vous';
+  String get lblAppointmentCount => 'Nombre de rendez-vous';
 
   @override
   String get lblNoRecordsFound => 'Aucun enregistrement trouvé';
 
   @override
-  String get lblNoAppointmentsFound => 'Aucun rendez-vous trouvé';
+  String get lblNoAppointmentsFound => 'Aucun rendez-vous trouvé.';
 
   @override
   String get lblSelectPatient => 'Sélectionner le patient';

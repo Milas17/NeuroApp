@@ -10,7 +10,7 @@ class AppTheme {
 
   static ThemeData get lightTheme {
     return ThemeData(
-      primarySwatch: createMaterialColor(primaryColor),
+      primarySwatch: createMaterialColor(const Color.fromRGBO(3, 119, 9, 1)),
       primaryColor: primaryColor,
       colorScheme: ColorScheme.fromSeed(seedColor: primaryColor, outlineVariant: borderColor),
       scaffoldBackgroundColor: scaffoldColorLight,
